@@ -7,7 +7,7 @@ function Login() {
   return (
     <MainLayout>
       <div className={styles.normal}>
-        Route Component: Login
+        Route Component: Login登录
     </div>
     </MainLayout>
   );
