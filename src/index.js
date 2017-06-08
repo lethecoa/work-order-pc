@@ -3,13 +3,20 @@ import createLoading from 'dva-loading';
 import './index.css';
 
 // 1. Initialize
-const app = dva();
+const app = dva({
+  ...createLoading({
+    effects: true,
+  }),
+  history: browserHistory,
+  onError(error) {
+    message.error(error.message)
+  },
+});
 
 // 2. Plugins
-app.use(createLoading());
 
 // 3. Model
-app.model(require("./models/usersModel"));
+app.model(require("./models/loginModel.js"));
 
 // 4. Router
 app.router(require('./routes/router'));

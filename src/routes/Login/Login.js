@@ -6,45 +6,59 @@ import { config } from '../../common'
 import styles from './Login.less';
 import MainLayout from '../../components/layout/MainLayout';
 
-function Login() {
+const FormItem = Form.Item;
+//const { getFieldDecorator, validateFieldsAndScroll } = Form;
+
+function Login({ dispatch, loginLoading, form: {
+    getFieldDecorator,
+  validateFieldsAndScroll,
+} }) {
+
+  /**
+   * 提交登录
+   */
+  function handleOk() {
+    validateFieldsAndScroll((errors, values) => {
+      if (errors) {
+        return
+      }
+      //dispatch({ type: 'login/login', payload: values })
+      console.log('login');
+    })
+  }
   return (
-    <MainLayout>
-      <div className={styles.form}>
-        <div className={styles.logo}>
-          <img src="/logo.png" />
-          <span>{config.name}</span>
-        </div>
-        <form>
-          <FormItem hasFeedback>
-            {getFieldDecorator('username', {
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(<Input size="large" onPressEnter={handleOk} placeholder="Username" />)}
-          </FormItem>
-          <FormItem hasFeedback>
-            {getFieldDecorator('password', {
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-            })(<Input size="large" type="password" onPressEnter={handleOk} placeholder="Password" />)}
-          </FormItem>
-          <Row>
-            <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
-              Sign in
-          </Button>
-            <p>
-              <span>Username：guest</span>
-              <span>Password：guest</span>
-            </p>
-          </Row>
-        </form>
+    <div className={styles.form}>
+      <div className={styles.logo}>
+        <img src="/logo.png" />
+        <span>{config.name}</span>
       </div>
-    </MainLayout>
+      <form>
+        <FormItem hasFeedback>
+          {getFieldDecorator('username', {
+            rules: [
+              {
+                required: true,
+              },
+            ],
+          })(<Input size="large" onPressEnter={handleOk} placeholder="请输入您的用户名" />)}
+        </FormItem>
+        <FormItem hasFeedback>
+          {getFieldDecorator('password', {
+            rules: [
+              {
+                required: true,
+              },
+            ],
+          })(<Input size="large" type="password" onPressEnter={handleOk} placeholder="请输入登录密码" />)}
+        </FormItem>
+        <Row>
+          <Button type="primary" size="large" onClick={handleOk} loading={loginLoading}>
+            登录
+          </Button>
+          <div className={styles.forgetPwd}><a href="#">忘记密码？</a></div>
+        </Row>
+      </form>
+    </div>
   );
 }
 
@@ -52,4 +66,4 @@ function mapStateToProps() {
   return {};
 }
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(Form.create()(Login));
