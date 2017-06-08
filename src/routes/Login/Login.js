@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import { Button, Row, Form, Input } from 'antd';
+import { config } from '../../common'
 import styles from './Login.less';
 import MainLayout from '../../components/layout/MainLayout';
 
@@ -10,7 +11,7 @@ function Login() {
     <MainLayout>
       <div className={styles.form}>
         <div className={styles.logo}>
-          <img alt={'logo'} src={config.logo} />
+          <img src="/logo.png" />
           <span>{config.name}</span>
         </div>
         <form>

@@ -1,1 +1,4 @@
-export const PAGE_SIZE = 3;
+module.exports = {
+  PAGE_SIZE : 3,
+  name: '客服工单系统'
+}
