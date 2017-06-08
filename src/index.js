@@ -1,5 +1,7 @@
 import dva from 'dva';
 import createLoading from 'dva-loading';
+import { browserHistory } from "dva/router";
+import { message } from "antd";
 import './index.css';
 
 // 1. Initialize
@@ -16,7 +18,7 @@ const app = dva({
 // 2. Plugins
 
 // 3. Model
-app.model(require("./models/loginModel.js"));
+app.model(require("./models/loginModel"));
 
 // 4. Router
 app.router(require('./routes/router'));
