@@ -7,7 +7,7 @@ function IndexPage({ location }) {
   return (
     <MainLayout location={location}>
       <div className={styles.normal}>
-        <h1 className={styles.title}>敢不敢再难一点？</h1>
+        <h1 className={styles.title}>React,你敢不敢再难一点！？</h1>
         <div className={styles.welcome} />
       </div>
     </MainLayout>

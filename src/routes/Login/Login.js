@@ -54,7 +54,7 @@ function Login({ dispatch, loginLoading, form: {
             </FormItem>
           }
           <FormItem hasFeedback>
-            {getFieldDecorator('username', {
+            {getFieldDecorator('telMobile', {
               rules: [
                 {
                   required: true,

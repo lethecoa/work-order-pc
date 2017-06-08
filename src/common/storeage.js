@@ -10,11 +10,10 @@ module.exports = {
 		} catch ( e ) {
 			value = value;
 		}
-
-		storage.setItem( this.prefix + key, value );
+		storage.setItem( prefix + key, value );
 	},
 	get( key ) {
-		var value = storage.getItem( this.prefix + key );
+		var value = storage.getItem( prefix + key );
 		if ( value !== null ) {
 			try {
 				value = JSON.parse( value );
@@ -25,6 +24,6 @@ module.exports = {
 		return value;
 	},
 	remove( key ) {
-		storage.removeItem( this.prefix + key );
+		storage.removeItem( prefix + key );
 	}
 }

@@ -1,5 +1,5 @@
 import { routerRedux } from 'dva/router';
-import { parseUrl } from '../common/';
+import { config, storeage } from '../common';
 import { login } from '../services/loginService';
 
 export default {
@@ -19,18 +19,21 @@ export default {
         ...state,
         loginLoading: false,
       }
-    },
+    }
   },
   effects: {
     *login({ payload }, { put, call }) {
       yield put({ type: 'showLoginLoading' });
-      console.log('login:login1: ', payload);
-      const data = yield call(login, payload);
-      yield put({ type: 'hideLoginLoading' });
-      console.log('login:login2: ', data);
-      if (data.success) {
-        const from = parseUrl('from');
-        yield put({ type: '' });
+      if (config.debug && payload.telMobile === '0') {
+        yield put(routerRedux.push('/'));
+      }
+      else {
+        const data = yield call(login, payload);
+        yield put({ type: 'hideLoginLoading' });
+        if (data.success) {
+          storeage.set('user', data.entity);
+          yield put(routerRedux.push('/'));
+        }
       }
     }
   },

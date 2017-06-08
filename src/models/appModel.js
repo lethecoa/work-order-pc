@@ -6,10 +6,10 @@ import { storeage } from '../common';
 export default {
   namespace: 'appModel',
   state: {
-    user: storeage.get('user') || {},
+    user: {},
   },
   reducers: {
-    initSuccess(state, { payload: user }) {
+    init(state, { payload: user }) {
       return {
         ...state,
         user
@@ -17,18 +17,14 @@ export default {
     }
   },
   effects: {
-    *init({ payload }, { call, put }) {
-      const data = yield call(init, parse(payload));
-      if (data.success && data.user) {
-        yield put({ type: 'initSuccess', payload: data.user });
-
-      }
-    },
     *checkLogin({ payload }, { call, put }) {
       let user = storeage.get('user');
-      console.log(user);
+      console.log('>>>user:', user);
       if (user === null) {
         yield put(routerRedux.push('/login'));
+      }
+      else {
+        yield put({ type: 'init', payload: user });
       }
     }
   },
