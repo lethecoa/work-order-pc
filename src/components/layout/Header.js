@@ -6,7 +6,7 @@ import styles from './Header.less'
 const Header = ({ location }) => {
   return (
     <div className={styles.normal}>
-      <img src="/logo.png" />
+      <Link to="/login"><img src="/logo.png" /></Link>
     </div>
   );
 };
