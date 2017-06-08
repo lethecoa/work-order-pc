@@ -21,6 +21,16 @@ function RouterConfig({ history, app }) {
 			},
 		},
 		{
+			path: '/login',
+			name: 'Login',
+			getComponent(nextState, cb) {
+				require.ensure([], (require) => {
+				  registerModel(app, require('../models/loginModel'));
+					cb(null, require('./Login/Login'));
+				});
+			},
+		},
+		{
 			path: '/signFamily',
 			name: 'SignFamilyPage',
 			getComponent(nextState, cb) {

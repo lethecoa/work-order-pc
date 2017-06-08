@@ -24,8 +24,8 @@ function Login({ dispatch, loginLoading, form: {
       if (errors) {
         return
       }
-      //dispatch({ type: 'login/login', payload: values })
-      console.log('login');
+      console.log('handleOk: ', values);
+      dispatch({ type: 'loginModel/login', payload: values });
     })
   }
 
@@ -71,23 +71,24 @@ function Login({ dispatch, loginLoading, form: {
               ],
             })(<Input prefix={<Icon type="lock" />} type="password" onPressEnter={handleOk} placeholder="请输入登录密码" />)}
           </FormItem>
-          <FormItem label="请选择所在城市：" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }}>
-            {/*请选择所在城市：*/}
-            <Select
-              showSearch
-              defaultValue="sm"
-              optionFilterProp="children"
-              onChange={handleChange}
-            >
-              <Option value="sm">三明</Option>
-              <Option value="fz">福州</Option>
-              <Option value="qz">泉州</Option>
-              <Option value="zz">漳州</Option>
-              <Option value="pt">莆田</Option>
-              <Option value="np">南平</Option>
-              <Option value="xm">厦门</Option>
-            </Select>
-          </FormItem>
+          {true ? '' :
+            <FormItem label="请选择所在城市：" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }}>
+              <Select
+                showSearch
+                defaultValue="sm"
+                optionFilterProp="children"
+                onChange={handleChange}
+              >
+                <Option value="sm">三明</Option>
+                <Option value="fz">福州</Option>
+                <Option value="qz">泉州</Option>
+                <Option value="zz">漳州</Option>
+                <Option value="pt">莆田</Option>
+                <Option value="np">南平</Option>
+                <Option value="xm">厦门</Option>
+              </Select>
+            </FormItem>
+          }
           <FormItem>
             {getFieldDecorator('remember', {
               valuePropName: 'checked',
@@ -96,7 +97,7 @@ function Login({ dispatch, loginLoading, form: {
               <Checkbox>保存帐号</Checkbox>
               )}
             <a className={styles.forgetPwd} href="">忘记密码？</a>
-            <Button type="primary" htmlType="submit">登录</Button>
+            <Button type="primary" onClick={handleOk} loading={loginLoading}>登录</Button>
           </FormItem>
         </form>
       </div>

@@ -1,6 +1,7 @@
 import config from './config';
 import request from './request';
-import api from './api.js';
+import api from './api';
+import storeage from './storeage';
 
 const parseUrl = (name) => {
   let reg = new RegExp(`(^|&)${name}=([^&]*)(&|$)`, 'i');
@@ -13,5 +14,6 @@ module.exports = {
   config,
   request,
   api,
+  storeage,
   parseUrl,
 }

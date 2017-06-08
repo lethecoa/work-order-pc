@@ -1,3 +1,4 @@
 module.exports = {
-  userLogin: '/wo/login',
+  userLogin: '/api/wo/login',
+  userLogout: ''
 }

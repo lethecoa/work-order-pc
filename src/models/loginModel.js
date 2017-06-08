@@ -1,5 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { parseUrl } from '../common/';
+import { login } from '../services/loginService';
 
 export default {
   namespace: 'loginModel',
@@ -23,8 +24,10 @@ export default {
   effects: {
     *login({ payload }, { put, call }) {
       yield put({ type: 'showLoginLoading' });
+      console.log('login:login1: ', payload);
       const data = yield call(login, payload);
       yield put({ type: 'hideLoginLoading' });
+      console.log('login:login2: ', data);
       if (data.success) {
         const from = parseUrl('from');
         yield put({ type: '' });

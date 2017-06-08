@@ -14,5 +14,14 @@
         ["import", { "libraryName": "antd", "style": "css" }]
       ]
     }
+  },
+  "proxy": {
+    "/api": {
+      "target": "http://api.jksmpt.com/ylk/rest/",
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": ""
+      }
+    }
   }
 }
