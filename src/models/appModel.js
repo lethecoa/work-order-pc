@@ -1,7 +1,7 @@
 import { parse } from 'qs';
 import { routerRedux } from 'dva/router';
 import { init } from '../services/appService';
-import { storeage } from '../common';
+import { storeage, print } from '../common';
 
 export default {
   namespace: 'appModel',
@@ -19,7 +19,7 @@ export default {
   effects: {
     *checkLogin({ payload }, { call, put }) {
       let user = storeage.get('user');
-      console.log('>>>user:', user);
+      print( user,'存储在浏览器内的user数据');
       if (user === null) {
         yield put(routerRedux.push('/login'));
       }
