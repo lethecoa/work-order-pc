@@ -11,8 +11,7 @@ export default {
   reducers: {
     init( state, { payload: user } ) {
       return {
-        ...state,
-        user
+        ...state, user
       }
     }
   },

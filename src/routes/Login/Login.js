@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
-import { Button, Select, Radio, Row, Icon, Form, Input, Checkbox } from 'antd';
+import { Button, Select, Radio, Row, Icon, Form, Input, Checkbox, notification } from 'antd';
 import { config, action, model, fun } from '../../common'
 import styles from './Login.less';
 import MainLayout from '../../components/layout/MainLayout';
@@ -11,12 +11,13 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
 
-function Login( { dispatch, loginLoading, form: { getFieldDecorator, validateFieldsAndScroll } } ) {
+function Login( { dispatch, loading, loginInfo = {},
+  form: { getFieldDecorator, validateFieldsAndScroll } } ) {
 
   /**
    * 提交登录信息
    */
-  function login() {
+  const login = () => {
     validateFieldsAndScroll(( errors, values ) => {
       if ( errors ) {
         return
@@ -25,12 +26,19 @@ function Login( { dispatch, loginLoading, form: { getFieldDecorator, validateFie
     } )
   }
 
+  const forgetPwd = () => {
+    notification.open( {
+      message: '亲，你又忘记密码了？',
+      description: '请拨打客服电话：10086，获得该支持！',
+    } );
+  }
+
   /**
    * 切换城市选择，暂时没用
    * 
    * @param {any} value 
    */
-  function handleChange( value ) {
+  const handleChange = ( value ) => {
     console.log( `selected ${value}` );
   }
 
@@ -51,6 +59,7 @@ function Login( { dispatch, loginLoading, form: { getFieldDecorator, validateFie
           }
           <FormItem hasFeedback>
             {getFieldDecorator( 'telMobile', {
+              initialValue: loginInfo.telMobile,
               rules: [
                 {
                   required: true,
@@ -87,8 +96,8 @@ function Login( { dispatch, loginLoading, form: { getFieldDecorator, validateFie
             } )(
               <Checkbox>保存帐号</Checkbox>
               )}
-            <a className={styles.forgetPwd} href="">忘记密码？</a>
-            <Button type="primary" onClick={login} loading={loginLoading}>登录</Button>
+            <a className={styles.forgetPwd} onClick={forgetPwd}>忘记密码？</a>
+            <Button type="primary" onClick={login} loading={loading}>登录</Button>
           </FormItem>
         </form>
       </div>
@@ -96,8 +105,15 @@ function Login( { dispatch, loginLoading, form: { getFieldDecorator, validateFie
   );
 }
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps( state ) {
+  return {
+    loading: state.loading.models.loginModel,
+    loginInfo: state.loginModel.loginInfo,
+  };
+}
+
+Login.prototype = {
+  loginInfo: PropTypes.object
 }
 
 export default connect( mapStateToProps )( Form.create()( Login ) );

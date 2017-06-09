@@ -5,5 +5,6 @@ module.exports = {
   storage_prefix: 'wop$',
   local: {
     user: 'user',
+    loginInfo: 'loginInfo'
   }
 }
