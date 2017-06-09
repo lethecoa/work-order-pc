@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import { Button, Select, Radio, Row, Icon, Form, Input, Checkbox } from 'antd';
-import { config } from '../../common'
+import { config, action } from '../../common'
 import styles from './Login.less';
 import MainLayout from '../../components/layout/MainLayout';
 
@@ -24,8 +24,7 @@ function Login({ dispatch, loginLoading, form: {
       if (errors) {
         return
       }
-      console.log('handleOk: ', values);
-      dispatch({ type: 'loginModel/login', payload: values });
+      dispatch({ type: action.login, payload: values });
     })
   }
 

@@ -1,15 +1,15 @@
 import { parse } from 'qs';
 import { routerRedux } from 'dva/router';
-import { init } from '../services/appService';
-import { storeage, print } from '../common';
+// import { } from '../services/appService';
+import { config, storeage, print, model, urlMap, action } from '../common';
 
 export default {
-  namespace: 'appModel',
+  namespace: model.app,
   state: {
     user: {},
   },
   reducers: {
-    init(state, { payload: user }) {
+    init( state, { payload: user } ) {
       return {
         ...state,
         user
@@ -17,20 +17,20 @@ export default {
     }
   },
   effects: {
-    *checkLogin({ payload }, { call, put }) {
-      let user = storeage.get('user');
-      print( user,'存储在浏览器内的user数据');
-      if (user === null) {
-        yield put(routerRedux.push('/login'));
+    *checkLogin( { payload }, { call, put } ) {
+      let user = storeage.get( config.local.user );
+      print( user, '存储在浏览器内的user数据' );
+      if ( user === null ) {
+        yield put( routerRedux.push( urlMap.login ) );
       }
       else {
-        yield put({ type: 'init', payload: user });
+        yield put( { type: action.app_init, payload: user } );
       }
     }
   },
   subscriptions: {
-    setup({ dispatch }) {
-      dispatch({ type: 'checkLogin' });
+    setup( { dispatch } ) {
+      dispatch( { type: action.checkLogin } );
     }
   },
 };
