@@ -4,6 +4,7 @@ import api from './api';
 import urlMap from './urlMap';
 import model from './model';
 import action from './action';
+import fun from './fun';
 import storeage from './storeage';
 
 module.exports = {
@@ -13,5 +14,6 @@ module.exports = {
   urlMap,
   model,
   action,
+  fun,
   storeage,
 }

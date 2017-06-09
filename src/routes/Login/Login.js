@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import { Button, Select, Radio, Row, Icon, Form, Input, Checkbox } from 'antd';
-import { config, action, model } from '../../common'
+import { config, action, model, fun } from '../../common'
 import styles from './Login.less';
 import MainLayout from '../../components/layout/MainLayout';
 
@@ -14,14 +14,14 @@ const Option = Select.Option;
 function Login( { dispatch, loginLoading, form: { getFieldDecorator, validateFieldsAndScroll } } ) {
 
   /**
-   * 提交登录
+   * 提交登录信息
    */
   function login() {
     validateFieldsAndScroll(( errors, values ) => {
       if ( errors ) {
         return
       }
-      dispatch( { type: action.fuse( model.login, action.login ), payload: values } );
+      dispatch( { type: fun.fuse( model.login, action.login ), payload: values } );
     } )
   }
 
