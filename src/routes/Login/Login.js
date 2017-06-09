@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import { Button, Select, Radio, Row, Icon, Form, Input, Checkbox } from 'antd';
-import { config, action } from '../../common'
+import { config, action, model } from '../../common'
 import styles from './Login.less';
 import MainLayout from '../../components/layout/MainLayout';
 
@@ -11,30 +11,27 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
 
-function Login({ dispatch, loginLoading, form: {
-    getFieldDecorator,
-  validateFieldsAndScroll,
-} }) {
+function Login( { dispatch, loginLoading, form: { getFieldDecorator, validateFieldsAndScroll } } ) {
 
   /**
    * 提交登录
    */
-  function handleOk() {
-    validateFieldsAndScroll((errors, values) => {
-      if (errors) {
+  function login() {
+    validateFieldsAndScroll(( errors, values ) => {
+      if ( errors ) {
         return
       }
-      dispatch({ type: action.login, payload: values });
-    })
+      dispatch( { type: action.fuse( model.login, action.login ), payload: values } );
+    } )
   }
 
   /**
-   * 切换城市选择
+   * 切换城市选择，暂时没用
    * 
    * @param {any} value 
    */
-  function handleChange(value) {
-    console.log(`selected ${value}`);
+  function handleChange( value ) {
+    console.log( `selected ${value}` );
   }
 
   return (
@@ -53,31 +50,26 @@ function Login({ dispatch, loginLoading, form: {
             </FormItem>
           }
           <FormItem hasFeedback>
-            {getFieldDecorator('telMobile', {
+            {getFieldDecorator( 'telMobile', {
               rules: [
                 {
                   required: true,
                 },
               ],
-            })(<Input prefix={<Icon type="user" />} onPressEnter={handleOk} placeholder="请输入您的手机号" />)}
+            } )( <Input prefix={<Icon type="user" />} onPressEnter={login} placeholder="请输入您的手机号" /> )}
           </FormItem>
           <FormItem hasFeedback>
-            {getFieldDecorator('password', {
+            {getFieldDecorator( 'password', {
               rules: [
                 {
                   required: true,
                 },
               ],
-            })(<Input prefix={<Icon type="lock" />} type="password" onPressEnter={handleOk} placeholder="请输入登录密码" />)}
+            } )( <Input prefix={<Icon type="lock" />} type="password" onPressEnter={login} placeholder="请输入登录密码" /> )}
           </FormItem>
           {true ? '' :
             <FormItem label="请选择所在城市：" labelCol={{ span: 10 }} wrapperCol={{ span: 14 }}>
-              <Select
-                showSearch
-                defaultValue="sm"
-                optionFilterProp="children"
-                onChange={handleChange}
-              >
+              <Select showSearch defaultValue="sm" optionFilterProp="children" onChange={handleChange}>
                 <Option value="sm">三明</Option>
                 <Option value="fz">福州</Option>
                 <Option value="qz">泉州</Option>
@@ -89,14 +81,14 @@ function Login({ dispatch, loginLoading, form: {
             </FormItem>
           }
           <FormItem>
-            {getFieldDecorator('remember', {
+            {getFieldDecorator( 'remember', {
               valuePropName: 'checked',
               initialValue: true,
-            })(
+            } )(
               <Checkbox>保存帐号</Checkbox>
               )}
             <a className={styles.forgetPwd} href="">忘记密码？</a>
-            <Button type="primary" onClick={handleOk} loading={loginLoading}>登录</Button>
+            <Button type="primary" onClick={login} loading={loginLoading}>登录</Button>
           </FormItem>
         </form>
       </div>
@@ -108,4 +100,4 @@ function mapStateToProps() {
   return {};
 }
 
-export default connect(mapStateToProps)(Form.create()(Login));
+export default connect( mapStateToProps )( Form.create()( Login ) );
