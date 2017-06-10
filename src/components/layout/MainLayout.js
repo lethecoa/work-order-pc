@@ -2,8 +2,12 @@ import React from 'react';
 import styles from './MainLayout.css';
 import Header from './Header';
 import Sidebar from './Sidebar'
+import { fun } from '../../common';
+
+const moudle = 'MainLayout';
 
 function MainLayout( { dispatch, children, user } ) {
+  fun.print( user, 'user', moudle );
   return (
     <div className={styles.normal}>
       <Header user={user} dispatch={dispatch} />

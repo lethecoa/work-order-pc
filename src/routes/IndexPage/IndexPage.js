@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './IndexPage.less';
-import MainLayout from '../../components/layout/MainLayout';
+import { MainLayout } from '../../components';
 
 function IndexPage( { dispatch, user } ) {
   return (
