@@ -3,10 +3,9 @@ import { connect } from 'dva';
 import styles from './IndexPage.less';
 import MainLayout from '../../components/layout/MainLayout';
 
-function IndexPage( { user } ) {
-  console.log( user );
+function IndexPage( { dispatch, user } ) {
   return (
-    <MainLayout user={user}>
+    <MainLayout user={user} dispatch={dispatch}>
       <div className={styles.normal}>
         <h1 className={styles.title}>React,你敢不敢再难一点！？</h1>
         <div className={styles.welcome} />

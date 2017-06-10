@@ -1,11 +1,9 @@
 import React from 'react';
-import { connect } from 'dva';
 import { Menu, Icon } from 'antd';
-import { Link } from 'dva/router';
 import styles from './Header.less';
 import { fun, model, action } from '../../common';
 
-function Header( { dispatch, user } ) {
+const Header = ( { dispatch, user } ) => {
   /**
    * 退出登录
    */
@@ -20,10 +18,4 @@ function Header( { dispatch, user } ) {
   );
 };
 
-function mapStateToProps( state ) {
-  return {
-    user: state.appModel.user,
-  };
-}
-
-export default connect( mapStateToProps )( Header );
+export default Header;
