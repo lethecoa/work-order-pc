@@ -1,13 +1,11 @@
 import React from 'react';
-import {connect} from 'dva';
-import {MainLayout} from '../components';
+import { connect } from 'dva';
+import { MainLayout } from '../components';
 
 function App( { dispatch, user, children } ) {
 	return (
 		<MainLayout user={user} dispatch={dispatch}>
-			<div>
-				{children}
-			</div>
+			{children}
 		</MainLayout>
 	);
 }
