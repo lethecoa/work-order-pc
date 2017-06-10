@@ -33,7 +33,7 @@ const InfoTable = ( { location } ) => {
   ];
 
   return (
-    <Table className={styles.table} columns={columns} dataSource={data} size="middle" pagination={false} />
+    <Table className={styles.table} bordered columns={columns} dataSource={data} size="middle" pagination={false} />
   )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ResidentInfoTable.less';
-// import Excel from 'exceljs';
+import xlsx from 'node-xlsx';
 import { Table, Button } from 'antd';
 import InfoTable from './InfoTabel';
 
