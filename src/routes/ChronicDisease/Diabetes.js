@@ -1,20 +1,17 @@
 import React from 'react';
-import { connect } from 'dva';
-import MainLayout from '../../components/layout/MainLayout';
+import {connect} from 'dva';
 import styles from './Diabetes.css';
 
 function Diabetes() {
-  return (
-    <MainLayout location={location}>
-      <div className={styles.normal}>
-        Route Component: Diabetes
-      </div>
-    </MainLayout>
-  );
+	return (
+		<div className={styles.normal}>
+			Route Component: Diabetes
+		</div>
+	);
 }
 
 function mapStateToProps() {
-  return {};
+	return {};
 }
 
-export default connect(mapStateToProps)(Diabetes);
+export default connect( mapStateToProps )( Diabetes );

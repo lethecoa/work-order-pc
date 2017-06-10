@@ -1,20 +1,17 @@
 import React from 'react';
-import { connect } from 'dva';
-import MainLayout from '../../components/layout/MainLayout';
+import {connect} from 'dva';
 import styles from './Hypertension.css';
 
 function Hypertension() {
-  return (
-    <MainLayout location={location}>
-      <div className={styles.normal}>
-        Route Component: Hypertension
-      </div>
-    </MainLayout>
-  );
+	return (
+		<div className={styles.normal}>
+			Route Component: Hypertension
+		</div>
+	);
 }
 
 function mapStateToProps() {
-  return {};
+	return {};
 }
 
-export default connect(mapStateToProps)(Hypertension);
+export default connect( mapStateToProps )( Hypertension );

@@ -1,20 +1,17 @@
 import React from 'react';
-import { connect } from 'dva';
-import MainLayout from '../../components/layout/MainLayout';
+import {connect} from 'dva';
 import styles from './AntenatalCare.css';
 
 function AntenatalCare() {
-  return (
-    <MainLayout location={location}>
-      <div className={styles.normal}>
-        Route Component: AntenatalCare
-      </div>
-    </MainLayout>
-  );
+	return (
+		<div className={styles.normal}>
+			Route Component: AntenatalCare
+		</div>
+	);
 }
 
 function mapStateToProps() {
-  return {};
+	return {};
 }
 
-export default connect(mapStateToProps)(AntenatalCare);
+export default connect( mapStateToProps )( AntenatalCare );

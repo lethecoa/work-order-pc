@@ -1,20 +1,17 @@
 import React from 'react';
-import { connect } from 'dva';
-import MainLayout from '../../components/layout/MainLayout';
+import {connect} from 'dva';
 import styles from './ResidentInspect.css';
 
 function ResidentInspect() {
-  return (
-    <MainLayout location={location}>
-      <div className={styles.normal}>
-      Route Component: ResidentInspect
-      </div>
-    </MainLayout>
-  );
+	return (
+		<div className={styles.normal}>
+			Route Component: ResidentInspect
+		</div>
+	);
 }
 
 function mapStateToProps() {
-  return {};
+	return {};
 }
 
-export default connect(mapStateToProps)(ResidentInspect);
+export default connect( mapStateToProps )( ResidentInspect );

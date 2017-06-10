@@ -1,20 +1,17 @@
 import React from 'react';
-import { connect } from 'dva';
-import MainLayout from '../../components/layout/MainLayout';
+import {connect} from 'dva';
 import styles from './CurativeEffect.css';
 
 function CurativeEffect() {
-  return (
-    <MainLayout location={location}>
-      <div className={styles.normal}>
-        Route Component: CurativeEffect
-      </div>
-    </MainLayout>
-  );
+	return (
+		<div className={styles.normal}>
+			Route Component: CurativeEffect
+		</div>
+	);
 }
 
 function mapStateToProps() {
-  return {};
+	return {};
 }
 
-export default connect(mapStateToProps)(CurativeEffect);
+export default connect( mapStateToProps )( CurativeEffect );
