@@ -1,20 +1,17 @@
 import React from 'react';
-import { connect } from 'dva';
-import MainLayout from '../../components/layout/MainLayout';
+import {connect} from 'dva';
 import styles from './Postpartum.css';
 
 function Postpartum() {
-  return (
-    <MainLayout location={location}>
-      <div className={styles.normal}>
-        Route Component: Postpartum
-      </div>
-    </MainLayout>
-  );
+	return (
+		<div className={styles.normal}>
+			Route Component: Postpartum
+		</div>
+	);
 }
 
 function mapStateToProps() {
-  return {};
+	return {};
 }
 
-export default connect(mapStateToProps)(Postpartum);
+export default connect( mapStateToProps )( Postpartum );

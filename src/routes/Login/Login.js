@@ -4,7 +4,6 @@ import { connect } from 'dva';
 import { Button, Select, Radio, Row, Icon, Form, Input, Checkbox, notification } from 'antd';
 import { config, action, model, fun } from '../../common'
 import styles from './Login.less';
-import MainLayout from '../../components/layout/MainLayout';
 
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;

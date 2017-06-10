@@ -13,13 +13,13 @@ function Sidebar() {
       <Tree showLine defaultExpandAll onSelect={onSelect}>
         <TreeNode key="0" title="云医助">
           <TreeNode key="signFamily" title="签约家庭" />
-          <TreeNode key="bookingAgent" title="预约代理">
+          <TreeNode key="bookingAgentMenu" title="预约代理">
             <TreeNode key="residentSign" title="预约居民签约" />
             <TreeNode key="residentInspect" title="预约居民体检" />
             <TreeNode key="newborn" title="预约新生儿家庭访视" />
             <TreeNode key="postpartum" title="预约产后访视" />
           </TreeNode>
-          <TreeNode key="noticeAgent" title="通知代理">
+          <TreeNode key="noticeAgentMenu" title="通知代理">
             <TreeNode key="chronicDisease" title="慢性病随访通知" />
             <TreeNode key="newestPolicy" title="最新政策通知" />
             <TreeNode key="newestActivity" title="最新活动通知" />
@@ -30,11 +30,11 @@ function Sidebar() {
           </TreeNode>
         </TreeNode>
         <TreeNode key="1" title="云健管">
-          <TreeNode key="trackingReminder" title="跟踪提醒">
+          <TreeNode key="trackingReminderMenu" title="跟踪提醒">
             <TreeNode key="medication" title="用药提醒" />
             <TreeNode key="curativeEffect" title="用药疗效跟踪" />
           </TreeNode>
-          <TreeNode key="chronicDisease" title="慢病随访">
+          <TreeNode key="chronicDiseaseMenu" title="慢病随访">
             <TreeNode key="hypertension" title="高血压随访" />
             <TreeNode key="diabetes" title="糖尿病随访" />
           </TreeNode>

@@ -1,20 +1,17 @@
 import React from 'react';
-import { connect } from 'dva';
-import MainLayout from '../../components/layout/MainLayout';
+import {connect} from 'dva';
 import styles from './ResidentSign.css';
 
 function ResidentSign() {
-  return (
-    <MainLayout location={location}>
-      <div className={styles.normal}>
-        Route Component: ResidentSign
-      </div>
-    </MainLayout>
-  );
+	return (
+		<div className={styles.normal}>
+			Route Component: ResidentSign
+		</div>
+	);
 }
 
 function mapStateToProps() {
-  return {};
+	return {};
 }
 
-export default connect(mapStateToProps)(ResidentSign);
+export default connect( mapStateToProps )( ResidentSign );

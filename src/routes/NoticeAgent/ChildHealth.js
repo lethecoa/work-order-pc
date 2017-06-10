@@ -1,20 +1,17 @@
 import React from 'react';
-import { connect } from 'dva';
-import MainLayout from '../../components/layout/MainLayout';
+import {connect} from 'dva';
 import styles from './ChildHealth.css';
 
 function ChildHealth() {
-  return (
-    <MainLayout location={location}>
-      <div className={styles.normal}>
-        Route Component: ChildHealth
-      </div>
-    </MainLayout>
-  );
+	return (
+		<div className={styles.normal}>
+			Route Component: ChildHealth
+		</div>
+	);
 }
 
 function mapStateToProps() {
-  return {};
+	return {};
 }
 
-export default connect(mapStateToProps)(ChildHealth);
+export default connect( mapStateToProps )( ChildHealth );
