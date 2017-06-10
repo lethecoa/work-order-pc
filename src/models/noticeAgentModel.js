@@ -1,8 +1,8 @@
-
+import {model} from '../common';
 export default {
-  namespace: 'noticeAgent',
-  state: {},
-  reducers: {},
-  effects: {},
-  subscriptions: {},
+	namespace: model.noticeAgent,
+	state: {},
+	reducers: {},
+	effects: {},
+	subscriptions: {},
 };

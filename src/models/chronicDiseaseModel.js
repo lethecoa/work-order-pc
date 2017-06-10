@@ -1,8 +1,8 @@
-
+import {model} from '../common';
 export default {
-  namespace: 'chronicDisease',
-  state: {},
-  reducers: {},
-  effects: {},
-  subscriptions: {},
+	namespace: model.chronicDisease,
+	state: {},
+	reducers: {},
+	effects: {},
+	subscriptions: {},
 };

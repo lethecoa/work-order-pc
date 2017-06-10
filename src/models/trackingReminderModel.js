@@ -1,8 +1,8 @@
-
+import {model} from '../common';
 export default {
-  namespace: 'TrackingReminder',
-  state: {},
-  reducers: {},
-  effects: {},
-  subscriptions: {},
+	namespace: model.trackingReminder,
+	state: {},
+	reducers: {},
+	effects: {},
+	subscriptions: {},
 };

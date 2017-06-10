@@ -1,8 +1,8 @@
-
+import {model} from '../common';
 export default {
-  namespace: 'bookingAgent',
-  state: {},
-  reducers: {},
-  effects: {},
-  subscriptions: {},
+	namespace: model.bookingAgent,
+	state: {},
+	reducers: {},
+	effects: {},
+	subscriptions: {},
 };
