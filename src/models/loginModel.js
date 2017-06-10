@@ -5,16 +5,20 @@ import { login } from '../services/loginService';
 export default {
   namespace: model.login,
   state: {
-    loginInfo: storeage.get( config.local.loginInfo ) || {},
+    loginInfo: storeage.get( config.local.loginInfo ) || { '18960535398': '123456' },
   },
   reducers: {
-    setInfo: ( state, { loginInfo } ) => {
+    setInfo: ( state, { payload: loginInfo } ) => {
       return {
         ...state, loginInfo
       }
     }
   },
   effects: {
+    *init( { }, { put } ) {
+      let info = storeage.get( config.local.loginInfo );
+      yield put( { type: action.login_setInfo, payload: info } );
+    },
     *login( { payload }, { put, call } ) {
       // 测试模式并且手机号输入0，直接进入主页
       if ( config.debug && payload.telMobile === '0' ) {
@@ -30,7 +34,7 @@ export default {
             storeage.set( config.local.loginInfo, payload );
           } else {
             yield put( { type: action.login_setInfo, payload: {} } );
-            storeage.set( config.local.loginInfo, {} );
+            storeage.set( config.local.loginInfo, null );
           }
 
           storeage.set( config.local.user, data.entity );
@@ -39,5 +43,8 @@ export default {
       }
     }
   },
-  subscriptions: {},
+  subscriptions: {
+    setup( { dispatch } ) {
+    }
+  },
 };
