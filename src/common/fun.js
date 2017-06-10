@@ -8,9 +8,9 @@ module.exports = {
    * @param {string} [mark='未定义标签'] 提示标签
    * @param {boolean} [force=false] 强制输出此信息
    */
-  print: ( obj, mark = '未定义标签', force = false ) => {
+  print: ( obj, mark = '未定义标签', moudle = 'none', force = false ) => {
     if ( config.debug || force ) {
-      console.log( '>>> ' + mark + ': ', obj );
+      console.log( moudle + ' >>> ' + mark + ': ', obj );
     }
   },
   /**
