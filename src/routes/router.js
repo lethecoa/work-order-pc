@@ -32,141 +32,141 @@ function RouterConfig( { history, app } ) {
 			},
 		},
 		{
-			path: '/signFamily',
-			name: 'SignFamilyPage',
+			path: urlMap.signFamily,
+			name: 'SignFamily',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/bookingAgentModel'));
 					cb( null, require( './SignFamily/SignFamily' ) );
 				} );
 			},
 		},
 		{
-			path: '/residentSign',
-			name: 'ResidentSignPage',
+			path: urlMap.residentSign,
+			name: 'ResidentSign',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/bookingAgentModel'));
 					cb( null, require( './BookingAgent/ResidentSign' ) );
 				} );
 			},
 		},
 		{
-			path: '/residentInspect',
-			name: 'ResidentInspectPage',
+			path: urlMap.residentInspect,
+			name: 'ResidentInspect',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/bookingAgentModel'));
 					cb( null, require( './BookingAgent/ResidentInspect' ) );
 				} );
 			},
 		},
 		{
-			path: '/newborn',
-			name: 'NewbornPage',
+			path: urlMap.newborn,
+			name: 'Newborn',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/bookingAgentModel'));
 					cb( null, require( './BookingAgent/Newborn' ) );
 				} );
 			},
 		},
 		{
-			path: '/postpartum',
-			name: 'PostpartumPage',
+			path: urlMap.postpartum,
+			name: 'Postpartum',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/bookingAgentModel'));
 					cb( null, require( './BookingAgent/Postpartum' ) );
 				} );
 			},
 		},
 		{
-			path: '/chronicDisease',
-			name: 'ChronicDiseasePage',
+			path: urlMap.chronicDisease,
+			name: 'ChronicDisease',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/noticeAgentModel'));
 					cb( null, require( './NoticeAgent/ChronicDisease' ) );
 				} );
 			},
 		},
 		{
-			path: '/newestPolicy',
-			name: 'NewestPolicyPage',
+			path: urlMap.newestPolicy,
+			name: 'NewestPolicy',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/noticeAgentModel'));
 					cb( null, require( './NoticeAgent/NewestPolicy' ) );
 				} );
 			},
 		},
 		{
-			path: '/newestActivity',
-			name: 'NewestActivityPage',
+			path: urlMap.newestActivity,
+			name: 'NewestActivity',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/noticeAgentModel'));
 					cb( null, require( './NoticeAgent/NewestActivity' ) );
 				} );
 			},
 		},
 		{
-			path: '/antenatalCare',
-			name: 'AntenatalCarePage',
+			path: urlMap.antenatalCare,
+			name: 'AntenatalCare',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/noticeAgentModel'));
 					cb( null, require( './NoticeAgent/AntenatalCare' ) );
 				} );
 			},
 		},
 		{
-			path: '/childHealth',
-			name: 'ChildHealthPage',
+			path: urlMap.childHealth,
+			name: 'ChildHealth',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/noticeAgentModel'));
 					cb( null, require( './NoticeAgent/ChildHealth' ) );
 				} );
 			},
 		},
 		{
-			path: '/medication',
-			name: 'MedicationPage',
+			path: urlMap.medication,
+			name: 'Medication',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/trackingReminderModel'));
 					cb( null, require( './TrackingReminder/Medication' ) );
 				} );
 			},
 		},
 		{
-			path: '/curativeEffect',
-			name: 'CurativeEffectPage',
+			path: urlMap.curativeEffect,
+			name: 'CurativeEffect',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/trackingReminderModel'));
 					cb( null, require( './TrackingReminder/CurativeEffect' ) );
 				} );
 			},
 		},
 		{
-			path: '/hypertension',
-			name: 'HypertensionPage',
+			path: urlMap.hypertension,
+			name: 'Hypertension',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/chronicDiseaseModel'));
 					cb( null, require( './ChronicDisease/Hypertension' ) );
 				} );
 			},
 		},
 		{
-			path: '/diabetes',
-			name: 'DiabetesPage',
+			path: urlMap.diabetes,
+			name: 'Diabetes',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
-					//registerModel(app, require('./models/users'));
+					registerModel(app, require('../models/chronicDiseaseModel'));
 					cb( null, require( './ChronicDisease/Diabetes' ) );
 				} );
 			},
