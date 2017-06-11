@@ -2,17 +2,17 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './ChronicDisease.less';
 import { OrderStep, ResidentInfoTable } from '../../components';
-import { fun } from '../../common';
+import { fun, modular } from '../../common';
 import { Form, Input, DatePicker, Checkbox, Button } from 'antd';
 
-const moudle = '慢性病随访通知(ChronicDisease)';
+const moudleName = modular.getModuleName( modular.chronicDisease );
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 const RangePicker = DatePicker.RangePicker;
 
 function ChronicDisease( { dispatch, loading,
   form: { getFieldDecorator, validateFieldsAndScroll } } ) {
-  // fun.print( user, 'user', moudle );
+  fun.print( '1212', '', moudleName );
   const formItemLayout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 12 }

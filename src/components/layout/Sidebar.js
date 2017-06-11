@@ -1,12 +1,13 @@
 import { browserHistory } from "dva/router";
 import styles from './Sidebar.less';
 import { Tree } from 'antd';
+import { modular } from '../../common';
 
 const TreeNode = Tree.TreeNode;
 
 function Sidebar() {
-  const onSelect = (selectedKeys, info) => {
-	  browserHistory.push(selectedKeys[0]);
+  const onSelect = ( selectedKeys, info ) => {
+    browserHistory.push( selectedKeys[ 0 ] );
   }
   return (
     <div className={styles.normal}>
@@ -20,12 +21,12 @@ function Sidebar() {
             <TreeNode key="postpartum" title="预约产后访视" />
           </TreeNode>
           <TreeNode key="noticeAgentMenu" title="通知代理">
-            <TreeNode key="chronicDisease" title="慢性病随访通知" />
+            <TreeNode key={modular.chronicDisease.name} title={modular.chronicDisease.cn} />
             <TreeNode key="newestPolicy" title="最新政策通知" />
             <TreeNode key="newestActivity" title="最新活动通知" />
             <TreeNode key="antenatalCare" title="孕产妇产检通知" />
             <TreeNode key="childHealth" title="儿童健康随访通知" />
-					  {/*<TreeNode key="vaccination" title="疫苗接种通知" />
+            {/*<TreeNode key="vaccination" title="疫苗接种通知" />
              <TreeNode key="healthManual" title="孕产妇建立保健手册通知" />*/}
           </TreeNode>
         </TreeNode>

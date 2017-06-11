@@ -1,6 +1,6 @@
 import React from 'react';
-import {Router, Route} from 'dva/router';
-import {urlMap} from '../common';
+import { Router, Route } from 'dva/router';
+import { urlMap, modular } from '../common';
 import App from './App'
 
 const cached = {};
@@ -14,7 +14,8 @@ function registerModel( app, model ) {
 function RouterConfig( { history, app } ) {
 	const routes = [
 		{
-			path: urlMap.index,
+			path: modular.index.url,
+			name: modular.index.name,
 			component: App,
 			indexRoute: {
 				getComponent( nextState, cb ) {
@@ -75,8 +76,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.chronicDisease,
-					name: 'ChronicDisease',
+					path: modular.chronicDisease.url,
+					name: modular.chronicDisease.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/noticeAgentModel' ) );
@@ -178,7 +179,7 @@ function RouterConfig( { history, app } ) {
 		},
 	];
 
-	return <Router history={history} routes={routes}/>;
+	return <Router history={history} routes={routes} />;
 }
 
 export default RouterConfig;
