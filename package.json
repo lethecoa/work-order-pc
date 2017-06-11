@@ -12,7 +12,6 @@
     "babel-runtime": "^6.9.2",
     "dva": "^1.2.1",
     "dva-loading": "^0.2.1",
-    "exceljs": "^0.4.11",
     "react": "^15.4.0",
     "react-dom": "^15.4.0"
   },

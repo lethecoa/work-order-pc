@@ -62,6 +62,7 @@ function Login( { dispatch, loading, loginInfo = {},
               rules: [
                 {
                   required: true,
+                  message: '请填写用户名！'
                 },
               ],
             } )( <Input prefix={<Icon type="user" />} onPressEnter={login} placeholder="请输入您的手机号" /> )}
@@ -71,6 +72,7 @@ function Login( { dispatch, loading, loginInfo = {},
               rules: [
                 {
                   required: true,
+                  message: '请填写您的密码！'
                 },
               ],
             } )( <Input prefix={<Icon type="lock" />} type="password" onPressEnter={login} placeholder="请输入登录密码" /> )}
