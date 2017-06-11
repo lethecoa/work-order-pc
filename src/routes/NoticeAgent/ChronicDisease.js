@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './ChronicDisease.less';
-import { ResidentInfoTable } from '../../components';
+import { OrderStep, ResidentInfoTable } from '../../components';
 import { fun } from '../../common';
-import { Steps, Form, Input, DatePicker, Checkbox, Button } from 'antd';
+import { Form, Input, DatePicker, Checkbox, Button } from 'antd';
 
 const moudle = '慢性病随访通知(ChronicDisease)';
 const FormItem = Form.Item;
-const Step = Steps.Step;
 const CheckboxGroup = Checkbox.Group;
 const RangePicker = DatePicker.RangePicker;
 
@@ -37,11 +36,7 @@ function ChronicDisease( { dispatch, loading,
   return (
     <div className={styles.wrap}>
       <div className={styles.header}>慢病随访通知委托表</div>
-      <Steps className={styles.step} size="small" current={0}>
-        <Step title="填写委托单" />
-        <Step title="确认填写信息" />
-        <Step title="等待客服处理" />
-      </Steps>
+      <OrderStep />
       <div className={styles.need}>
         <div className={styles.title}>需求说明</div>
         <Form className={styles.form}>

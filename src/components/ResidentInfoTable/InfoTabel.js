@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, Icon } from 'antd';
 import styles from './InfoTable.less';
 
-const InfoTable = ( { location } ) => {
+const InfoTable = () => {
   const columns = [
     {
       title: '姓名',
@@ -27,9 +27,9 @@ const InfoTable = ( { location } ) => {
   ];
 
   const data = [
-    { name: '', sex: '', birthday: '', tel: '' },
-    { name: '', sex: '', birthday: '', tel: '' },
-    { name: '', sex: '', birthday: '', tel: '' },
+    { key: 1, name: '', sex: '', birthday: '', tel: '' },
+    { key: 2, name: '', sex: '', birthday: '', tel: '' },
+    { key: 3, name: '', sex: '', birthday: '', tel: '' },
   ];
 
   return (
