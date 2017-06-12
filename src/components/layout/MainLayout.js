@@ -4,10 +4,10 @@ import Header from './Header';
 import Sidebar from './Sidebar'
 import { fun } from '../../common';
 
-const moudle = 'MainLayout';
+const moudleName = '主框架(MainLayout)';
 
 function MainLayout( { dispatch, children, user } ) {
-  fun.print( user, 'user', moudle );
+  fun.print( user, 'user', moudleName );
   return (
     <div className={styles.normal}>
       <Header user={user} dispatch={dispatch} />

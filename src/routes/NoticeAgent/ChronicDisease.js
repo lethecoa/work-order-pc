@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './ChronicDisease.less';
-import { OrderStep, ResidentInfoTable } from '../../components';
+import { BaseInfo, OrderStep, ResidentInfoTable } from '../../components';
 import { fun, modular } from '../../common';
 import { Form, Input, DatePicker, Checkbox, Button } from 'antd';
 
@@ -10,9 +10,9 @@ const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 const RangePicker = DatePicker.RangePicker;
 
-function ChronicDisease( { dispatch, loading,
+function ChronicDisease( { dispatch, loading, user,
   form: { getFieldDecorator, validateFieldsAndScroll } } ) {
-  fun.print( '1212', '', moudleName );
+  // fun.print( '1212', '', moudleName );
   const formItemLayout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 12 }
@@ -37,6 +37,7 @@ function ChronicDisease( { dispatch, loading,
     <div className={styles.wrap}>
       <div className={styles.header}>慢病随访通知委托表</div>
       <OrderStep />
+      <BaseInfo {...user} />
       <div className={styles.need}>
         <div className={styles.title}>需求说明</div>
         <Form className={styles.form}>
@@ -101,7 +102,7 @@ function ChronicDisease( { dispatch, loading,
           </FormItem>
         </Form>
       </div>
-      <ResidentInfoTable />
+      <ResidentInfoTable name={modular.chronicDisease.name} />
       <div className={styles.submit}>
         <Button size="large" type="primary" onClick={confirmOrder}>提交我的委托单信息</Button></div>
     </div>
