@@ -5,13 +5,14 @@ import { BaseInfo, OrderStep, ResidentInfoTable } from '../../components';
 import { fun, modular } from '../../common';
 import { Form, Input, DatePicker, Checkbox, Button } from 'antd';
 
-const moudleName = modular.getModuleName( modular.chronicDisease );
+const moduleName = modular.getModuleName( modular.chronicDisease );
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 const RangePicker = DatePicker.RangePicker;
 
 function ChronicDisease( { dispatch, loading, user,
   form: { getFieldDecorator, validateFieldsAndScroll } } ) {
+  let residentInfoTable;
   // fun.print( '1212', '', moudleName );
   const formItemLayout = {
     labelCol: { span: 4 },
@@ -30,7 +31,7 @@ function ChronicDisease( { dispatch, loading, user,
   ];
 
   const confirmOrder = () => {
-
+    fun.print( residentInfoTable.getData(), 'residentInfoTable', moduleName );
   }
 
   return (
@@ -102,7 +103,7 @@ function ChronicDisease( { dispatch, loading, user,
           </FormItem>
         </Form>
       </div>
-      <ResidentInfoTable name={modular.chronicDisease.name} />
+      <ResidentInfoTable name={modular.chronicDisease.name} ref={e => ( residentInfoTable = e )} />
       <div className={styles.submit}>
         <Button size="large" type="primary" onClick={confirmOrder}>提交我的委托单信息</Button></div>
     </div>

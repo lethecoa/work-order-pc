@@ -9,11 +9,16 @@ const load = Symbol( 'load' );
 const moduleName = '居民信息表控件(ResidentInfoTable)';
 
 class ResidentInfoTable extends React.Component {
+  // public function
+  getData = () => {
+    return this.refs.infoTable.getData();
+  }
+  // private function
   /**
    * 下载excel模版
    */
   [ download ] = () => {
-    fun.print( this.refs.infoTable.getData(), 'download', moduleName );
+
   }
   /**
    * 读取excel数据
