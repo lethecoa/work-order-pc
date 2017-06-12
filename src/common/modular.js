@@ -7,8 +7,14 @@ module.exports = {
    */
   index: { url: root, name: 'IndexPage', cn: '首页' },
   login: root + 'login',
-  signFamily: 'signFamily',
-  residentSign: 'residentSign',
+	/**
+   * 签约家庭
+	 */
+	signFamily: { url: 'signFamily', name: 'SignFamily', cn: '签约家庭' },
+	/**
+   * 预约代理
+	 */
+	residentSign: 'residentSign',
   residentInspect: 'residentInspect',
   newborn: 'newborn',
   postpartum: 'postpartum',

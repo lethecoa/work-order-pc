@@ -13,7 +13,7 @@ function Sidebar() {
     <div className={styles.normal}>
       <Tree showLine defaultExpandAll onSelect={onSelect}>
         <TreeNode key="0" title="云医助">
-          <TreeNode key="signFamily" title="签约家庭" />
+          <TreeNode key={modular.signFamily.name} title={modular.signFamily.cn} />
           <TreeNode key="bookingAgentMenu" title="预约代理">
             <TreeNode key="residentSign" title="预约居民签约" />
             <TreeNode key="residentInspect" title="预约居民体检" />

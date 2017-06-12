@@ -26,8 +26,8 @@ function RouterConfig( { history, app } ) {
 			},
 			childRoutes: [
 				{
-					path: urlMap.signFamily,
-					name: 'SignFamily',
+					path: modular.signFamily.url,
+					name: modular.signFamily.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/bookingAgentModel' ) );
