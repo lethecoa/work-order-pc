@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './ChronicDisease.less';
-import { BaseInfo, OrderStep, ResidentInfoTable } from '../../components';
+import { BaseInfo, OrderStep, ResidentInfoTable, CarryMaterial } from '../../components';
 import { fun, modular } from '../../common';
 import { Form, Input, DatePicker, Checkbox, Button } from 'antd';
 
@@ -10,8 +10,8 @@ const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 const RangePicker = DatePicker.RangePicker;
 
-function ChronicDisease( { dispatch, loading, user,
-  form: { getFieldDecorator, validateFieldsAndScroll } } ) {
+function ChronicDisease( { dispatch, loading, user, form,
+  form: { getFieldDecorator, validateFieldsAndScroll, setFieldsValue } } ) {
   let residentInfoTable;
   // fun.print( '1212', '', moudleName );
   const formItemLayout = {
@@ -23,11 +23,6 @@ function ChronicDisease( { dispatch, loading, user,
     { label: '血糖', value: 2 },
     { label: '血脂', value: 3 },
     { label: '糖化血红蛋白', value: 4 }
-  ];
-  const materialOptions = [
-    { label: '身份证', value: 1 },
-    { label: '社保卡', value: 2 },
-    { label: '不携带任何材料', value: 0 },
   ];
 
   const confirmOrder = () => {
@@ -63,17 +58,7 @@ function ChronicDisease( { dispatch, loading, user,
               ],
             } )( <Input placeholder="请输入本社区联系方式" /> )}
           </FormItem>
-          <FormItem label="所需携带材料" {...formItemLayout} hasFeedback>
-            {getFieldDecorator( 'carryMaterial', {
-              initialValue: [ 1 ],
-              rules: [
-                {
-                  required: true,
-                  message: '请至少选择其中一项！'
-                },
-              ],
-            } )( <CheckboxGroup options={materialOptions} /> )}
-          </FormItem>
+          <CarryMaterial layout={formItemLayout} />
           <FormItem label="随访地点" {...formItemLayout} hasFeedback>
             {getFieldDecorator( 'interviewSite', {
               rules: [

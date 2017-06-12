@@ -24,6 +24,7 @@ class ResidentInfoTable extends React.Component {
    * 读取excel数据
    */
   [ load ] = () => {
+
   }
 
   render() {

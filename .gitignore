@@ -11,3 +11,4 @@
 .vscode
 .DS_Store
 npm-debug.log*
+temp_*
