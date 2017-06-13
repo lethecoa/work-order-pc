@@ -25,8 +25,11 @@ function ChronicDisease( { dispatch, loading, user, form,
     { label: '糖化血红蛋白', value: 4 }
   ];
 
-  const confirmOrder = () => {
-    fun.print( residentInfoTable.getData(), 'residentInfoTable', moduleName );
+  const confirmOrder = ( e ) => {
+    e.preventDefault();
+    validateFieldsAndScroll(( err, values ) => {
+      fun.print( values, 'residentInfoTable', moduleName );
+    } );
   }
 
   return (
@@ -37,7 +40,7 @@ function ChronicDisease( { dispatch, loading, user, form,
       <div className={styles.need}>
         <div className={styles.title}>需求说明</div>
         <Form className={styles.form}>
-          <FormItem label="随访项目" {...formItemLayout} hasFeedback>
+          <FormItem label="随访项目" {...formItemLayout}>
             {getFieldDecorator( 'interviewItem', {
               initialValue: [ 1 ],
               rules: [
@@ -48,8 +51,9 @@ function ChronicDisease( { dispatch, loading, user, form,
               ],
             } )( <CheckboxGroup options={interviewOptions} /> )}
           </FormItem>
-          <FormItem label="社区联系方式" {...formItemLayout} hasFeedback>
+          <FormItem label="社区联系方式" {...formItemLayout}>
             {getFieldDecorator( 'communityContact', {
+              initialValue: '1',
               rules: [
                 {
                   required: true,
@@ -58,9 +62,19 @@ function ChronicDisease( { dispatch, loading, user, form,
               ],
             } )( <Input placeholder="请输入本社区联系方式" /> )}
           </FormItem>
-          <CarryMaterial layout={formItemLayout} />
-          <FormItem label="随访地点" {...formItemLayout} hasFeedback>
+          <FormItem label="所需携带材料" {...formItemLayout}>
+            {getFieldDecorator( 'carryMaterial', {
+              rules: [
+                {
+                  required: true,
+                  message: '请至少选择其中一项！'
+                },
+              ],
+            } )( <CarryMaterial /> )}
+          </FormItem>
+          <FormItem label="随访地点" {...formItemLayout}>
             {getFieldDecorator( 'interviewSite', {
+              initialValue: '1',
               rules: [
                 {
                   required: true,
@@ -69,7 +83,7 @@ function ChronicDisease( { dispatch, loading, user, form,
               ],
             } )( <Input placeholder="请输入您希望的随访地点" /> )}
           </FormItem>
-          <FormItem label="随访时间" {...formItemLayout} hasFeedback
+          <FormItem label="随访时间" {...formItemLayout}
             help="时间需精确到小时（日期选择里可以切换时间显示，默认使用当前的时间）">
             {getFieldDecorator( 'interviewDate', {
               rules: [
@@ -81,7 +95,7 @@ function ChronicDisease( { dispatch, loading, user, form,
               ],
             } )( <RangePicker size="small" showTime format="YYYY-MM-DD HH:00" /> )}
           </FormItem>
-          <FormItem label="其他要求" {...formItemLayout} hasFeedback>
+          <FormItem label="其他要求" {...formItemLayout}>
             {getFieldDecorator( 'otherRequirements', )
               ( <Input type="textarea" autosize={{ minRows: 4, maxRows: 6 }}
                 placeholder="请在此输入您的其它要求" /> )}
@@ -101,4 +115,13 @@ function mapStateToProps( state ) {
   };
 }
 
-export default connect( mapStateToProps )( Form.create()( ChronicDisease ) );
+const mapDispatchToProps = ( dispatch ) => {
+  return {
+    onSubmit: ( values ) => {
+      fun.print( values, 'onSubmit', moduleName );
+      // dispatch( { type: fun.fuse( model.bookingAgent, action.BA_onSubmit ), payload: values } );
+    }
+  }
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( Form.create()( ChronicDisease ) );

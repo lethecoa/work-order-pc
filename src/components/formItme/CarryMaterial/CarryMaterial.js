@@ -8,55 +8,49 @@ const CheckboxGroup = Checkbox.Group;
 const materialOptions = [
   { label: '身份证', value: 1 },
   { label: '社保卡', value: 2 },
+  { label: '不携带任何材料', value: 0 },
 ];
 
 class CarryMaterial extends React.Component {
-  state = {
-    checkedList: [ 1 ],
-    Without: false,
-    validateStatus: 'success',
-    help: ''
-  };
-  check = () => {
-    fun.print( this.state, 'check' );
-    if ( !this.state.Without && this.state.checkedList.length == 0 ) {
-      this.setState( {
-        validateStatus: 'error',
-        help: '请至少选择其中一项！'
-      } );
-    } else {
-      this.setState( {
-        validateStatus: 'success',
-        help: ''
-      } );
+  constructor( props ) {
+    super( props );
+
+    const value = this.props.value || {};
+    this.state = {
+      valueList: value.valueList || [ 1 ]
+    };
+  }
+  componentWillReceiveProps( nextProps ) {
+    fun.print( nextProps, 'componentWillReceiveProps' );
+    if ( 'value' in nextProps ) {
+      const value = nextProps.value;
+      this.setState( value );
     }
   }
-  selectOne = ( checkedList ) => {
-    // fun.print( checkedList, 'selectWithout' );
-    this.setState( {
-      checkedList,
-      Without: false,
-    }, this.check );
+  selectOne = ( list ) => {
+    let valueList;
+    fun.print( list, 'selectOne1' );
+    if ( list[ list.length - 1 ] === 0 ) {
+      valueList = [ 0 ];
+    } else {
+      valueList = list.filter(( item ) => { return item !== 0; } );
+    }
+    fun.print( valueList, 'selectOne2' );
+    this.setState( { valueList: valueList } );
+    this.triggerChange( valueList );
   }
-  selectWithout = ( e ) => {
-    this.setState( {
-      checkedList: [],
-      Without: e.target.checked
-    }, this.check );
+  triggerChange = ( changedValue ) => {
+    fun.print( changedValue, 'triggerChange1' );
+    const onChange = this.props.onChange;
+    if ( onChange ) {
+      onChange( changedValue );
+    }
+    fun.print( this.state.valueList, 'triggerChange2' );
   }
   render() {
     return (
-      <FormItem label="所需携带材料" {...this.props.layout } hasFeedback required
-        validateStatus={this.state.validateStatus} help={this.state.help}>
-        <div className={styles.group}>
-          <CheckboxGroup options={materialOptions}
-            value={this.state.checkedList}
-            onChange={this.selectOne} />
-          <Checkbox value='0' checked={this.state.checked}
-            onChange={this.selectWithout}
-            checked={this.state.Without}>不携带任何材料</Checkbox>
-        </div>
-      </FormItem >
+      <CheckboxGroup options={materialOptions} onChange={this.selectOne}
+        value={this.state.valueList} />
     )
   }
 }
