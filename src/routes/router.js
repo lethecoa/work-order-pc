@@ -1,6 +1,6 @@
 import React from 'react';
-import { Router, Route } from 'dva/router';
-import { urlMap, modular } from '../common';
+import {Router, Route} from 'dva/router';
+import {urlMap, modular} from '../common';
 import App from './App'
 
 const cached = {};
@@ -36,8 +36,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.residentSign,
-					name: 'ResidentSign',
+					path: modular.residentSign.url,
+					name: modular.residentSign.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/bookingAgentModel' ) );
@@ -179,7 +179,7 @@ function RouterConfig( { history, app } ) {
 		},
 	];
 
-	return <Router history={history} routes={routes} />;
+	return <Router history={history} routes={routes}/>;
 }
 
 export default RouterConfig;

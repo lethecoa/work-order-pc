@@ -11,42 +11,45 @@ const confirm = 'confirm';
  * ritDoctor：居民信息表里医生显示的字段配置
  */
 module.exports = {
-  /**
-   * 首页
-   */
-  index: { url: root, name: 'IndexPage', cn: '首页' },
-  login: root + 'login',
 	/**
-   * 签约家庭
+	 * 首页
 	 */
-  signFamily: {
-    url: 'signFamily', name: 'signFamily', cn: '签约家庭', ritRef: 'dljmqy',
-    ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
-  },
+	index: { url: root, name: 'IndexPage', cn: '首页' },
+	login: root + 'login',
 	/**
-   * 预约代理
+	 * 签约家庭
 	 */
-  residentSign: 'residentSign',
-  residentInspect: 'residentInspect',
-  newborn: 'newborn',
-  postpartum: 'postpartum',
-  /**
-   * 慢性病随访通知
-   */
-  chronicDisease: {
-    url: 'chronicDisease', name: 'chronicDisease', cn: '慢性病随访通知', ritRef: 'mbsftz',
-    ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
-  },
-  newestPolicy: 'newestPolicy',
-  newestActivity: 'newestActivity',
-  antenatalCare: 'antenatalCare',
-  childHealth: 'childHealth',
-  medication: root + 'medication',
-  curativeEffect: 'curativeEffect',
-  hypertension: 'hypertension',
-  diabetes: 'diabetes',
+	signFamily: {
+		url: 'signFamily', name: 'signFamily', cn: '签约家庭', ritRef: 'dljmqy',
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+	},
+	/**
+	 * 预约代理
+	 */
+	residentSign: {
+		url: 'residentSign', name: 'residentSign', cn: '预约居民签约', ritRef: 'yyjmqy',
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+	},
+	residentInspect: 'residentInspect',
+	newborn: 'newborn',
+	postpartum: 'postpartum',
+	/**
+	 * 慢性病随访通知
+	 */
+	chronicDisease: {
+		url: 'chronicDisease', name: 'chronicDisease', cn: '慢性病随访通知', ritRef: 'mbsftz',
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+	},
+	newestPolicy: 'newestPolicy',
+	newestActivity: 'newestActivity',
+	antenatalCare: 'antenatalCare',
+	childHealth: 'childHealth',
+	medication: root + 'medication',
+	curativeEffect: 'curativeEffect',
+	hypertension: 'hypertension',
+	diabetes: 'diabetes',
 
-  getModuleName: ( modular ) => {
-    return modular.cn + '(' + modular.name + ')';
-  }
+	getModuleName: ( modular ) => {
+		return modular.cn + '(' + modular.name + ')';
+	}
 };
