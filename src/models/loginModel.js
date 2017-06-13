@@ -5,7 +5,7 @@ import { login } from '../services/loginService';
 export default {
   namespace: model.login,
   state: {
-    loginInfo: storeage.get( config.local.loginInfo ) || { '18960535398': '123456' },
+    loginInfo: storeage.get( config.local.loginInfo ) || {},
   },
   reducers: {
     setInfo: ( state, { payload: loginInfo } ) => {

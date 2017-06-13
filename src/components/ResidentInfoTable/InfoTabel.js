@@ -7,12 +7,6 @@ const getTableProp = Symbol( 'getTableProp' );
 const moduleName = '信息表控件(infoTable)';
 let columns = [];
 
-// 默认数据
-const data = [
-  { key: 1, name: '张三', sex: '男', birthday: '2000-10-10', tel: '1886448555' },
-  { key: 2, name: '李四', sex: '女', birthday: '1998-05-16', tel: '13951775012' },
-  { key: 3, name: '王五', sex: '男', birthday: '1986-09-03', tel: '13512542197' },
-];
 /**
  * 完整表头定义
  */
@@ -42,13 +36,30 @@ function getColumns( columnConfig ) {
       key: config.ritField.tel,
       className: columnConfig.includes( config.ritField.tel ) ? '' : 'hide'
     },
+    {
+      title: '疾病情况',
+      dataIndex: config.ritField.disease,
+      key: config.ritField.disease,
+      className: columnConfig.includes( config.ritField.disease ) ? '' : 'hide'
+    },
+    {
+      title: '药品名称',
+      dataIndex: config.ritField.drugs,
+      key: config.ritField.drugs,
+      className: columnConfig.includes( config.ritField.drugs ) ? '' : 'hide'
+    },
+    {
+      title: '建卡时间',
+      dataIndex: config.ritField.cardDate,
+      key: config.ritField.cardDate,
+      className: columnConfig.includes( config.ritField.cardDate ) ? '' : 'hide'
+    },
   ];
 }
 
 class InfoTable extends React.Component {
   constructor( props ) {
     super( props );
-    fun.print( modular, props.name );
     let columnConfig = modular[ props.name ][ 'ritDoctor' ];
     columns = getColumns( columnConfig );
   }
@@ -66,7 +77,8 @@ class InfoTable extends React.Component {
   render() {
     return (
       <Table className={styles.table} bordered columns={columns}
-        dataSource={data} size="middle" pagination={false} ref="table" />
+        dataSource={this.props.dataSource} size="middle" pagination={false}
+        ref="table" />
     )
   }
 }
