@@ -21,7 +21,6 @@ class CarryMaterial extends React.Component {
     };
   }
   componentWillReceiveProps( nextProps ) {
-    fun.print( nextProps, 'componentWillReceiveProps' );
     if ( 'value' in nextProps ) {
       const value = nextProps.value;
       this.setState( value );
@@ -29,23 +28,20 @@ class CarryMaterial extends React.Component {
   }
   selectOne = ( list ) => {
     let valueList;
-    fun.print( list, 'selectOne1' );
     if ( list[ list.length - 1 ] === 0 ) {
       valueList = [ 0 ];
     } else {
       valueList = list.filter(( item ) => { return item !== 0; } );
     }
-    fun.print( valueList, 'selectOne2' );
     this.setState( { valueList: valueList } );
     this.triggerChange( valueList );
   }
   triggerChange = ( changedValue ) => {
-    fun.print( changedValue, 'triggerChange1' );
     const onChange = this.props.onChange;
     if ( onChange ) {
       onChange( changedValue );
     }
-    fun.print( this.state.valueList, 'triggerChange2' );
+    // fun.print( this.state.valueList, 'triggerChange2' );
   }
   render() {
     return (
