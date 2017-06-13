@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'antd';
 import styles from './InfoTable.less';
-import { config, fun } from '../../common';
+import { config, fun, modular } from '../../common';
 
 const getTableProp = Symbol( 'getTableProp' );
 const moduleName = '信息表控件(infoTable)';
@@ -48,7 +48,8 @@ function getColumns( columnConfig ) {
 class InfoTable extends React.Component {
   constructor( props ) {
     super( props );
-    let columnConfig = doctorConfig[ props.name ];
+    fun.print( modular, props.name );
+    let columnConfig = modular[ props.name ][ 'ritDoctor' ];
     columns = getColumns( columnConfig );
   }
   // public function

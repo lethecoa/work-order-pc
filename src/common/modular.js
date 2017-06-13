@@ -20,7 +20,7 @@ module.exports = {
    * 签约家庭
 	 */
   signFamily: {
-    url: 'signFamily', name: 'SignFamily', cn: '签约家庭', ritRef: 'dljmqy',
+    url: 'signFamily', name: 'signFamily', cn: '签约家庭', ritRef: 'dljmqy',
     ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
   },
 	/**
@@ -34,7 +34,7 @@ module.exports = {
    * 慢性病随访通知
    */
   chronicDisease: {
-    url: 'chronicDisease', name: 'ChronicDisease', cn: '慢性病随访通知', ritRef: 'mbsftz',
+    url: 'chronicDisease', name: 'chronicDisease', cn: '慢性病随访通知', ritRef: 'mbsftz',
     ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
   },
   newestPolicy: 'newestPolicy',
