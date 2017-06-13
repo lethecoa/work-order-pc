@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'dva';
 import {Row, Col, Form, DatePicker, Input, Radio, Checkbox, Select, Button, notification, Modal} from 'antd';
 import {action, model, fun, config, modular} from '../../common';
-import {OrderStep, BaseInfo, ResidentInfoTable} from '../../components';
+import {OrderStep, BaseInfo, ResidentInfoTable, PayModal} from '../../components';
 import styles from './SignFamily.less';
 
 const moduleName = modular.getModuleName( modular.signFamily );
@@ -17,17 +17,19 @@ let entrustNumber;
 let currentStep = 0;
 let display = 'none';
 let disabled = false;
+let submitDisabled=false;
 let displayConfirm = 'block';
-let displayBack='block';
-let displayNew='none';
-
+let displayBack = 'block';
+let displayNew = 'none';
+let payModal;
+let expenseAccount = 0.0;
 const SignFamily = ( {
 	appModel,
 	form,
 	onSubmit,
 } ) => {
 	const { validateFieldsAndScroll, getFieldDecorator } = form;
-	const { doctorId, doctorName, doctorTel, orgName } = appModel.user;
+	const { doctorId, doctorName, doctorTel, orgName, remainingBalance } = appModel.user;
 
 	const baseInfoProps = {
 		...appModel.user,
@@ -37,6 +39,7 @@ const SignFamily = ( {
 	};
 
 	const openNotificationWithIcon = ( data ) => {
+		payModal.handleOver();
 		if ( data.success ) {
 			notification[ 'success' ]( {
 				message: '提交成功',
@@ -48,8 +51,11 @@ const SignFamily = ( {
 		}
 	};
 
-	const handleSubmit = ( e ) => {
+	const showModal = ( e ) => {
 		e.preventDefault();
+		payModal.showModal();
+	};
+	const handleSubmit = () => {
 		baseInfo.validateFieldsAndScroll( ( errOut, valuesOut ) => {
 			if ( !errOut ) {
 				validateFieldsAndScroll( ( err, values ) => {
@@ -63,19 +69,24 @@ const SignFamily = ( {
 						values.carryMaterial = values.carryMaterial.join( ',' );
 						values.agreementDateStart = values.allowDate[ 0 ]._d;
 						values.agreementDateEnd = values.allowDate[ 1 ]._d;
-						values.expenseAccount = 0.0;
+						values.expenseAccount = expenseAccount;
 						values.residentQueryDtoList = residentInfo;
 						values.fun = openNotificationWithIcon;
-						currentStep = 2;
-						displayBack='none';
-						displayNew='block';
+						currentStep = 3;
+						displayBack = 'none';
+						displayNew = 'block';
+						submitDisabled=true;
 						onSubmit( values );
 					}
 				} );
 			}
 		} );
 	};
-
+	const payModalProps = {
+		handleSubmit: handleSubmit,
+		expenseAccount: expenseAccount,
+		remainingBalance: remainingBalance,
+	};
 	const validAndConfirm = () => {
 		baseInfo.validateFieldsAndScroll( ( err, values ) => {
 			if ( !err ) {
@@ -95,13 +106,14 @@ const SignFamily = ( {
 
 	return (
 		<div className={styles.wrap}>
+			<PayModal ref={e => ( payModal = e )} {...payModalProps}/>
 			<div className={styles.header}>预约居民签约委托表</div>
 			<OrderStep currentStep={currentStep}/>
-			<Form onSubmit={handleSubmit}>
+			<Form onSubmit={showModal}>
 				<BaseInfo {...baseInfoProps} ref={e => ( baseInfo = e )}/>
 				<div className={styles.need}>
 					<div className={styles.title}>需求说明</div>
-					<FormItem {...config.formItemLayout} label="是否告知签约流程" >
+					<FormItem {...config.formItemLayout} label="是否告知签约流程">
 						{getFieldDecorator( 'isInformSignFlow', { initialValue: 0 } )(
 							<RadioGroup disabled={disabled}>
 								<Radio value={1}>是</Radio>
@@ -110,7 +122,7 @@ const SignFamily = ( {
 							</RadioGroup>
 						)}
 					</FormItem>
-					<FormItem {...config.formItemLayout} label="是否告知签约益处" >
+					<FormItem {...config.formItemLayout} label="是否告知签约益处">
 						{getFieldDecorator( 'isInformSignBenefit', { initialValue: 0 } )(
 							<RadioGroup disabled={disabled}>
 								<Radio value={1}>是</Radio>
@@ -166,12 +178,12 @@ const SignFamily = ( {
 				</div>
 				<div className={styles.submit} style={{ display: display }}>
 					<Row>
-						<Col span={12} className={styles.center}>
-							<Button size="large" type="primary" htmlType="submit" style={{ width: 200 }}>确认委托并支付</Button>
+						<Col span={12}>
+							<Button size="large" type="primary" htmlType="submit" style={{ width: 200 }} disabled={submitDisabled}>确认委托并支付</Button>
 						</Col>
-						<Col span={12} className={styles.center}>
-							<Button size="large" type="primary" style={{ width: 200,display: displayBack }} onClick={validAndConfirm}>返回修改</Button>
-							<Button size="large" type="primary" style={{ width: 200,display: displayNew }} onClick={function(){location.reload()}}>新建委托单</Button>
+						<Col span={12}>
+							<Button size="large" type="primary" style={{ width: 200, display: displayBack }} onClick={validAndConfirm}>返回修改</Button>
+							<Button size="large" type="primary" style={{ width: 200, display: displayNew }} onClick={function () {location.reload()}}>新建委托单</Button>
 						</Col>
 					</Row>
 				</div>
