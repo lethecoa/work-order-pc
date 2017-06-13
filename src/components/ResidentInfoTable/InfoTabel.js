@@ -1,26 +1,12 @@
 import React from 'react';
 import { Table } from 'antd';
 import styles from './InfoTable.less';
-import { fun } from '../../common';
+import { config, fun } from '../../common';
 
 const getTableProp = Symbol( 'getTableProp' );
 const moduleName = '信息表控件(infoTable)';
 let columns = [];
 
-/**
- * 根据委托单名称定义表头的显示项
- */
-const field = {
-  name: 'name', sex: 'sex', birthday: 'birthday', tel: 'tel',
-  disease: 'disease', cardDate: 'cardDate', drugs: 'drugs'
-}
-/**
- * 每个模块显示的数据字段配置
- */
-const doctorConfig = {
-  SignFamily: [ field.name, field.sex, field.birthday, field.tel ],
-  ChronicDisease: [ field.name, field.sex, field.birthday, field.tel ],
-}
 // 默认数据
 const data = [
   { key: 1, name: '张三', sex: '男', birthday: '2000-10-10', tel: '1886448555' },
@@ -30,31 +16,31 @@ const data = [
 /**
  * 完整表头定义
  */
-function getColumns( config ) {
+function getColumns( columnConfig ) {
   return columns = [
     {
       title: '姓名',
-      dataIndex: field.name,
-      key: field.name,
-      className: config.includes( field.name ) ? '' : 'hide'
+      dataIndex: config.ritField.name,
+      key: config.ritField.name,
+      className: columnConfig.includes( config.ritField.name ) ? '' : 'hide'
     },
     {
       title: '性别',
-      dataIndex: field.sex,
-      key: field.sex,
-      className: config.includes( field.sex ) ? '' : 'hide'
+      dataIndex: config.ritField.sex,
+      key: config.ritField.sex,
+      className: columnConfig.includes( config.ritField.sex ) ? '' : 'hide'
     },
     {
       title: '出生日期',
-      dataIndex: field.birthday,
-      key: field.birthday,
-      className: config.includes( field.birthday ) ? '' : 'hide'
+      dataIndex: config.ritField.birthday,
+      key: config.ritField.birthday,
+      className: columnConfig.includes( config.ritField.birthday ) ? '' : 'hide'
     },
     {
       title: '联系电话',
-      dataIndex: field.tel,
-      key: field.tel,
-      className: config.includes( field.tel ) ? '' : 'hide'
+      dataIndex: config.ritField.tel,
+      key: config.ritField.tel,
+      className: columnConfig.includes( config.ritField.tel ) ? '' : 'hide'
     },
   ];
 }

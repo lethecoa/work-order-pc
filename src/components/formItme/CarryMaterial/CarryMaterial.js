@@ -1,9 +1,8 @@
 import React from 'react';
-import { Form, Checkbox } from 'antd';
+import { Checkbox } from 'antd';
 import { fun } from '../../../common'
 import styles from './CarryMaterial.less';
 
-const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 const materialOptions = [
   { label: '身份证', value: 1 },

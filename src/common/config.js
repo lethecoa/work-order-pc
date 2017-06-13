@@ -7,15 +7,13 @@ module.exports = {
 		user: 'user',
 		loginInfo: 'loginInfo'
 	},
-	materialOptions: [
-		{ label: '身份证', value: 1 },
-		{ label: '社保卡', value: 2 },
-		{ label: '不携带任何材料', value: 0 },
-	],
 	formItemLayout: {
 		labelCol: { span: 4 },
 		wrapperCol: { span: 12 }
 	},
+	/**
+ 	* 根据委托单名称定义表头的显示项
+ 	*/
 	ritField: {
 		name: 'name', sex: 'sex', birthday: 'birthday', tel: 'tel',
 		disease: 'disease', cardDate: 'cardDate', drugs: 'drugs'
