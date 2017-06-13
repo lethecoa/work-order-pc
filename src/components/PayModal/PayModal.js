@@ -12,11 +12,13 @@ export default class PayModal extends React.Component {
 	state = {
 		loading: false,
 		visible: false,
+		expenseAccount: 0,
 	};
 
-	showModal = () => {
+	showModal = ( expenseAccount ) => {
 		this.setState( {
 			visible: true,
+			expenseAccount: expenseAccount,
 		} );
 	};
 
@@ -26,15 +28,15 @@ export default class PayModal extends React.Component {
 
 	handleOk = () => {
 		this.setState( { loading: true } );
-		this.props.handleSubmit();
+		this.props.handleSubmit( this.state.expenseAccount );
 	};
 
 	handleCancel = () => {
-		this.setState( { visible: false } );
+		this.setState( { loading: false, visible: false } );
 	};
 
 	render() {
-		const { visible, loading } = this.state;
+		const { visible, loading, expenseAccount } = this.state;
 		return (
 			<div>
 				<Modal
@@ -42,6 +44,8 @@ export default class PayModal extends React.Component {
 					title="支付详情"
 					onOk={this.handleOk}
 					onCancel={this.handleCancel}
+					maskClosable={false}
+					closable={false}
 					footer={[
 						<Button key="back" size="large" onClick={this.handleCancel}>取消</Button>,
 						<Button key="submit" type="primary" size="large" loading={loading} onClick={this.handleOk}>
@@ -53,7 +57,7 @@ export default class PayModal extends React.Component {
 						<Input className={styles.right} type="text" value={this.props.remainingBalance + '元'} disabled/>
 					</FormItem>
 					<FormItem {...formItemLayout} label="本次委托费用">
-						<Input className={styles.right} type="text" value={this.props.expenseAccount + '元'} disabled/>
+						<Input className={styles.right} type="text" value={expenseAccount + '元'} disabled/>
 					</FormItem>
 				</Modal>
 			</div>
