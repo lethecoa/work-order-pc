@@ -10,4 +10,6 @@ module.exports = {
 	BA_changeConfirmState: 'changeConfirmState',
 	BA_changeSubmitSate: 'changeSubmitSate',
 	BA_savePhysicalExam: 'savePhysicalExam',
+	BA_saveNewBorn: 'saveNewBorn',
+	BA_savePostpartum: 'savePostpartum',
 };

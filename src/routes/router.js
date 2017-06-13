@@ -56,8 +56,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.newborn,
-					name: 'Newborn',
+					path: modular.newborn.url,
+					name: modular.newborn.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/bookingAgentModel' ) );
@@ -66,8 +66,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.postpartum,
-					name: 'Postpartum',
+					path: modular.postpartum.url,
+					name: modular.postpartum.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/bookingAgentModel' ) );

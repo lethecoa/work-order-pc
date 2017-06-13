@@ -34,8 +34,14 @@ module.exports = {
 		url: 'residentInspect', name: 'residentInspect', cn: '预约居民体检', ritRef: 'yyjmtj',
 		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
 	},
-	newborn: 'newborn',
-	postpartum: 'postpartum',
+	newborn: {
+		url: 'newborn', name: 'newborn', cn: '预约新生儿家庭访视', ritRef: 'yyxsfs',
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+	},
+	postpartum: {
+		url: 'postpartum', name: 'postpartum', cn: '预约产后访视', ritRef: 'yychfs',
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+	},
 	/**
 	 * 慢性病随访通知
 	 */
