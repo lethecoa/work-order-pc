@@ -45,7 +45,7 @@ class CarryMaterial extends React.Component {
   render() {
     return (
       <CheckboxGroup options={materialOptions} onChange={this.selectOne}
-        value={this.state.valueList} />
+        value={this.state.valueList} disabled={this.props.disabled}/>
     )
   }
 }

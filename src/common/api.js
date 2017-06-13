@@ -1,5 +1,6 @@
 module.exports = {
-  userLogin: '/api/wo/login',
-  userLogout: '',
-	saveSign:'/api/workorder/saveSign'
+	userLogin: '/api/wo/login',
+	userLogout: '',
+	getItemPriceById: '/api/workorder/getItemPriceById',
+	saveSign: '/api/workorder/saveSign'
 }
