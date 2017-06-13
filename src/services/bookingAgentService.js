@@ -6,3 +6,9 @@ export async function saveSign(data) {
     data
   })
 }
+export async function savePhysicalExam(data) {
+	return request({
+		url: api.savePhysicalExam,
+		data
+	})
+}

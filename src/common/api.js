@@ -3,5 +3,6 @@ module.exports = {
 	userLogout: '',
 	getItemInfoById: '/api/workorder/getItemInfoById',
 	saveSign: '/api/workorder/saveSign',
-	uploadExcel: '/callCenter/resolveExcel',
+	uploadExcel: '/api/callCenter/resolveExcel',
+	savePhysicalExam:'/api/workorder/savePhysicalExam'
 }

@@ -30,7 +30,10 @@ module.exports = {
 		url: 'residentSign', name: 'residentSign', cn: '预约居民签约', ritRef: 'yyjmqy',
 		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
 	},
-	residentInspect: 'residentInspect',
+	residentInspect: {
+		url: 'residentInspect', name: 'residentInspect', cn: '预约居民体检', ritRef: 'yyjmtj',
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+	},
 	newborn: 'newborn',
 	postpartum: 'postpartum',
 	/**

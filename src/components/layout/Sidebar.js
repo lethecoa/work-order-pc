@@ -16,7 +16,7 @@ function Sidebar() {
 					<TreeNode key={modular.signFamily.name} title={modular.signFamily.cn}/>
 					<TreeNode key="bookingAgentMenu" title="预约代理">
 						<TreeNode key={modular.residentSign.name} title={modular.residentSign.cn}/>
-						<TreeNode key="residentInspect" title="预约居民体检"/>
+						<TreeNode key={modular.residentInspect.name} title={modular.residentInspect.cn}/>
 						<TreeNode key="newborn" title="预约新生儿家庭访视"/>
 						<TreeNode key="postpartum" title="预约产后访视"/>
 					</TreeNode>

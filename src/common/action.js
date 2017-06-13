@@ -9,4 +9,5 @@ module.exports = {
 	BA_saveSign: 'saveSign',
 	BA_changeConfirmState: 'changeConfirmState',
 	BA_changeSubmitSate: 'changeSubmitSate',
+	BA_savePhysicalExam: 'savePhysicalExam',
 };

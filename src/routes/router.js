@@ -46,8 +46,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.residentInspect,
-					name: 'ResidentInspect',
+					path: modular.residentInspect.url,
+					name: modular.residentInspect.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/bookingAgentModel' ) );

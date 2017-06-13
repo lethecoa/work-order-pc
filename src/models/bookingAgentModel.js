@@ -1,5 +1,6 @@
 import {fun, model, action} from '../common';
-import {saveSign} from '../services/bookingAgentService';
+import {saveSign, savePhysicalExam} from '../services/bookingAgentService';
+
 export default {
 	namespace: model.bookingAgent,
 	state: {
@@ -51,8 +52,21 @@ export default {
 			values.agreementDateStart = values.allowDate[ 0 ]._d;
 			values.agreementDateEnd = values.allowDate[ 1 ]._d;
 			delete(values[ "allowDate" ]);
-			fun.print( payload, 'onSubmit', model.bookingAgent );
+			fun.print( payload, 'saveSign', model.bookingAgent );
 			const data = yield call( saveSign, values );
+			payload.fun( data );
+			yield put( { type: action.BA_changeSubmitSate } );
+		},
+		*savePhysicalExam( { payload }, { call, put } ) {
+			let values = payload.data;
+			values.examineItem = values.examineItem.join( ',' );
+			values.carryMaterial = values.carryMaterial.join( ',' );
+			values.taskDeadlineDate = values.taskDeadlineDate._d;
+			values.examineDateStart = values.allowDate[ 0 ]._d;
+			values.examineDateEnd = values.allowDate[ 1 ]._d;
+			delete(values[ "allowDate" ]);
+			fun.print( payload, 'savePhysicalExam', model.bookingAgent );
+			const data = yield call( savePhysicalExam, values );
 			payload.fun( data );
 			yield put( { type: action.BA_changeSubmitSate } );
 		}
@@ -60,7 +74,8 @@ export default {
 	subscriptions: {
 		setup ( { dispatch, history } ) {
 			history.listen( location => {
-				if ( location.pathname === 'signFamily' ) {
+				let arr = [ 'signFamily', 'residentSign', 'residentInspect' ]
+				if ( arr.indexOf( location.pathname ) >= 0 ) {
 					dispatch( { type: action.BA_init } );
 				}
 			} )
