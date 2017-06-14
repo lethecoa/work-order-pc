@@ -158,7 +158,7 @@ const ResidentInspect = ( {
 						</FormItem>
 					</div>
 				</div>
-				<ResidentInfoTable name={modular.signFamily.name} ref={e => ( residentInfoTable = e )}/>
+				<ResidentInfoTable name={modular.residentInspect.name} ref={e => ( residentInfoTable = e )}/>
 				<div className={styles.submit} style={{ display: displayConfirm }}>
 					<Button size="large" type="primary" onClick={validAndConfirm}>提交我的委托单信息</Button>
 				</div>
