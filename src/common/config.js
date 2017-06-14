@@ -19,7 +19,8 @@ module.exports = {
  	* 根据委托单名称定义表头的显示项
  	*/
 	ritField: {
-		key: 'key', name: 'name', sex: 'sex', birthday: 'birthday', tel: 'tell',
-		disease: 'disease', cardDate: 'cardDate', drugs: 'drugs'
+		key: 'key', name: 'name', sex: 'sex', birthday: 'birthday', tel: 'tell', present: 'present',
+		disease: 'disease', cardDate: 'cardDate', drugs: 'drugs', notice: 'notice', operation: 'operation',
+		booking: 'booking', remark: 'remark'
 	}
 }
