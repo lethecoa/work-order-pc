@@ -1,7 +1,8 @@
 import config from './config';
 
 const root = '/';
-const confirm = 'confirm';
+const order = 'order/';
+const worker = 'worker';
 
 /**
  * url：路由对应的访问路径
@@ -49,15 +50,31 @@ module.exports = {
 		url: 'chronicDisease', name: 'chronicDisease', cn: '慢性病随访通知', ritRef: 'mbsftz',
 		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
 	},
-	newestPolicy: 'newestPolicy',
-	newestActivity: 'newestActivity',
-	antenatalCare: 'antenatalCare',
-	childHealth: 'childHealth',
+	newestPolicy: {
+		url: 'newestPolicy', name: 'newestPolicy', cn: '最新政策通知', ritRef: 'zxzctz',
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+	},
+	newestActivity: {
+		url: 'newestActivity', name: 'newestActivity', cn: '最新活动通知', ritRef: 'zxhdtz',
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+	},
+	antenatalCare: {
+		url: 'antenatalCare', name: 'antenatalCare', cn: '孕产妇产检通知', ritRef: 'yfcjtz',
+		ritDoctor: [ config.ritField.name, config.ritField.birthday, config.ritField.tel, config.ritField.cardDate ]
+	},
+	childHealth: {
+		url: 'childHealth', name: 'childHealth', cn: '儿童健康随访通知', ritRef: 'etsftz',
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+	},
 	medication: root + 'medication',
 	curativeEffect: 'curativeEffect',
 	hypertension: 'hypertension',
 	diabetes: 'diabetes',
 
+	/**
+	 * 订单列表页
+	 */
+	orderList: { url: 'orderList', name: 'orderList', cn: '小秘书工单' },
 	getModuleName: ( modular ) => {
 		return modular.cn + '(' + modular.name + ')';
 	}

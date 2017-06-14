@@ -20,6 +20,7 @@ function RouterConfig( { history, app } ) {
 			indexRoute: {
 				getComponent( nextState, cb ) {
 					require.ensure( [], ( require ) => {
+						registerModel( app, require( '../models/orderModel' ) );
 						cb( null, require( './IndexPage/IndexPage' ) )
 					} );
 				},
@@ -86,8 +87,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.newestPolicy,
-					name: 'NewestPolicy',
+					path: modular.newestPolicy.url,
+					name: modular.newestPolicy.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/noticeAgentModel' ) );
@@ -96,8 +97,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.newestActivity,
-					name: 'NewestActivity',
+					path: modular.newestActivity.url,
+					name: modular.newestActivity.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/noticeAgentModel' ) );
@@ -106,8 +107,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.antenatalCare,
-					name: 'AntenatalCare',
+					path: modular.antenatalCare.url,
+					name: modular.antenatalCare.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/noticeAgentModel' ) );
@@ -116,8 +117,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.childHealth,
-					name: 'ChildHealth',
+					path: modular.childHealth.url,
+					name: modular.childHealth.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/noticeAgentModel' ) );
@@ -176,6 +177,29 @@ function RouterConfig( { history, app } ) {
 					cb( null, require( './Login/Login' ) );
 				} );
 			},
+		},
+		{
+			path: modular.orderList.url,
+			name: modular.orderList.name,
+			indexRoute: {
+				getComponent( nextState, cb ) {
+					require.ensure( [], ( require ) => {
+						cb( null, require( './OrderList/OrderList' ) )
+					} );
+				},
+			},
+			// childRoutes: [
+			// 	{
+			// 		path: modular.signFamily.url,
+			// 		name: modular.signFamily.name,
+			// 		getComponent( nextState, cb ) {
+			// 			require.ensure( [], ( require ) => {
+			// 				registerModel( app, require( '../models/bookingAgentModel' ) );
+			// 				cb( null, require( './SignFamily/SignFamily' ) );
+			// 			} );
+			// 		},
+			// 	},
+			// ]
 		},
 	];
 

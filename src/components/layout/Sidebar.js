@@ -13,19 +13,20 @@ function Sidebar() {
 		<div className={styles.normal}>
 			<Tree showLine defaultExpandAll onSelect={onSelect}>
 				<TreeNode key="0" title="云医助">
-					<TreeNode key={modular.signFamily.name} title={modular.signFamily.cn}/>
+
+					<TreeNode key={modular.signFamily.url} title={modular.signFamily.cn}/>
 					<TreeNode key="bookingAgentMenu" title="预约代理">
-						<TreeNode key={modular.residentSign.name} title={modular.residentSign.cn}/>
-						<TreeNode key={modular.residentInspect.name} title={modular.residentInspect.cn}/>
-						<TreeNode key={modular.newborn.name} title={modular.newborn.cn}/>
-						<TreeNode key={modular.postpartum.name} title={modular.postpartum.cn}/>
+						<TreeNode key={modular.residentSign.url} title={modular.residentSign.cn}/>
+						<TreeNode key={modular.residentInspect.url} title={modular.residentInspect.cn}/>
+						<TreeNode key={modular.newborn.url} title={modular.newborn.cn}/>
+						<TreeNode key={modular.postpartum.url} title={modular.postpartum.cn}/>
 					</TreeNode>
 					<TreeNode key="noticeAgentMenu" title="通知代理">
-						<TreeNode key={modular.chronicDisease.name} title={modular.chronicDisease.cn}/>
-						<TreeNode key="newestPolicy" title="最新政策通知"/>
-						<TreeNode key="newestActivity" title="最新活动通知"/>
-						<TreeNode key="antenatalCare" title="孕产妇产检通知"/>
-						<TreeNode key="childHealth" title="儿童健康随访通知"/>
+						<TreeNode key={modular.chronicDisease.url} title={modular.chronicDisease.cn}/>
+						<TreeNode key={modular.newestPolicy.url} title={modular.newestPolicy.cn}/>
+						<TreeNode key={modular.newestActivity.url} title={modular.newestActivity.cn}/>
+						<TreeNode key={modular.antenatalCare.url} title={modular.antenatalCare.cn}/>
+						<TreeNode key={modular.childHealth.url} title={modular.childHealth.cn}/>
 						{/*<TreeNode key="vaccination" title="疫苗接种通知" />
 						 <TreeNode key="healthManual" title="孕产妇建立保健手册通知" />*/}
 					</TreeNode>
