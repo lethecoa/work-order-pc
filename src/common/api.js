@@ -9,4 +9,5 @@ module.exports = {
 	savePhysicalExam: config.api + '/workorder/savePhysicalExam',
 	saveNewBorn: config.api + '/workorder/saveNewBorn',
 	savePostpartum: config.api + '/workorder/savePostpartum',
+	savePolicy: config.api + '/workorder/savePolicy',
 };

@@ -20,7 +20,6 @@ function RouterConfig( { history, app } ) {
 			indexRoute: {
 				getComponent( nextState, cb ) {
 					require.ensure( [], ( require ) => {
-						registerModel( app, require( '../models/orderModel' ) );
 						cb( null, require( './IndexPage/IndexPage' ) )
 					} );
 				},
@@ -31,6 +30,7 @@ function RouterConfig( { history, app } ) {
 					name: modular.signFamily.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/bookingAgentModel' ) );
 							cb( null, require( './SignFamily/SignFamily' ) );
 						} );
@@ -41,6 +41,7 @@ function RouterConfig( { history, app } ) {
 					name: modular.residentSign.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/bookingAgentModel' ) );
 							cb( null, require( './BookingAgent/ResidentSign' ) );
 						} );
@@ -51,6 +52,7 @@ function RouterConfig( { history, app } ) {
 					name: modular.residentInspect.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/bookingAgentModel' ) );
 							cb( null, require( './BookingAgent/ResidentInspect' ) );
 						} );
@@ -61,6 +63,7 @@ function RouterConfig( { history, app } ) {
 					name: modular.newborn.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/bookingAgentModel' ) );
 							cb( null, require( './BookingAgent/Newborn' ) );
 						} );
@@ -71,6 +74,7 @@ function RouterConfig( { history, app } ) {
 					name: modular.postpartum.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/bookingAgentModel' ) );
 							cb( null, require( './BookingAgent/Postpartum' ) );
 						} );
@@ -81,6 +85,7 @@ function RouterConfig( { history, app } ) {
 					name: modular.chronicDisease.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/noticeAgentModel' ) );
 							cb( null, require( './NoticeAgent/ChronicDisease' ) );
 						} );
@@ -91,6 +96,7 @@ function RouterConfig( { history, app } ) {
 					name: modular.newestPolicy.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/noticeAgentModel' ) );
 							cb( null, require( './NoticeAgent/NewestPolicy' ) );
 						} );
@@ -101,6 +107,7 @@ function RouterConfig( { history, app } ) {
 					name: modular.newestActivity.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/noticeAgentModel' ) );
 							cb( null, require( './NoticeAgent/NewestActivity' ) );
 						} );
@@ -111,6 +118,7 @@ function RouterConfig( { history, app } ) {
 					name: modular.antenatalCare.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/noticeAgentModel' ) );
 							cb( null, require( './NoticeAgent/AntenatalCare' ) );
 						} );
@@ -121,6 +129,7 @@ function RouterConfig( { history, app } ) {
 					name: modular.childHealth.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/noticeAgentModel' ) );
 							cb( null, require( './NoticeAgent/ChildHealth' ) );
 						} );
@@ -131,6 +140,7 @@ function RouterConfig( { history, app } ) {
 					name: 'Medication',
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/trackingReminderModel' ) );
 							cb( null, require( './TrackingReminder/Medication' ) );
 						} );
@@ -141,6 +151,7 @@ function RouterConfig( { history, app } ) {
 					name: 'CurativeEffect',
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/trackingReminderModel' ) );
 							cb( null, require( './TrackingReminder/CurativeEffect' ) );
 						} );
@@ -151,6 +162,7 @@ function RouterConfig( { history, app } ) {
 					name: 'Hypertension',
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/chronicDiseaseModel' ) );
 							cb( null, require( './ChronicDisease/Hypertension' ) );
 						} );
@@ -161,6 +173,7 @@ function RouterConfig( { history, app } ) {
 					name: 'Diabetes',
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/chronicDiseaseModel' ) );
 							cb( null, require( './ChronicDisease/Diabetes' ) );
 						} );

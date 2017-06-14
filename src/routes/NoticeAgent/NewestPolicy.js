@@ -1,14 +1,12 @@
 import React from 'react';
 import {connect} from 'dva';
-import {Row, Col, Form, DatePicker, Input, Radio, Select, Button, notification, Modal} from 'antd';
+import {Row, Col, Form, Input, Button, notification, Modal} from 'antd';
 import {action, model, fun, config, modular} from '../../common';
-import {OrderStep, BaseInfo, ResidentInfoTable, PayModal, CarryMaterial} from '../../components';
+import {OrderStep, BaseInfo, ResidentInfoTable, PayModal} from '../../components';
 import styles from './NewestPolicy.less';
 
 const moduleName = modular.getModuleName( modular.newestPolicy );
 const FormItem = Form.Item;
-const RadioGroup = Radio.Group;
-const RangePicker = DatePicker.RangePicker;
 
 let residentInfoTable;
 let baseInfo;
@@ -27,7 +25,7 @@ const NewestPolicy = ( {
 	openNotificationWithIcon,
 } ) => {
 	const { validateFieldsAndScroll, getFieldDecorator } = form;
-	const { doctorId, doctorName, doctorTel, orgName, remainingBalance } = appModel.user;
+	const { doctorId, doctorName, doctorTel, remainingBalance } = appModel.user;
 	const { currentStep, display, disabled, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel;
 
 	const handleSubmit = ( expenseAccount ) => {
@@ -88,7 +86,8 @@ const NewestPolicy = ( {
 										required: true,
 										message: '请输入政策内容！'
 									},
-								]} )(
+								]
+							} )(
 								<Input type="textarea" rows={8} placeholder="请输入政策内容：如政策下发时间、下发内容、需要居民配合的事项等" disabled={disabled}/>
 							)}
 						</FormItem>
@@ -128,7 +127,7 @@ const mapDispatchToProps = ( dispatch ) => {
 			let residentInfo = residentInfoTable.getData();
 			values.data.entrustNumber = residentInfo.length;
 			values.data.residentQueryDtoList = residentInfo;
-			//dispatch( { type: fun.fuse( model.bookingAgent, action.BA_saveSign ), payload: values } );
+			dispatch( { type: fun.fuse( model.noticeAgent, action.NA_savePolicy ), payload: values } );
 		},
 		changeConfirmState: () => {
 			dispatch( { type: fun.fuse( model.orderModel, action.order_changeConfirmState ) } );

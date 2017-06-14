@@ -15,4 +15,5 @@ module.exports = {
 	BA_savePhysicalExam: 'savePhysicalExam',
 	BA_saveNewBorn: 'saveNewBorn',
 	BA_savePostpartum: 'savePostpartum',
+	NA_savePolicy: 'savePolicy',
 };
