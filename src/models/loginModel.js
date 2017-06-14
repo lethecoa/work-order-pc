@@ -36,8 +36,10 @@ export default {
             yield put( { type: action.login_setInfo, payload: {} } );
             storeage.set( config.local.loginInfo, null );
           }
-
-          storeage.set( config.local.user, data.entity );
+          let user = data.entity;
+          user.userType = config.userType.doctor;
+          storeage.set( config.local.user, user );
+          yield put( { type: action.app_init, payload: user } );
           yield put( routerRedux.push( urlMap.index ) );
         }
       }

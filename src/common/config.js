@@ -12,7 +12,7 @@ module.exports = {
 		wrapperCol: { span: 12 }
 	},
 	userType: {
-		doctor, worker
+		doctor: 'doctor', worker: 'worker'
 	},
 	/**
  	* 根据委托单名称定义表头的显示项
