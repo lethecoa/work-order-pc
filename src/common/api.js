@@ -1,10 +1,12 @@
+import config from './config';
+
 module.exports = {
-	userLogin: '/api/wo/login',
+	userLogin: config.api + '/wo/login',
 	userLogout: '',
-	getItemInfoById: '/api/workorder/getItemInfoById',
-	saveSign: '/api/workorder/saveSign',
-	uploadExcel: '/api/callCenter/resolveExcel',
-	savePhysicalExam: '/api/workorder/savePhysicalExam',
-	saveNewBorn: '/api/workorder/saveNewBorn',
-	savePostpartum: '/api/workorder/savePostpartum',
+	getItemInfoById: config.api + '/workorder/getItemInfoById',
+	saveSign: config.api + '/workorder/saveSign',
+	uploadExcel: config.api + '/callCenter/resolveExcel',
+	savePhysicalExam: config.api + '/workorder/savePhysicalExam',
+	saveNewBorn: config.api + '/workorder/saveNewBorn',
+	savePostpartum: config.api + '/workorder/savePostpartum',
 };

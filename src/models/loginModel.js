@@ -39,7 +39,7 @@ export default {
           let user = data.entity;
           user.userType = config.userType.doctor;
           storeage.set( config.local.user, user );
-          yield put( { type: action.app_init, payload: user } );
+          yield put( { type: fun.fuse( model.app, action.app_init ), payload: user } );
           yield put( routerRedux.push( urlMap.index ) );
         }
       }

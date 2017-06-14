@@ -1,4 +1,5 @@
 module.exports = {
+	api: '/api',
 	debug: true,
 	PAGE_SIZE: 3,
 	name: '客服工单系统',
