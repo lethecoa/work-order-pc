@@ -11,6 +11,9 @@ module.exports = {
 		labelCol: { span: 4 },
 		wrapperCol: { span: 12 }
 	},
+	userType: {
+		doctor, worker
+	},
 	/**
  	* 根据委托单名称定义表头的显示项
  	*/
