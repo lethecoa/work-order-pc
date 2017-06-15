@@ -18,11 +18,11 @@ export default {
 		*checkLogin( {}, { call, put } ) {
 			let user = storeage.get( config.local.user );
 			fun.print( user, '存储在浏览器内的user数据' );
-			if ( !user ) {
-				yield put( routerRedux.push( urlMap.login ) );
+			if ( user && user.userType === config.userType.doctor ) {
+				yield put( { type: action.app_init, payload: user } );
 			}
 			else {
-				yield put( { type: action.app_init, payload: user } );
+				yield put( routerRedux.push( urlMap.login ) );
 			}
 		},
 		*logout( {}, { put } ) {
@@ -39,8 +39,17 @@ export default {
 		}
 	},
 	subscriptions: {
-		setup( { dispatch } ) {
-			dispatch( { type: action.checkLogin } );
-		}
+		setup ( { dispatch, history } ) {
+			history.listen( ( { pathname, query } ) => {
+				if ( pathname === '/orderList' ) {
+					let user = { userType: config.userType.worker };
+					user = Object.assign( {}, user, query );
+					storeage.set( config.local.user, user );
+					dispatch( { type: action.app_init, payload: user } );
+				} else if ( pathname !== '/login' ) {
+					dispatch( { type: action.checkLogin } );
+				}
+			} )
+		},
 	},
 };
