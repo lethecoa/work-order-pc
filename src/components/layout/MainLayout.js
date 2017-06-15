@@ -1,28 +1,28 @@
 import React from 'react';
+import { Layout } from 'antd';
 import styles from './MainLayout.css';
 import Header from './Header';
 import Sidebar from './Sidebar'
 import { fun } from '../../common';
 
+const { Content } = Layout;
 const moudleName = '主框架(MainLayout)';
 
-class MainLayout extends React.Component {
-  render() {
-    return (
-      <div className={styles.normal}>
-        <Header user={this.props.user} dispatch={this.props.dispatch} />
+function MainLayout( { dispatch, children, user } ) {
+  fun.print( user, 'user', moudleName );
+  return (
+    <Layout className={styles.normal}>
+      <Header user={user} dispatch={dispatch} />
+      <Layout>
         <div className={styles.content}>
           <Sidebar></Sidebar>
-          <div className={styles.main}>
-            {this.props.children}
-          </div>
+          <Content className={styles.main}>
+            {children}
+          </Content>
         </div>
-      </div>
-    );
-  }
-  componentDidMount() {
-    console.log( 'componentDidMount' );
-  }
+      </Layout>
+    </Layout>
+  );
 }
 
 export default MainLayout;
