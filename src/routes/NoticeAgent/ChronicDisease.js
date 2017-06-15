@@ -13,6 +13,7 @@ const RangePicker = DatePicker.RangePicker;
 function ChronicDisease( { dispatch, loading, user, form,
   form: { getFieldDecorator, validateFieldsAndScroll, setFieldsValue } } ) {
   let residentInfoTable;
+  let disabled = false;
   // fun.print( '1212', '', moudleName );
   const formItemLayout = {
     labelCol: { span: 4 },
@@ -102,7 +103,8 @@ function ChronicDisease( { dispatch, loading, user, form,
           </FormItem>
         </Form>
       </div>
-      <ResidentInfoTable name={modular.chronicDisease.name} ref={e => ( residentInfoTable = e )} />
+      <ResidentInfoTable name={modular.chronicDisease.name} userType="worker"
+        disabled={disabled} ref={e => ( residentInfoTable = e )} />
       <div className={styles.submit}>
         <Button size="large" type="primary" onClick={confirmOrder}>提交我的委托单信息</Button></div>
     </div>
@@ -111,7 +113,9 @@ function ChronicDisease( { dispatch, loading, user, form,
 
 function mapStateToProps( state ) {
   return {
+    ...state,
     user: state.appModel.user,
+    loading: state.loading.models.appModel,
   };
 }
 

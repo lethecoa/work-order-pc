@@ -1,4 +1,5 @@
 module.exports = {
+	ver: '1.03',
 	api: '/api',
 	debug: true,
 	PAGE_SIZE: 3,
