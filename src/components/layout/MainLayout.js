@@ -5,21 +5,23 @@ import Header from './Header';
 import Sidebar from './Sidebar'
 import { fun } from '../../common';
 
-const { Content } = Layout;
+const { Content, Sider } = Layout;
 const moudleName = '主框架(MainLayout)';
 
 function MainLayout( { dispatch, children, user } ) {
   fun.print( user, 'user', moudleName );
   return (
-    <Layout className={styles.normal}>
+    <Layout>
       <Header user={user} dispatch={dispatch} />
       <Layout>
-        <div className={styles.content}>
-          <Sidebar></Sidebar>
-          <Content className={styles.main}>
+        <Sider className={styles.sider} width={240}>
+          <Sidebar />
+        </Sider>
+        <Layout className={styles.main}>
+          <Content>
             {children}
           </Content>
-        </div>
+        </Layout>
       </Layout>
     </Layout>
   );
