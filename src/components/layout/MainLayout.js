@@ -6,19 +6,23 @@ import { fun } from '../../common';
 
 const moudleName = '主框架(MainLayout)';
 
-function MainLayout( { dispatch, children, user } ) {
-  fun.print( user, 'user', moudleName );
-  return (
-    <div className={styles.normal}>
-      <Header user={user} dispatch={dispatch} />
-      <div className={styles.content}>
-        <Sidebar></Sidebar>
-        <div className={styles.main}>
-          {children}
+class MainLayout extends React.Component {
+  render() {
+    return (
+      <div className={styles.normal}>
+        <Header user={user} dispatch={dispatch} />
+        <div className={styles.content}>
+          <Sidebar></Sidebar>
+          <div className={styles.main}>
+            {children}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+  componentDidMount() {
+    console.log( 'componentDidMount' );
+  }
 }
 
 export default MainLayout;
