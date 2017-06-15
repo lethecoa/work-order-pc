@@ -10,11 +10,11 @@ class MainLayout extends React.Component {
   render() {
     return (
       <div className={styles.normal}>
-        <Header user={user} dispatch={dispatch} />
+        <Header user={this.props.user} dispatch={this.props.dispatch} />
         <div className={styles.content}>
           <Sidebar></Sidebar>
           <div className={styles.main}>
-            {children}
+            {this.props.children}
           </div>
         </div>
       </div>
