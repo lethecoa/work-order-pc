@@ -22,7 +22,9 @@ module.exports = {
 	 */
 	signFamily: {
 		url: 'signFamily', name: 'signFamily', cn: '签约家庭', ritRef: 'dljmqy',
-		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ],
+		ritWorker: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel,
+			config.ritField.present, config.ritField.booking ]
 	},
 	/**
 	 * 预约代理
