@@ -130,7 +130,7 @@ const mapDispatchToProps = ( dispatch ) => {
 			dispatch( { type: fun.fuse( model.noticeAgent, action.NA_savePolicy ), payload: values } );
 		},
 		changeConfirmState: () => {
-			dispatch( { type: fun.fuse( model.orderModel, action.order_changeConfirmState ) } );
+			dispatch( { type: fun.fuse( model.order, action.order_changeConfirmState ) } );
 		},
 		showModal: ( e ) => {
 			e.preventDefault();

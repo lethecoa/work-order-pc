@@ -1,7 +1,7 @@
 import {action, model} from '../common';
 
 export default {
-	namespace: model.orderModel,
+	namespace: model.order,
 	state: {
 		currentStep: 0,
 		display: 'none',

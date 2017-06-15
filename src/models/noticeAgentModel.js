@@ -10,7 +10,7 @@ export default {
 			fun.print( payload, 'savePolicy', model.noticeAgent );
 			const data = yield call( savePolicy, payload.data );
 			payload.fun( data );
-			yield put( { type: fun.fuse( model.orderModel, action.order_changeSubmitSate ) } );
+			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},
 	},
 	subscriptions: {},

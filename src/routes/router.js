@@ -197,6 +197,7 @@ function RouterConfig( { history, app } ) {
 			indexRoute: {
 				getComponent( nextState, cb ) {
 					require.ensure( [], ( require ) => {
+						registerModel( app, require( '../models/workerModel' ) );
 						cb( null, require( './OrderList/OrderList' ) )
 					} );
 				},

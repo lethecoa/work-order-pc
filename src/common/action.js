@@ -16,4 +16,5 @@ module.exports = {
 	BA_saveNewBorn: 'saveNewBorn',
 	BA_savePostpartum: 'savePostpartum',
 	NA_savePolicy: 'savePolicy',
+	OL_getOrders:'getOrders',
 };

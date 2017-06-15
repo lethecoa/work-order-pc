@@ -10,4 +10,5 @@ module.exports = {
 	saveNewBorn: config.api + '/workorder/saveNewBorn',
 	savePostpartum: config.api + '/workorder/savePostpartum',
 	savePolicy: config.api + '/workorder/savePolicy',
+	getOrders: config.api + '/callCenter/getOrders',
 };

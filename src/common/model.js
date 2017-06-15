@@ -1,7 +1,8 @@
 module.exports = {
 	app: 'appModel',
 	login: 'loginModel',
-	orderModel: 'orderModel',
+	order: 'orderModel',
+	worker: 'workerModel',
 	bookingAgent: 'bookingAgentModel',
 	chronicDisease: 'chronicDiseaseModel',
 	noticeAgent: 'noticeAgentModel',
