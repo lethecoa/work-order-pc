@@ -20,7 +20,7 @@ class CarryMaterial extends React.Component {
     };
   }
   componentWillReceiveProps( nextProps ) {
-    if ( 'value' in nextProps ) {
+    if ( 'value' in nextProps && nextProps[ 'value' ] !== undefined ) {
       const value = nextProps.value;
       this.setState( value );
     }
@@ -45,7 +45,7 @@ class CarryMaterial extends React.Component {
   render() {
     return (
       <CheckboxGroup options={materialOptions} onChange={this.selectOne}
-        value={this.state.valueList} disabled={this.props.disabled}/>
+        value={this.state.valueList} disabled={this.props.disabled} />
     )
   }
 }
