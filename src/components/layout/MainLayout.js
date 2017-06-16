@@ -11,7 +11,7 @@ const moudleName = '主框架(MainLayout)';
 function MainLayout( { dispatch, children, user } ) {
   fun.print( user, 'user', moudleName );
   return (
-    <Layout>
+    <Layout style={{ height: '100%' }}>
       <Header user={user} dispatch={dispatch} />
       <Layout>
         <Sider className={styles.sider} width={240}>
