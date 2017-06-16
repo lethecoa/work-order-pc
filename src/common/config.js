@@ -1,6 +1,7 @@
 module.exports = {
 	ver: '1.03',
 	api: '/api',
+	tpl: '/tpl/',
 	debug: true,
 	PAGE_SIZE: 3,
 	name: '客服工单系统',
@@ -21,7 +22,7 @@ module.exports = {
  	*/
 	ritField: {
 		key: 'key', name: 'name', sex: 'sex', birthday: 'birthday', tel: 'tell', present: 'present',
-		disease: 'disease', cardDate: 'cardDate', drugs: 'drugs', notice: 'notice', operation: 'operation',
+		disease: 'relatedDiseases', diseaseCase: 'diseaseSituation', cardDate: 'cardDate', drugs: 'drugs', notice: 'notice', operation: 'operation',
 		booking: 'booking', remark: 'remark'
 	}
 }

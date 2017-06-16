@@ -11,4 +11,6 @@ module.exports = {
 	savePostpartum: config.api + '/workorder/savePostpartum',
 	savePolicy: config.api + '/workorder/savePolicy',
 	getOrders: config.api + '/callCenter/getOrders',
+	/** 查询委托单明细 */
+	getOrderDetail: config.api + '/callCenter/getOrderDetail',
 };

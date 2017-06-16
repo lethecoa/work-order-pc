@@ -50,6 +50,7 @@ module.exports = {
 	 */
 	chronicDisease: {
 		url: 'chronicDisease', name: 'chronicDisease', cn: '慢性病随访通知', ritRef: 'mbsftz',
+		tpl: config.tpl + 'chronicDisease.xls',
 		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ],
 		ritWorker: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel,
 		config.ritField.present, config.ritField.booking, config.ritField.operation ]
