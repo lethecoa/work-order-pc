@@ -11,20 +11,12 @@ const uploadError = Symbol( 'uploadError' );
 const uploadSuccess = Symbol( 'uploadSuccess' );
 const moduleName = '居民信息表控件(ResidentInfoTable)';
 
-// 默认数据
-const data = [
-  { key: 1, name: '张三', sex: '男', birthday: '2000-10-10', tell: '18864485551' },
-  { key: 2, name: '李四', sex: '女', birthday: '1998-05-16', tell: '13951775012' },
-  { key: 3, name: '王五', sex: '男', birthday: '1986-09-03', tell: '13512542197' },
-];
-
 class ResidentInfoTable extends React.Component {
   constructor( props ) {
     super( props );
-    fun.print( props );
     this.state = {
       ritRef: modular[ props.name ][ 'ritRef' ],
-      infoData: data,
+      infoData: this.props.data,
       disabled: props.disabled,
       show: props.userType === config.userType.doctor ? '' : 'hide',
     }
@@ -59,7 +51,8 @@ class ResidentInfoTable extends React.Component {
    * 下载excel模版
    */
   [ download ] = () => {
-    this.refs.ifile.src = '/tpl/' + this.props.name + '.xlsx';
+    fun.print( this.refs.ifile );
+    this.refs.ifile.src = modular[ this.props.name ].tpl;
   }
   /**
    * 读取excel数据
@@ -71,6 +64,7 @@ class ResidentInfoTable extends React.Component {
       fun.print( res.entity, '读取Excel完成', moduleName );
       if ( res.success ) {
         this.setState( { infoData: res.entity.rows } );
+        // this.refs.infoTable.dataSource = res.entity.rows;
         this[ uploadSuccess ]();
       } else {
         this[ uploadError ]();
@@ -98,9 +92,14 @@ class ResidentInfoTable extends React.Component {
           居民信息表样本
         </div>
         <InfoTable name={this.props.name} dataSource={this.state.infoData}
+          onSave={this.props.onSave} onSubmit={this.props.onSubmit}
           userType={this.props.userType} ref="infoTable" />
       </div>
     );
+  }
+
+  componentWillReceiveProps( nextProps ) {
+    console.log( 'componentWillReceiveProps', nextProps )
   }
 }
 

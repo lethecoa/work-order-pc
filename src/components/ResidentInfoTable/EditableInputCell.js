@@ -1,50 +1,58 @@
 import { Input } from 'antd';
+import { config, fun } from '../../common';
 
 class EditableInputCell extends React.Component {
-  state = {
-    value: this.props.value,
-    editable: this.props.editable || false,
+  constructor( props ) {
+    super( props );
+    this.cacheValue = '';
+    this.state = {
+      name: props.name,
+      value: props.value,
+      myStatus: props.myStatus || config.ritStatus.general
+    }
   }
+
   componentWillReceiveProps( nextProps ) {
-    if ( nextProps.editable !== this.state.editable ) {
-      this.setState( { editable: nextProps.editable } );
-      if ( nextProps.editable ) {
+    // console.log( 'componentWillReceiveProps', nextProps )
+    if ( nextProps.myStatus !== this.state.myStatus ) {
+      if ( nextProps.myStatus === config.ritStatus.general ) {
+        this.setState( { myStatus: nextProps.myStatus } );
+        this.props.onChange( this.state.value );
         this.cacheValue = this.state.value;
       }
-    }
-    if ( nextProps.status && nextProps.status !== this.props.status ) {
-      if ( nextProps.status === 'save' ) {
-        this.props.onChange( this.state.value );
-      } else if ( nextProps.status === 'cancel' ) {
-        this.setState( { value: this.cacheValue } );
+      else if ( nextProps.myStatus === config.ritStatus.editing ) {
+        this.setState( { myStatus: nextProps.myStatus, value: nextProps.value } );
+      }
+      else {
+        this.setState( { myStatus: nextProps.myStatus, value: this.cacheValue } );
         this.props.onChange( this.cacheValue );
       }
     }
   }
+
   shouldComponentUpdate( nextProps, nextState ) {
-    return nextProps.editable !== this.state.editable ||
+    return nextProps.myStatus !== this.state.myStatus ||
       nextState.value !== this.state.value;
   }
+
   handleChange( e ) {
     const value = e.target.value;
     this.setState( { value } );
   }
   render() {
-    const { value, editable } = this.state;
+    const { myStatus, value } = this.state;
+    // fun.print( myStatus, 'render', this.state.name );
     return (
       <div>
         {
-          editable ?
+          myStatus === config.ritStatus.editing ?
             <div>
               <Input
                 value={value} size="small"
                 onChange={e => this.handleChange( e )}
               />
             </div>
-            :
-            <div>
-              {value.toString() || ' '}
-            </div>
+            : value || ''
         }
       </div>
     );
