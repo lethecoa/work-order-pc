@@ -13,14 +13,13 @@ module.exports = {
 	/** 表单布局 */
 	formItemLayout: { labelCol: { span: 4 }, wrapperCol: { span: 12 } },
 	/** 用户类型 */
-	userType: {
-		doctor: 'doctor', worker: 'worker'
-	},
-	/** 根据委托单名称定义表头的显示项	*/
+	userType: { doctor: 'doctor', worker: 'worker' },
+	/** “居民信息控件”单元格的编辑模式 */
+	ritStatus: { general: 'general', editing: 'editing' },
+	/** 根据委托单名称定义“居民信息控件”表头的显示项	*/
 	ritField: {
-		key: 'key', name: 'name', sex: 'sex', birthday: 'birthday', tel: 'tel',
+		name: 'name', sex: 'sex', birthday: 'birthday', tel: 'tel', present: 'isOnScene', visit: 'isInterview',
 		disease: 'relatedDiseases', diseaseCase: 'diseaseSituation', cardDate: 'cardDate', drugs: 'drugs',
-		notice: 'notice', operation: 'operation', booking: 'booking',
-		present: 'isOnScene', visit: 'isInterview', remark: 'remark',
+		notice: 'notice', operation: 'operation', booking: 'booking', remark: 'remark',
 	}
 }
