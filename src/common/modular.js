@@ -1,8 +1,6 @@
 import config from './config';
 
 const root = '/';
-const order = 'order/';
-const worker = 'worker';
 
 /**
  * url：路由对应的访问路径
@@ -17,6 +15,7 @@ module.exports = {
 	 */
 	index: { url: root, name: 'IndexPage', cn: '首页' },
 	login: root + 'login',
+	worker: root + 'worker',
 	/**
 	 * 签约家庭
 	 */
@@ -57,7 +56,9 @@ module.exports = {
 	},
 	newestPolicy: {
 		url: 'newestPolicy', name: 'newestPolicy', cn: '最新政策通知', ritRef: 'zxzctz',
-		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ]
+		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ],
+		ritWorker: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel,
+			config.ritField.remark, config.ritField.operation ]
 	},
 	newestActivity: {
 		url: 'newestActivity', name: 'newestActivity', cn: '最新活动通知', ritRef: 'zxhdtz',
