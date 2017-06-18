@@ -122,7 +122,7 @@ class InfoTable extends React.Component {
   constructor( props ) {
     super( props );
     fun.printLoader( moduleName );
-    this.initData();
+    this.initData( props.data );
     let columnConfig = props.userType === config.userType.doctor ?
       modular[ props.name ][ 'ritDoctor' ] : modular[ props.name ][ 'ritWorker' ];
     this.columns = this.getColums( columnConfig );
@@ -145,21 +145,23 @@ class InfoTable extends React.Component {
   /**
    * 初始化数据，将可编辑的字段改为 object 类型
    */
-  initData = () => {
-    this.props.dataSource.forEach( function ( item, index, arr ) {
-      let obj = arr[ index ];
-      obj.myStatus = config.ritStatus.general;
-      // 监听数量，代表每一列有多少个可编辑单元格，
-      // 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
-      obj.monitor = 0;
+  initData = ( data ) => {
+    if ( data !== null && data.length > 0 ) {
+      data.forEach( function ( item, index, arr ) {
+        let obj = arr[ index ];
+        obj.myStatus = config.ritStatus.general;
+        // 监听数量，代表每一列有多少个可编辑单元格，
+        // 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
+        obj.monitor = 0;
 
-      if ( !obj.hasOwnProperty( remark ) ) {
-        obj[ remark ] = '';
-      }
-      if ( !obj.hasOwnProperty( present ) ) {
-        obj[ present ] = '0';
-      }
-    } );
+        if ( !obj.hasOwnProperty( remark ) ) {
+          obj[ remark ] = '';
+        }
+        if ( !obj.hasOwnProperty( present ) ) {
+          obj[ present ] = '0';
+        }
+      } );
+    }
   }
   /**
    * 获取表头数据
