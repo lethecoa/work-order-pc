@@ -202,18 +202,17 @@ function RouterConfig( { history, app } ) {
 					} );
 				},
 			},
-			// childRoutes: [
-			// 	{
-			// 		path: modular.signFamily.url,
-			// 		name: modular.signFamily.name,
-			// 		getComponent( nextState, cb ) {
-			// 			require.ensure( [], ( require ) => {
-			// 				registerModel( app, require( '../models/bookingAgentModel' ) );
-			// 				cb( null, require( './SignFamily/SignFamily' ) );
-			// 			} );
-			// 		},
-			// 	},
-			// ]
+			childRoutes: [
+				{
+					path: modular.worker +modular.newestPolicy.ritRef,
+					getComponent( nextState, cb ) {
+						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
+							cb( null, require( './NoticeAgent/NewestPolicy' ) );
+						} );
+					},
+				},
+			]
 		},
 	];
 
