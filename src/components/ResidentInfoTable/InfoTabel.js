@@ -122,7 +122,7 @@ class InfoTable extends React.Component {
   constructor( props ) {
     super( props );
     fun.printLoader( moduleName );
-    this.initData( props.data );
+    this.initData( props.dataSource );
     let columnConfig = props.userType === config.userType.doctor ?
       modular[ props.name ][ 'ritDoctor' ] : modular[ props.name ][ 'ritWorker' ];
     this.columns = this.getColums( columnConfig );
