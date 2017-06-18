@@ -4,10 +4,12 @@ import { config, fun, modular } from '../../common';
 import styles from './InfoTable.less';
 import EditableInputCell from './EditableInputCell';
 import EditableRadioCell from './EditableRadioCell';
+import AppointmentCell from './AppointmentCell';
 
 const moduleName = '信息表控件(infoTable)';
 const RadioGroup = Radio.Group;
-const { name, sex, birthday, tel, cardDate, disease, drugs, present, remark, operation } = config.ritField;
+const { name, sex, birthday, tel, cardDate, disease, drugs, present,
+  remark, operation, visit, appointment } = config.ritField;
 const CALL_BACK_STATUS = { save: 'save', submit: 'submit' };
 /**
  * 用户信息表控件
@@ -63,12 +65,26 @@ class InfoTable extends React.Component {
       key: present,
       render: ( text, record, index ) => this.renderRadioCell( text, index, present )
     },
+    [ visit ]: {
+      title: '是否可访',
+      width: 120,
+      dataIndex: visit,
+      key: visit,
+      render: ( text, record, index ) => this.renderRadioCell( text, index, visit )
+    },
     [ remark ]: {
       title: '通知情况',
       width: 300,
       dataIndex: remark,
       key: remark,
       render: ( text, record, index ) => this.renderInputCell( text, index, remark )
+    },
+    [ appointment ]: {
+      title: '预约情况',
+      width: 120,
+      dataIndex: appointment,
+      key: appointment,
+      render: ( text, record, index ) => this.renderAppointmentCell( text, index, appointment )
     },
     [ operation ]: {
       title: '操作栏',
@@ -171,6 +187,14 @@ class InfoTable extends React.Component {
       value={value}
       onChange={( name, value ) => this.handleChange( name, key, index, value )}
       myStatus={myStatus}
+    /> );
+  }
+  /**
+   * 创建预约情况单元格（未完成）
+   */
+  renderAppointmentCell = ( value, index, key ) => {
+    return ( <AppointmentCell
+      name={key + '_appointment_' + index}
     /> );
   }
   /**

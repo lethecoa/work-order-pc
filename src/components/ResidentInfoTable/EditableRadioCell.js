@@ -4,6 +4,9 @@ import { config, fun } from '../../common';
 
 const RadioGroup = Radio.Group;
 
+/**
+ * 可编辑的 Radio 组件
+ */
 class EditableRadioCell extends BaseCell {
   constructor( props ) {
     super( props );
