@@ -20,6 +20,6 @@ module.exports = {
 	ritField: {
 		name: 'name', sex: 'sex', birthday: 'birthday', tel: 'tel', present: 'isOnScene', visit: 'isInterview',
 		disease: 'relatedDiseases', diseaseCase: 'diseaseSituation', cardDate: 'cardDate', drugs: 'drugs',
-		notice: 'notice', operation: 'operation', booking: 'booking', remark: 'remark', appointment: 'appointment'
+		notice: 'notice', operation: 'operation', booking: 'booking', remark: 'remark', followUp: 'followUp'
 	}
 }

@@ -53,7 +53,7 @@ module.exports = {
 		tpl: config.tpl + 'chronicDisease.xls',
 		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ],
 		ritWorker: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel,
-		config.ritField.present, config.ritField.appointment, config.ritField.remark, config.ritField.operation ]
+		config.ritField.present, config.ritField.followUp, config.ritField.remark, config.ritField.operation ]
 	},
 	newestPolicy: {
 		url: 'newestPolicy', name: 'newestPolicy', cn: '最新政策通知', ritRef: 'zxzctz',

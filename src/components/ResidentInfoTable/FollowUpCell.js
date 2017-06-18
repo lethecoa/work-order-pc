@@ -2,9 +2,9 @@ import React from 'react';
 import { config, fun } from '../../common';
 
 /**
- * 预约情况 组件
+ * 录入随访情况 组件
  */
-class AppointmentCell extends React.Component {
+class FollowUpCell extends React.Component {
   constructor( props ) {
     super( props );
     this.name = props.name;
@@ -16,9 +16,9 @@ class AppointmentCell extends React.Component {
 
   render() {
     return (
-      <a onClick={this.handlerClick}>填写预约情况</a>
+      <a onClick={this.handlerClick}>录入随访情况</a>
     );
   }
 }
 
-export default AppointmentCell;
+export default FollowUpCell;

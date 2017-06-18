@@ -4,12 +4,12 @@ import { config, fun, modular } from '../../common';
 import styles from './InfoTable.less';
 import EditableInputCell from './EditableInputCell';
 import EditableRadioCell from './EditableRadioCell';
-import AppointmentCell from './AppointmentCell';
+import FollowUpCell from './FollowUpCell';
 
 const moduleName = '信息表控件(infoTable)';
 const RadioGroup = Radio.Group;
 const { name, sex, birthday, tel, cardDate, disease, drugs, present,
-  remark, operation, visit, appointment } = config.ritField;
+  remark, operation, visit, followUp } = config.ritField;
 const CALL_BACK_STATUS = { save: 'save', submit: 'submit' };
 /**
  * 用户信息表控件
@@ -79,12 +79,12 @@ class InfoTable extends React.Component {
       key: remark,
       render: ( text, record, index ) => this.renderInputCell( text, index, remark )
     },
-    [ appointment ]: {
-      title: '预约情况',
+    [ followUp ]: {
+      title: '随访情况',
       width: 120,
-      dataIndex: appointment,
-      key: appointment,
-      render: ( text, record, index ) => this.renderAppointmentCell( text, index, appointment )
+      dataIndex: followUp,
+      key: followUp,
+      render: ( text, record, index ) => this.renderFollowUpCellCell( text, index, followUp )
     },
     [ operation ]: {
       title: '操作栏',
@@ -190,10 +190,10 @@ class InfoTable extends React.Component {
     /> );
   }
   /**
-   * 创建预约情况单元格（未完成）
+   * 创建随访情况单元格（未完成）
    */
-  renderAppointmentCell = ( value, index, key ) => {
-    return ( <AppointmentCell
+  renderFollowUpCellCell = ( value, index, key ) => {
+    return ( <FollowUpCell
       name={key + '_appointment_' + index}
     /> );
   }
