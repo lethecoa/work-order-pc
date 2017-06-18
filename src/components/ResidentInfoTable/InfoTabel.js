@@ -146,7 +146,7 @@ class InfoTable extends React.Component {
    * 初始化数据，将可编辑的字段改为 object 类型
    */
   initData = ( data ) => {
-    if ( data !== null && data.length > 0 ) {
+    if ( typeof data !== 'undefined' && data.length > 0 ) {
       data.forEach( function ( item, index, arr ) {
         let obj = arr[ index ];
         obj.myStatus = config.ritStatus.general;
