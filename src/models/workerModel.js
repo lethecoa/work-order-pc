@@ -1,47 +1,71 @@
+import {routerRedux} from 'dva/router';
 import {fun, model, action} from '../common';
-import {getOrders} from '../services/workerService';
+import {getOrders, getOrderDetail} from '../services/workerService';
 
 export default {
 	namespace: model.worker,
 	state: {
-		pageSize: 10,
+		pagination: {
+			pageSize: 10,
+		},
 	},
 	reducers: {
-		save( state, { payload: { data: list, total, page } } ) {
-			return { ...state, list, total, page };
+		save( state, { payload: { list, total, pagination } } ) {
+			return { ...state, list, total, pagination };
+		},
+		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList } } ) {
+			return { ...state, currentData, serviceDetail, residentList };
 		},
 	},
 	effects: {
-		*getOrders( { payload: { page = 1, status = 1, serverPackName = 0, dateStart = null, dateEnd = null } }, { call, put, select } ) {
-			const pageSize = yield select( state => state.workerModel.pageSize );
+		*getOrders( { payload: { page = 1, status = "1", serverPackName = "0", dateStart = undefined, dateEnd = undefined } }, { call, put, select } ) {
+			const pagination = yield select( state => state.workerModel.pagination );
 			const data = yield call( getOrders, {
 				dateStart: dateStart,
 				dateEnd: dateEnd,
-				pageSize: pageSize,
+				pageSize: pagination.pageSize,
 				serverPackName: serverPackName,
 				pageNumber: page,
 				status: status
 			} );
-			console.log( data );
+			pagination.page = parseInt( page, 10 );
+			pagination.status = status;
+			pagination.serverPackName = serverPackName;
+			pagination.dateStart = dateStart;
+			pagination.dateEnd = dateEnd;
 			yield put( {
 				type: 'save',
 				payload: {
-					data: data.entity.rows,
+					list: data.entity.rows,
 					total: parseInt( data.entity.total, 10 ),
-					page: parseInt( page, 10 ),
+					pagination: pagination,
 				},
 			} );
 		},
-		*pageChange( { payload: { page = 1 } } ){
+		*getOrderDetail( { payload: { status = 1, order, url, orderId } }, { put, call, select } ){
+			const currentData = order ? order : yield select( state => state.workerModel.currentData );
+			const data = yield call( getOrderDetail, {
+				orderId: order ? order.orderId : orderId,
+				status: status,
+			} );
+			yield put( {
+				type: 'saveCurrentOrder',
+				payload: {
+					currentData: currentData,
+					serviceDetail: data.entity.serviceDetail,
+					residentList: data.entity.residentList,
+				},
+			} );
+			yield put( routerRedux.push( url ) );
 
-		},
+		}
 	},
 	subscriptions: {
 		setup ( { dispatch, history } ) {
 			history.listen( ( { pathname, query } ) => {
 				fun.print( query, 'query', model.worker );
 				if ( pathname === '/orderList' ) {
-					dispatch( { type: action.OL_getOrders, payload: query, } )
+					dispatch( { type: action.worker_getOrders, payload: query, } )
 				}
 			} )
 		},
