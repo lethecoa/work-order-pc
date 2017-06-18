@@ -5,7 +5,8 @@ module.exports = {
 	logout: 'logout',
 	login_setInfo: 'setInfo',
 	APP_getItemPrice: 'getItemPrice',
-	order_init: 'initState',
+	order_init: 'initDoctor',
+	order_initWorker: 'initWorker',
 	order_changeConfirmState: 'changeConfirmState',
 	order_changeSubmitSate: 'changeSubmitSate',
 	BA_init: 'intiState',
@@ -16,5 +17,6 @@ module.exports = {
 	BA_saveNewBorn: 'saveNewBorn',
 	BA_savePostpartum: 'savePostpartum',
 	NA_savePolicy: 'savePolicy',
-	OL_getOrders:'getOrders',
+	worker_getOrders: 'getOrders',
+	worker_getOrderDetail: 'getOrderDetail',
 };
