@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 import {Form, Select, DatePicker, Button, Table, Pagination, Radio} from 'antd';
+import moment from 'moment';
 import {action, model, fun, config, modular} from '../../common';
 import styles from './OrderList.less';
 
@@ -54,7 +55,7 @@ const OrderList = ( {
 } ) => {
 
 	const { resetFields, validateFieldsAndScroll, getFieldDecorator } = form;
-	const { pageSize, list: dataSource, page, total } = workerModel;
+	const { pagination, list: dataSource, total } = workerModel;
 
 	const handlerSubmit = ( e ) => {
 		e.preventDefault();
@@ -82,7 +83,7 @@ const OrderList = ( {
 			<Form className={styles.form} layout="inline" onSubmit={handlerSubmit}>
 				<FormItem>
 					{getFieldDecorator( 'status', {
-						initialValue: '1',
+						initialValue: pagination.status,
 					} )( <RadioGroup className={styles.tab} onChange={handlerRadioChange}>
 						<RadioButton value="1">待处理</RadioButton>
 						<RadioButton value="2">已处理</RadioButton>
@@ -90,7 +91,7 @@ const OrderList = ( {
 				</FormItem>
 				<FormItem>
 					{getFieldDecorator( 'serverPackName', {
-						initialValue: '0',
+						initialValue: pagination.serverPackName,
 					} )( <Select style={{ width: 210 }}>
 						<Option value="0">所有委托单</Option>
 						<Option value="1">家庭医生签约（云医助）</Option>
@@ -102,7 +103,11 @@ const OrderList = ( {
 					</Select> )}
 				</FormItem>
 				<FormItem>
-					{getFieldDecorator( 'allowDate', {} )( <RangePicker showTime format="YYYY-MM-DD"/> )}
+					{getFieldDecorator( 'allowDate', {
+						initialValue: [
+							pagination.dateStart ? moment( pagination.dateStart, 'YYYY-MM-DD' ) : undefined,
+							pagination.dateEnd ? moment( pagination.dateEnd, 'YYYY-MM-DD' ) : undefined ],
+					} )( <RangePicker showTime format="YYYY-MM-DD"/> )}
 				</FormItem>
 				<Button size="large" type="primary" htmlType="submit">查询</Button>
 			</Form>
@@ -119,11 +124,10 @@ const OrderList = ( {
 			<Pagination
 				className="ant-table-pagination"
 				total={total}
-				current={page}
-				pageSize={pageSize}
+				current={pagination.page}
+				pageSize={pagination.pageSize}
 				onChange={handlerPageChange}
 			/>
-
 		</div>
 	);
 };
@@ -139,21 +143,26 @@ const mapStateToProps = ( state ) => {
 const mapDispatchToProps = ( dispatch ) => {
 	return {
 		search: ( values ) => {
-			if ( values.allowDate ) {
+			if ( values.allowDate[ 0 ] && values.allowDate[ 1 ] ) {
 				values.dateStart = values.allowDate[ 0 ].format( 'YYYY-MM-DD' );
 				values.dateEnd = values.allowDate[ 1 ].format( 'YYYY-MM-DD' );
 			}
 			delete(values[ "allowDate" ]);
-			dispatch( { type: fun.fuse( model.worker, action.OL_getOrders ), payload: values } );
+			dispatch( { type: fun.fuse( model.worker, action.worker_getOrders ), payload: values } );
 		},
 		handlerRowClick: ( record, index ) => {
-			console.log( record )
+			console.log(modular.worker + record.itemId);
+			dispatch( {
+				type: fun.fuse( model.worker, action.worker_getOrderDetail ),
+				payload: { order: record, url: modular.worker + record.itemId }
+			} );
+			//dispatch( routerRedux.push( '/workerSignFamily' ) );
 		},
 		onRadioChange: ( value ) => {
-			dispatch( { type: fun.fuse( model.worker, action.OL_getOrders ), payload: { status: value } } );
+			dispatch( { type: fun.fuse( model.worker, action.worker_getOrders ), payload: { status: value } } );
 		}
 	};
-}
+};
 
 export default connect( mapStateToProps, mapDispatchToProps )( Form.create()( OrderList ) );
 

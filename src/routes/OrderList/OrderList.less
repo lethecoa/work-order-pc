@@ -2,8 +2,15 @@
   margin: 10px;
   width: calc(~'100% - 20px');
   display: inline-table;
-  th {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  thead tr th {
     background: #e7f0fa!important;
+    text-align: center;
+  }
+  td{
+    cursor: pointer;
   }
 }
 .form{
