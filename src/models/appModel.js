@@ -46,7 +46,7 @@ export default {
 					user = Object.assign( {}, user, query );
 					storeage.set( config.local.user, user );
 					dispatch( { type: action.app_init, payload: user } );
-				} else if ( pathname !== '/login' ) {
+				} else if ( pathname !== '/login' && pathname.indexOf( 'worker' ) < 0 ) {
 					dispatch( { type: action.checkLogin } );
 				}
 			} )
