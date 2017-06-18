@@ -149,7 +149,7 @@ function ChronicDisease( { dispatch, loading, user, form,
           </FormItem>
         </Form>
       </div>
-      <ResidentInfoTable name={modular.chronicDisease.name} userType="worker"
+      <ResidentInfoTable name={modular.chronicDisease.name} userType="worker" monitor={2}
         data={data} onSave={e => saveRow( e )} onSubmit={e => submitRow( e )}
         disabled={disabled} ref={e => ( residentInfoTable = e )} />
       <div className={styles.submit}>

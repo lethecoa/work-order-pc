@@ -11,6 +11,15 @@ const uploadError = Symbol( 'uploadError' );
 const uploadSuccess = Symbol( 'uploadSuccess' );
 const moduleName = '居民信息表控件(ResidentInfoTable)';
 
+/**
+ * 用户信息表控件，必须提供以下几个参数
+ * @name 引用它的父级控件名称
+ * @userType 用户类型
+ * @onSave 保存时的回调函数，
+ * @onSubmit 提交时的回调函数，
+ * @monitor 表格一行内有几个可编辑的单元格项
+ * @disabled 控制上传excel和下载excel模板按钮是否可见
+ */
 class ResidentInfoTable extends React.Component {
   constructor( props ) {
     super( props );
@@ -91,7 +100,7 @@ class ResidentInfoTable extends React.Component {
           </div>
           居民信息表样本
         </div>
-        <InfoTable name={this.props.name} dataSource={this.state.infoData}
+        <InfoTable name={this.props.name} dataSource={this.state.infoData} monitor={this.props.monitor}
           onSave={this.props.onSave} onSubmit={this.props.onSubmit}
           userType={this.props.userType} ref="infoTable" />
       </div>

@@ -3,8 +3,8 @@ import { Table, Pagination, Radio, Popconfirm } from 'antd';
 import { config, fun, modular } from '../../common';
 import styles from './InfoTable.less';
 import EditableInputCell from './EditableInputCell';
+import EditableRadioCell from './EditableRadioCell';
 
-const getTableProp = Symbol( 'getTableProp' );
 const moduleName = '信息表控件(infoTable)';
 const RadioGroup = Radio.Group;
 const { name, sex, birthday, tel, cardDate, disease, drugs, present, remark, operation } = config.ritField;
@@ -61,19 +61,14 @@ class InfoTable extends React.Component {
       width: 120,
       dataIndex: present,
       key: present,
-      render: ( text, record, index ) => (
-        <RadioGroup value={text}>
-          <Radio value={1}>是</Radio>
-          <Radio value={2}>否</Radio>
-        </RadioGroup>
-      )
+      render: ( text, record, index ) => this.renderRadioCell( text, index, present )
     },
     [ remark ]: {
       title: '通知情况',
       width: 300,
       dataIndex: remark,
       key: remark,
-      render: ( item, record, index ) => this.renderInputCell( item, index, remark )
+      render: ( text, record, index ) => this.renderInputCell( text, index, remark )
     },
     [ operation ]: {
       title: '操作栏',
@@ -115,6 +110,7 @@ class InfoTable extends React.Component {
     let columnConfig = props.userType === config.userType.doctor ?
       modular[ props.name ][ 'ritDoctor' ] : modular[ props.name ][ 'ritWorker' ];
     this.columns = this.getColums( columnConfig );
+    this.monitor = props.monitor;
     this.state = {
       data: props.dataSource,
       pagination: {
@@ -126,6 +122,7 @@ class InfoTable extends React.Component {
       },
       saveCallback: this.props.onSave,
       submitCallback: this.props.onSubmit,
+      /** 用户操作的类型：保存或者提交 */
       callBackStatus: '',
     }
   }
@@ -136,12 +133,15 @@ class InfoTable extends React.Component {
     this.props.dataSource.forEach( function ( item, index, arr ) {
       let obj = arr[ index ];
       obj.myStatus = config.ritStatus.general;
+      // 监听数量，代表每一列有多少个可编辑单元格，
+      // 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
+      obj.monitor = 0;
 
       if ( !obj.hasOwnProperty( remark ) ) {
         obj[ remark ] = '';
       }
       if ( !obj.hasOwnProperty( present ) ) {
-        obj[ present ] = '';
+        obj[ present ] = '0';
       }
     } );
   }
@@ -161,30 +161,48 @@ class InfoTable extends React.Component {
     return this.state.data;
   }
   /**
- * 创建可编辑的 Input 单元格
- */
+   * 创建可编辑的 Input 单元格
+   */
   renderInputCell = ( value, index, key ) => {
     const { myStatus } = this.state.data[ index ];
 
     return ( <EditableInputCell
-      name={key + 'Cell_' + index}
+      name={key + '_input_' + index}
       value={value}
-      onChange={value => this.inputChange( key, index, value )}
+      onChange={( name, value ) => this.handleChange( name, key, index, value )}
+      myStatus={myStatus}
+    /> );
+  }
+  /**
+   * 创建可编辑的 Radio 单元格
+   */
+  renderRadioCell = ( value, index, key ) => {
+    const { myStatus } = this.state.data[ index ];
+
+    return ( <EditableRadioCell
+      name={key + '_radio_' + index}
+      value={value}
+      onChange={( name, value ) => this.handleChange( name, key, index, value )}
       myStatus={myStatus}
     /> );
   }
   /**
    * input组件的数据发生更改时
    */
-  inputChange = ( key, index, value ) => {
+  handleChange = ( name, key, index, value ) => {
     const { data, callBackStatus, saveCallback, submitCallback } = this.state;
-    if ( data[ index ][ key ] !== value ) {
-      data[ index ][ key ] = value.trim();
+    let item = data[ index ];
+    item.monitor--;
+    if ( item[ key ] !== value ) {
+      item[ key ] = value;
       this.setState( { data } );
-      if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) saveCallback( data[ index ] );
     }
-    if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) submitCallback( data[ index ] );
-    fun.print( this.state, 'inputChange' );
+    fun.print( value, 'handleChange', name );
+
+    if ( item.monitor <= 0 ) {
+      if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) saveCallback( item );
+      if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) submitCallback( data[ index ] );
+    }
   }
   /**
    * 点击编辑按钮
@@ -192,6 +210,7 @@ class InfoTable extends React.Component {
   edit = ( index ) => {
     const { data } = this.state;
     data[ index ][ 'myStatus' ] = config.ritStatus.editing;
+    data[ index ][ 'monitor' ] = this.monitor;
     this.setState( { data } );
   }
   /**
