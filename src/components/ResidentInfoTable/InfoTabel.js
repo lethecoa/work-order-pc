@@ -21,13 +21,13 @@ class InfoTable extends React.Component {
   allColumns = {
     [ name ]: {
       title: '姓名',
-      width: 100,
+      width: 60,
       dataIndex: name,
       key: name,
     },
     [ sex ]: {
       title: '性别',
-      width: 80,
+      width: 60,
       dataIndex: sex,
       key: sex,
     },
@@ -60,21 +60,21 @@ class InfoTable extends React.Component {
     },
     [ present ]: {
       title: '是否到场',
-      width: 120,
+      width: 150,
       dataIndex: present,
       key: present,
       render: ( text, record, index ) => this.renderRadioCell( text, index, present )
     },
     [ visit ]: {
       title: '是否可访',
-      width: 120,
+      width: 150,
       dataIndex: visit,
       key: visit,
       render: ( text, record, index ) => this.renderRadioCell( text, index, visit )
     },
     [ remark ]: {
       title: '通知情况',
-      width: 300,
+      width: 280,
       dataIndex: remark,
       key: remark,
       render: ( text, record, index ) => this.renderInputCell( text, index, remark )
@@ -88,6 +88,7 @@ class InfoTable extends React.Component {
     },
     [ operation ]: {
       title: '操作栏',
+      width: 160,
       dataIndex: operation,
       key: operation,
       render: ( text, record, index ) => {
