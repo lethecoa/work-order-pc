@@ -1,5 +1,6 @@
 import React from 'react';
 import {Row, Col, Form, DatePicker, Input} from 'antd';
+import moment from 'moment';
 import styles from './BaseInfo.less';
 
 function BaseInfo( props ) {
@@ -36,6 +37,7 @@ function BaseInfo( props ) {
 					<Col span={12}>
 						<FormItem {...formItemLayout} label="任务截止时间">
 							{getFieldDecorator( 'taskDeadlineDate', {
+								initialValue: props.taskDeadlineDate ? moment( props.taskDeadlineDate, 'YYYY-MM-DD' ) : undefined,
 								rules: [
 									{ required: true, message: '请选择截止日期！' },
 								],
