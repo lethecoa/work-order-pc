@@ -12,8 +12,8 @@ export default {
 		submitDisabled: false,
 	},
 	reducers: {
-		initState: ( state ) => {
-			console.log( '===orderModal_init===' );
+		initState: ( state, { payload: { currentData } } ) => {
+			console.log( '===initState===' );
 			return {
 				currentStep: 0,
 				display: 'none',
@@ -22,6 +22,15 @@ export default {
 				displayBack: 'block',
 				displayNew: 'none',
 				submitDisabled: false,
+				currentData,
+			}
+		},
+		initWorkerState: ( state, { payload: { currentData } } ) => {
+			console.log( '===initWorkerState===' );
+			return {
+				display: 'block',
+				disabled: true,
+				currentData,
 			}
 		},
 		changeConfirmState: ( state ) => {
@@ -43,11 +52,30 @@ export default {
 			}
 		}
 	},
-	effects: {},
+	effects: {
+		*initWorker( {}, { put, select } ){
+			const currentData = yield select( state => state.workerModel.currentData );
+			yield put( {
+				type: 'initWorkerState',
+				payload: {
+					currentData: currentData,
+				},
+			} );
+		},
+		*initDoctor( {}, { put, select } ){
+			const currentData = yield select( state => state.appModel.user );
+			yield put( {
+				type: 'initState',
+				payload: { currentData: currentData },
+			} );
+		}
+	},
 	subscriptions: {
 		setup ( { dispatch, history } ) {
 			history.listen( location => {
-				if ( location.pathname.indexOf( 'order' ) < 0 ) {
+				if ( location.pathname.indexOf( 'worker' ) >= 0 ) {
+					dispatch( { type: action.order_initWorker } );
+				} else if ( location.pathname !== '/orderList' ) {
 					dispatch( { type: action.order_init } );
 				}
 			} )
