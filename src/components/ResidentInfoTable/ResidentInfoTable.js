@@ -21,7 +21,7 @@ class ResidentInfoTable extends React.Component {
     super( props );
     this.state = {
       ritRef: modular[ props.name ][ 'ritRef' ],
-      infoData: props.data,
+      dataSource: props.data || [],
       disabled: props.disabled,
       show: props.userType === config.userType.doctor ? '' : 'hide',
     }
@@ -31,8 +31,8 @@ class ResidentInfoTable extends React.Component {
    * 获取用户信息表数据
    */
   getData = () => {
-    let data = this.state.infoData;
-    fun.print( data, 'infoData', moduleName );
+    let data = this.state.dataSource;
+    fun.print( data, 'dataSource', moduleName );
     return data;
   }
   // private function
@@ -64,7 +64,7 @@ class ResidentInfoTable extends React.Component {
       let res = info.file.response;
       fun.print( res.entity, '读取Excel完成', moduleName );
       if ( res.success ) {
-        this.setState( { infoData: res.entity.rows } );
+        this.setState( { dataSource: res.entity.rows } );
         this.uploadSuccess();
       } else {
         this.uploadError();
@@ -80,7 +80,7 @@ class ResidentInfoTable extends React.Component {
       <div className={styles.normal}>
         <div className={styles.title}>
           <div className={styles.button}>
-            <Button size="small" onClick={this.getData}>测试</Button>&nbsp;
+            <Button size="small" onClick={this.getData}>打印测试数据</Button>&nbsp;
             <Button size="small" disabled={this.props.disabled} onClick={this.download}
               icon="download" className={this.state.show}>下载该表格</Button>&nbsp;
             <Upload action={api.uploadExcel} onChange={this.upload}
@@ -90,20 +90,20 @@ class ResidentInfoTable extends React.Component {
           </div>
           居民信息表样本
         </div>
-        <InfoTable name={this.props.name} dataSource={this.state.infoData} monitor={this.props.monitor}
+        <InfoTable name={this.props.name} dataSource={this.state.dataSource} monitor={this.props.monitor}
           onSave={this.props.onSave} onSubmit={this.props.onSubmit} userType={this.props.userType} />
       </div>
     );
   }
 
   componentWillReceiveProps( nextProps ) {
-    if ( nextProps.data !== this.state.infoData ) {
-      this.setState( { infoData: nextProps.data } );
+    if ( nextProps.data !== this.state.dataSource ) {
+      this.setState( { dataSource: nextProps.data } );
     }
   }
 
   shouldComponentUpdate( nextProps, nextState ) {
-    return nextState.data !== this.state.infoData;
+    return nextState.dataSource !== this.state.dataSource;
   }
 
 }
