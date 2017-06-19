@@ -63,7 +63,7 @@ module.exports = {
 	},
 	newestActivity: {
 		url: 'newestActivity', name: 'newestActivity', cn: '最新活动通知', ritRef: 'zxhdtz',
-		model: model.noticeAgent, action: action.NA_savePolicy,
+		model: model.noticeAgent, action: action.NA_saveActivity,
 		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ],
 		ritWorker: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel,
 			config.ritField.present, config.ritField.remark, config.ritField.operation ]
