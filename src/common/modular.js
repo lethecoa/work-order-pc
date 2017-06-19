@@ -40,6 +40,9 @@ module.exports = {
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ],
 	},
+	workeryyjmqy: {
+		url: worker + 'yyjmqy', name: 'residentSign',
+	},
 	residentInspect: {
 		url: 'residentInspect', name: 'residentInspect', cn: '预约居民体检', ritRef: 'yyjmtj',
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
