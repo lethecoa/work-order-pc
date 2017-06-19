@@ -13,3 +13,10 @@ export async function getOrderDetail( data ) {
 		data
 	} )
 }
+
+export async function saveService( data ) {
+	return request( {
+		url: api.saveService,
+		data
+	} )
+}
