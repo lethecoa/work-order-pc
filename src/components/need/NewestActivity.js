@@ -12,7 +12,7 @@ function NewestActivity( props ) {
 
 	return (
 		<div className={styles.need}>
-			<div className={styles.title}>基本信息</div>
+			<div className={styles.title}>需求说明</div>
 			<div className={styles.form}>
 				<FormItem {...config.formItemLayout} label="是否确认居民可到场情况">
 					{getFieldDecorator( 'isOnSceneSituation', {

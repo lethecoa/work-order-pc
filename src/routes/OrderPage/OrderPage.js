@@ -3,7 +3,17 @@ import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 import {Spin, Row, Col, Form, Button, notification, Modal, Radio} from 'antd';
 import {action, model, fun, config, modular} from '../../common';
-import {OrderStep, BaseInfo, ResidentInfoTable, PayModal, NewestActivity, ResidentSign, ResidentInspect, Newborn} from '../../components';
+import {
+	OrderStep,
+	BaseInfo,
+	ResidentInfoTable,
+	PayModal,
+	NewestActivity,
+	ResidentSign,
+	ResidentInspect,
+	Newborn,
+	ChronicDisease
+} from '../../components';
 import styles from './OrderPage.less';
 
 const moduleName = 'orderPage';
@@ -98,7 +108,7 @@ const OrderPage = ( {
 		} );
 	};
 	/** 客服端-保存单条数据 */
-	const saveRow = ( row ) => {
+	const saveRow = ( index, row ) => {
 		orderData.residentList[ 0 ] = row;
 		let result = {
 			data: orderData,
@@ -108,7 +118,7 @@ const OrderPage = ( {
 
 	};
 	/** 客服端-提交单条数据 */
-	const submitRow = ( row ) => {
+	const submitRow = ( index, row ) => {
 		orderData.residentList[ 0 ] = row;
 		orderData.residentList[ 0 ].status = 2;
 		let result = {
@@ -177,7 +187,8 @@ const OrderPage = ( {
 					{path === 'workeryyxsfs' ? <Newborn disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'postpartum' ? <Newborn disabled={disabled} ref={e => ( need = e )}/> : ''}
 					{path === 'workeryychfs' ? <Newborn disabled={disabled} {...serviceDetail}/> : ''}
-
+					{path === 'chronicDisease' ? <ChronicDisease disabled={disabled} ref={e => ( need = e )} interviewSite={orgName}/> : ''}
+					{path === 'workermbsftz' ? <ChronicDisease disabled={disabled} {...serviceDetail}/> : ''}
 					<ResidentInfoTable name={modular[ path ].name} userType={userType} monitor={1}
 					                   data={dataList} onSave={e => saveRow( e )} onSubmit={e => submitRow( e )}
 					                   disabled={disabled} ref={e => ( residentInfoTable = e )}/>

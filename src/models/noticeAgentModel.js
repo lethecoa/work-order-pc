@@ -7,8 +7,14 @@ export default {
 	reducers: {},
 	effects: {
 		*saveChronic( { payload }, { call, put } ) {
-			fun.print( payload, 'saveChronic', model.noticeAgent );
-			const data = yield call( saveChronic, payload.data );
+			let values = payload.data;
+			values.interviewItem = values.interviewItem.join( ',' );
+			values.carryMaterial = values.carryMaterial.join( ',' );
+			values.interviewDateStart = values.allowDate[ 0 ];
+			values.interviewDateEnd = values.allowDate[ 1 ];
+			delete(values[ "allowDate" ]);
+			fun.print( values, 'saveChronic', model.noticeAgent );
+			const data = yield call( saveChronic, values );
 			payload.fun( data );
 			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},
