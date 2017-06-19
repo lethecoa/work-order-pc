@@ -87,7 +87,7 @@ function RouterConfig( { history, app } ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/noticeAgentModel' ) );
-							cb( null, require( './NoticeAgent/ChronicDisease' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
@@ -98,7 +98,7 @@ function RouterConfig( { history, app } ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/noticeAgentModel' ) );
-							cb( null, require( './NoticeAgent/NewestPolicy' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
@@ -109,7 +109,7 @@ function RouterConfig( { history, app } ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/noticeAgentModel' ) );
-							cb( null, require( './NoticeAgent/NewestActivity' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
@@ -120,7 +120,7 @@ function RouterConfig( { history, app } ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/noticeAgentModel' ) );
-							cb( null, require( './NoticeAgent/AntenatalCare' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
@@ -131,29 +131,29 @@ function RouterConfig( { history, app } ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/noticeAgentModel' ) );
-							cb( null, require( './NoticeAgent/ChildHealth' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
 				{
-					path: urlMap.medication,
-					name: 'Medication',
+					path: modular.medication.url,
+					name: modular.medication.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/trackingReminderModel' ) );
-							cb( null, require( './TrackingReminder/Medication' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
 				{
-					path: urlMap.curativeEffect,
-					name: 'CurativeEffect',
+					path: modular.curativeEffect.url,
+					name: modular.curativeEffect.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/trackingReminderModel' ) );
-							cb( null, require( './TrackingReminder/CurativeEffect' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
@@ -164,7 +164,7 @@ function RouterConfig( { history, app } ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/chronicDiseaseModel' ) );
-							cb( null, require( './ChronicDisease/Hypertension' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
@@ -175,7 +175,7 @@ function RouterConfig( { history, app } ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/chronicDiseaseModel' ) );
-							cb( null, require( './ChronicDisease/Diabetes' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
@@ -244,22 +244,72 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: modular.worker + modular.newestPolicy.ritRef,
-					name: modular.worker + modular.newestPolicy.ritRef,
+					path: modular.workermbsftz.url,
+					name: modular.workermbsftz.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
-							cb( null, require( './NoticeAgent/NewestPolicy' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
 				{
-					path: modular.worker + modular.newestActivity.ritRef,
-					name: modular.worker + modular.newestActivity.ritRef,
+					path: modular.workerzxzctz.url,
+					name: modular.workerzxzctz.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
-							cb( null, require( './NoticeAgent/NewestActivity' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
+						} );
+					},
+				},
+				{
+					path: modular.workerzxhdtz.url,
+					name: modular.workerzxhdtz.url,
+					getComponent( nextState, cb ) {
+						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
+						} );
+					},
+				},
+				{
+					path: modular.workeryfcjtz.url,
+					name: modular.workeryfcjtz.url,
+					getComponent( nextState, cb ) {
+						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
+						} );
+					},
+				},
+				{
+					path: modular.workeretsftz.url,
+					name: modular.workeretsftz.url,
+					getComponent( nextState, cb ) {
+						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
+						} );
+					},
+				},
+				{
+					path: modular.workeryytx00.url,
+					name: modular.workeryytx00.url,
+					getComponent( nextState, cb ) {
+						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
+						} );
+					},
+				},
+				{
+					path: modular.workeryylxgz.url,
+					name: modular.workeryylxgz.url,
+					getComponent( nextState, cb ) {
+						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},

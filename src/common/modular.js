@@ -4,7 +4,7 @@ import model from './model';
 
 const root = '/';
 const {
-	name, sex, birthday, tel, cardDate, disease, drugs, present,
+	name, sex, birthday, tel, cardDate, disease, drugs, present, diseaseCase,
 	remark, operation, visit, followUp
 } = config.ritField;
 const worker = '/worker';
@@ -76,13 +76,21 @@ module.exports = {
 	chronicDisease: {
 		url: 'chronicDisease', name: 'chronicDisease', cn: '慢性病随访通知', ritRef: 'mbsftz',
 		tpl: config.tpl + 'chronicDisease.xls',
-		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
-		ritWorker: [ name.key, sex.key, birthday.key, tel.key, present.key, followUp.key, remark.key, operation.key ]
+		model: model.noticeAgent, action: action.NA_saveChronic,
+		ritDoctor: [ name.key, sex.key, birthday.key, tel.key, disease.key ],
+		ritWorker: [ name.key, sex.key, birthday.key, tel.key, disease.key, remark.key, operation.key ]
+	},
+	workermbsftz: {
+		url: worker + 'mbsftz', name: 'chronicDisease',
 	},
 	newestPolicy: {
 		url: 'newestPolicy', name: 'newestPolicy', cn: '最新政策通知', ritRef: 'zxzctz',
+		model: model.noticeAgent, action: action.NA_savePolicy,
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, present.key, remark.key, operation.key ]
+	},
+	workerzxzctz: {
+		url: worker + 'zxzctz', name: 'newestPolicy',
 	},
 	newestActivity: {
 		url: 'newestActivity', name: 'newestActivity', cn: '最新活动通知', ritRef: 'zxhdtz',
@@ -95,14 +103,40 @@ module.exports = {
 	},
 	antenatalCare: {
 		url: 'antenatalCare', name: 'antenatalCare', cn: '孕产妇产检通知', ritRef: 'yfcjtz',
-		ritDoctor: [ name, birthday, tel, cardDate ]
+		model: model.noticeAgent, action: action.NA_saveGravida,
+		ritDoctor: [ name.key, birthday.key, tel.key, cardDate.key ],
+		ritWorker: [ name.key, sex.key, birthday.key, tel.key, present.key, remark.key, operation.key ]
+	},
+	workeryfcjtz: {
+		url: worker + 'yfcjtz', name: 'antenatalCare',
 	},
 	childHealth: {
 		url: 'childHealth', name: 'childHealth', cn: '儿童健康随访通知', ritRef: 'etsftz',
+		model: model.noticeAgent, action: action.NA_saveChildren,
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
+		ritWorker: [ name.key, sex.key, birthday.key, tel.key, present.key, remark.key, operation.key ]
 	},
-	medication: root + 'medication',
-	curativeEffect: 'curativeEffect',
+	workeretsftz: {
+		url: worker + 'etsftz', name: 'childHealth',
+	},
+	medication: {
+		url: 'medication', name: 'medication', cn: '用药提醒', ritRef: 'yytx00',
+		model: model.trackingReminder, action: action.TR_saveDrug,
+		ritDoctor: [ name.key, tel.key, diseaseCase.key, drugs.key ],
+		ritWorker: [ name.key, tel.key, diseaseCase.key, drugs.key, remark.key, operation.key ]
+	},
+	workeryytx00: {
+		url: worker + 'yytx00', name: 'medication',
+	},
+	curativeEffect: {
+		url: 'curativeEffect', name: 'curativeEffect', cn: '用药疗效跟踪', ritRef: 'yylxgz',
+		model: model.trackingReminder, action: action.TR_saveDrugeffect,
+		ritDoctor: [ name.key, tel.key, diseaseCase.key, drugs.key ],
+		ritWorker: [ name.key, tel.key, diseaseCase.key, drugs.key, remark.key, operation.key ]
+	},
+	workeryylxgz: {
+		url: worker + 'yylxgz', name: 'curativeEffect',
+	},
 	hypertension: 'hypertension',
 	diabetes: 'diabetes',
 	/**
