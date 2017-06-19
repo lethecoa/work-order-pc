@@ -270,7 +270,7 @@ class InfoTable extends React.Component {
     data[ index ][ 'myStatus' ] = config.ritStatus.cancel;
     this.setState( { data } );
   }
-  // private function
+
   render() {
     return (
       <Table className={styles.table} bordered columns={this.columns} rowKey="rownum"
