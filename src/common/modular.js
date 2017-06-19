@@ -64,7 +64,12 @@ module.exports = {
 	},
 	newestActivity: {
 		url: 'newestActivity', name: 'newestActivity', cn: '最新活动通知', ritRef: 'zxhdtz',
+		model: model.noticeAgent, action: action.NA_saveActivity,
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
+		ritWorker: [ name.key, sex.key, birthday.key, tel.key, present.key, remark.key, operation.key ]
+	},
+	workerzxhdtz: {
+		url: worker + 'zxhdtz', name: 'newestActivity',
 	},
 	antenatalCare: {
 		url: 'antenatalCare', name: 'antenatalCare', cn: '孕产妇产检通知', ritRef: 'yfcjtz',
