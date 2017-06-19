@@ -58,11 +58,17 @@ module.exports = {
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, visit.key, remark.key, operation.key ],
 	},
+	workeryyxsfs: {
+		url: worker + 'yyxsfs', name: 'newborn',
+	},
 	postpartum: {
 		url: 'postpartum', name: 'postpartum', cn: '预约产后访视', ritRef: 'yychfs',
 		model: model.bookingAgent, action: action.BA_savePostpartum,
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, visit.key, remark.key, operation.key ],
+	},
+	workeryychfs: {
+		url: worker + 'yychfs', name: 'postpartum',
 	},
 	/**
 	 * 慢性病随访通知

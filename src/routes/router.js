@@ -65,7 +65,7 @@ function RouterConfig( { history, app } ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/bookingAgentModel' ) );
-							cb( null, require( './BookingAgent/Newborn' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
@@ -76,7 +76,7 @@ function RouterConfig( { history, app } ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/bookingAgentModel' ) );
-							cb( null, require( './BookingAgent/Postpartum' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
@@ -216,6 +216,26 @@ function RouterConfig( { history, app } ) {
 				{
 					path: modular.workeryyjmtj.url,
 					name: modular.workeryyjmtj.url,
+					getComponent( nextState, cb ) {
+						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
+						} );
+					},
+				},
+				{
+					path: modular.workeryyxsfs.url,
+					name: modular.workeryyxsfs.url,
+					getComponent( nextState, cb ) {
+						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
+						} );
+					},
+				},
+				{
+					path: modular.workeryychfs.url,
+					name: modular.workeryychfs.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
