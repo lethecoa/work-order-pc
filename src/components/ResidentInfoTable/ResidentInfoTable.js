@@ -96,6 +96,18 @@ class ResidentInfoTable extends React.Component {
       </div>
     );
   }
+
+  componentWillReceiveProps( nextProps ) {
+    if ( nextProps.data !== this.state.infoData ) {
+      console.log( 'ResidentInfoTable', this.state.infoData );
+      this.setState( { infoData: nextProps.data } );
+    }
+  }
+
+  shouldComponentUpdate( nextProps, nextState ) {
+    return nextProps.data !== this.state.infoData;
+  }
+
 }
 
 export default ResidentInfoTable;
