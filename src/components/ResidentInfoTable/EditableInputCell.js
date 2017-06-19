@@ -12,7 +12,7 @@ class EditableInputCell extends BaseCell {
 
   render() {
     const { myStatus, value } = this.state;
-    fun.print( myStatus, 'render', this.name );
+    // fun.print( myStatus, 'render', this.name );
     return (
       <div>
         {

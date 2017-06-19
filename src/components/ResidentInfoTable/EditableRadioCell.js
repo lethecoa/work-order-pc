@@ -10,6 +10,7 @@ const RadioGroup = Radio.Group;
 class EditableRadioCell extends BaseCell {
   constructor( props ) {
     super( props );
+    this.cacheValue = '0';
   }
 
   render() {

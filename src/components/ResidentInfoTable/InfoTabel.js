@@ -155,11 +155,11 @@ class InfoTable extends React.Component {
         // 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
         obj.monitor = 0;
 
-        if ( !obj.hasOwnProperty( remark ) ) {
-          obj[ remark ] = '';
+        if ( !obj.hasOwnProperty( remark.key ) ) {
+          obj[ remark.key ] = '';
         }
-        if ( !obj.hasOwnProperty( present ) ) {
-          obj[ present ] = '0';
+        if ( !obj.hasOwnProperty( present.key ) ) {
+          obj[ present.key ] = '0';
         }
       } );
     }
@@ -221,9 +221,25 @@ class InfoTable extends React.Component {
     fun.print( value, 'handleChange', name );
 
     if ( item.monitor <= 0 ) {
-      if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) saveCallback( item );
-      if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) submitCallback( data[ index ] );
+      let row = this.rebuildData( item );
+      if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) saveCallback( row );
+      if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) submitCallback( row );
     }
+  }
+  /**
+   * 重构数据，剔除掉提交时不需要的字段
+   */
+  rebuildData = ( item ) => {
+    let row = {};
+    let ritField = config.ritField;
+    for ( let key in item ) {
+      for ( let field in ritField ) {
+        if ( ritField[ field ].key === key && ritField[ field ].need ) {
+          row[ key ] = item[ key ];
+        }
+      }
+    }
+    return row;
   }
   /**
    * 点击编辑按钮
@@ -249,7 +265,8 @@ class InfoTable extends React.Component {
   submit = ( index ) => {
     const { data, submitCallback } = this.state;
     if ( data[ index ][ 'myStatus' ] === config.ritStatus.general ) {
-      if ( typeof submitCallback === 'function' ) submitCallback( data[ index ] );
+      let row = this.rebuildData( data[ index ] );
+      if ( typeof submitCallback === 'function' ) submitCallback( row );
     }
     else {
       data[ index ][ 'myStatus' ] = config.ritStatus.general;
