@@ -18,9 +18,20 @@ module.exports = {
 	ritStatus: { general: '显示状态', editing: '编辑中', cancel: '取消编辑' },
 	/** 根据委托单名称定义“居民信息控件”表头的显示项  */
 	ritField: {
-		name: 'name', sex: 'sex', birthday: 'birthday', tel: 'tel', present: 'isOnScene', visit: 'isInterview',
-		disease: 'relatedDiseases', diseaseCase: 'diseaseSituation', cardDate: 'cardDate', drugs: 'drugs',
-		notice: 'notice', operation: 'operation', booking: 'booking', remark: 'remark', followUp: 'followUp'
+		name: { key: 'name', cn: '姓名', need: false },
+		sex: { key: 'sex', cn: '性别', need: false },
+		birthday: { key: 'birthday', cn: '出生日期', need: false },
+		tel: { key: 'tel', cn: '联系电话', need: false },
+		disease: { key: 'relatedDiseases', cn: '相关疾病', need: false },
+		diseaseCase: { key: 'diseaseSituation', cn: '疾病情况 ', need: false },
+		cardDate: { key: 'buildCardDate', cn: '建卡日期 ', need: false },
+		drugs: { key: 'drugName', cn: '药品名称 ', need: false },
+		present: { key: 'isOnScene', cn: '是否到场', need: true },
+		visit: { key: 'isInterview', cn: '是否可访', need: true },
+		remark: { key: 'remark', cn: '通知情况', need: true },
+		followUp: { key: 'followUp', cn: '随访情况', need: true },
+		operation: { key: 'operation', cn: '操作栏', need: false },
+		// notice: 'notice', booking: 'booking'
 	},
 	/** 提交成功提示信息  */
 	SUCCESS: '提交成功'
