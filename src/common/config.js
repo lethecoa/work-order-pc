@@ -19,6 +19,7 @@ module.exports = {
 	/** 根据委托单名称定义“居民信息控件”表头的显示项  */
 	ritField: {
 		serviceId: { key: 'serviceId', cn: '服务id', need: true },
+		status: { key: 'status', cn: '状态', need: true },
 		name: { key: 'name', cn: '姓名', need: false },
 		sex: { key: 'sex', cn: '性别', need: false },
 		birthday: { key: 'birthday', cn: '出生日期', need: false },
