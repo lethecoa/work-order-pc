@@ -15,4 +15,6 @@ module.exports = {
 	getOrders: config.api + '/callCenter/getOrders',
 	/** 查询委托单明细 */
 	getOrderDetail: config.api + '/callCenter/getOrderDetail',
+	/** 保存委托单明细 */
+	saveService: config.api + '/callCenter/saveService',
 };
