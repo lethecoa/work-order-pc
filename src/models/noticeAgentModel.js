@@ -25,8 +25,13 @@ export default {
 			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},
 		*saveActivity( { payload }, { call, put } ) {
+			let values = payload.data;
+			values.carryMaterial = values.carryMaterial.join( ',' );
+			values.activityDateStart = values.allowDate[ 0 ];
+			values.activityDateEnd = values.allowDate[ 1 ];
+			delete(values[ "allowDate" ]);
 			fun.print( payload, 'saveActivity', model.noticeAgent );
-			const data = yield call( saveActivity, payload.data );
+			const data = yield call( saveActivity, values );
 			payload.fun( data );
 			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},

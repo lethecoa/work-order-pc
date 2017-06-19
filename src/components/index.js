@@ -8,8 +8,6 @@ import BaseInfo from './BaseInfo/BaseInfo';
 import PayModal from './PayModal/PayModal'
 // 表单项
 import CarryMaterial from './formItme/CarryMaterial/CarryMaterial';
-//需求说明
-import NewestActivity from './need/NewestActivity';
 //预约居民签约
 import ResidentSign from './need/BookingAgent/ResidentSign';
 //预约居民体检
@@ -18,6 +16,10 @@ import ResidentInspect from './need/BookingAgent/ResidentInspect';
 import Newborn from './need/BookingAgent/Newborn';
 //慢病随访通知
 import ChronicDisease from './need/NoticeAgent/ChronicDisease';
+//最新政策通知
+import NewestPolicy from './need/NoticeAgent/NewestPolicy';
+//最新活动通知
+import NewestActivity from './need/NoticeAgent/NewestActivity';
 export {
 	MainLayout,
 	ResidentInfoTable,
@@ -25,9 +27,10 @@ export {
 	BaseInfo,
 	CarryMaterial,
 	PayModal,
-	NewestActivity,
 	ResidentSign,
 	ResidentInspect,
 	Newborn,
 	ChronicDisease,
+	NewestPolicy,
+	NewestActivity,
 }

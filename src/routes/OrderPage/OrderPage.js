@@ -8,11 +8,12 @@ import {
 	BaseInfo,
 	ResidentInfoTable,
 	PayModal,
-	NewestActivity,
 	ResidentSign,
 	ResidentInspect,
 	Newborn,
-	ChronicDisease
+	ChronicDisease,
+	NewestPolicy,
+	NewestActivity,
 } from '../../components';
 import styles from './OrderPage.less';
 
@@ -177,8 +178,6 @@ const OrderPage = ( {
 				}
 				<Form onSubmit={showModal}>
 					<BaseInfo {...baseInfoProps} ref={e => ( baseInfo = e )}/>
-					{path === 'newestActivity' ? <NewestActivity disabled={disabled} ref={e => ( need = e )}/> : ''}
-					{path === 'workerzxhdtz' ? <NewestActivity disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'residentSign' ? <ResidentSign disabled={disabled} ref={e => ( need = e )} signSite={orgName}/> : ''}
 					{path === 'workeryyjmqy' ? <ResidentSign disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'residentInspect' ? <ResidentInspect disabled={disabled} ref={e => ( need = e )} examineSite={orgName}/> : ''}
@@ -189,6 +188,11 @@ const OrderPage = ( {
 					{path === 'workeryychfs' ? <Newborn disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'chronicDisease' ? <ChronicDisease disabled={disabled} ref={e => ( need = e )} interviewSite={orgName}/> : ''}
 					{path === 'workermbsftz' ? <ChronicDisease disabled={disabled} {...serviceDetail}/> : ''}
+					{path === 'newestPolicy' ? <NewestPolicy disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'workerzxzctz' ? <NewestPolicy disabled={disabled} {...serviceDetail}/> : ''}
+					{path === 'newestActivity' ? <NewestActivity disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'workerzxhdtz' ? <NewestActivity disabled={disabled} {...serviceDetail}/> : ''}
+
 					<ResidentInfoTable name={modular[ path ].name} userType={userType} monitor={1}
 					                   data={dataList} onSave={e => saveRow( e )} onSubmit={e => submitRow( e )}
 					                   disabled={disabled} ref={e => ( residentInfoTable = e )}/>
