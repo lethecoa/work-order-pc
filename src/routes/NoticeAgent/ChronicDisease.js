@@ -71,12 +71,12 @@ function ChronicDisease( { dispatch, loading, user, form,
     } );
   }
   /** 保存单条数据 */
-  const saveRow = ( row ) => {
-    console.log( '================= save: ', row );
+  const saveRow = ( index, row ) => {
+    console.log( '================= save: ', index, row );
   }
   /** 提交单条数据 */
-  const submitRow = ( row ) => {
-    console.log( '================= submit: ', row );
+  const submitRow = ( index, row ) => {
+    console.log( '================= submit: ', index, row );
   }
 
   return (
@@ -111,6 +111,7 @@ function ChronicDisease( { dispatch, loading, user, form,
           </FormItem>
           <FormItem label="所需携带材料" {...formItemLayout}>
             {getFieldDecorator( 'carryMaterial', {
+              initialValue: [ 1, 2 ],
               rules: [
                 {
                   required: true,
@@ -149,7 +150,7 @@ function ChronicDisease( { dispatch, loading, user, form,
           </FormItem>
         </Form>
       </div>
-      <ResidentInfoTable name={modular.chronicDisease.name} userType="worker" monitor={2}
+      <ResidentInfoTable name={modular.chronicDisease.name} userType="doctor" monitor={2}
         data={data} onSave={e => saveRow( e )} onSubmit={e => submitRow( e )}
         disabled={disabled} ref={e => ( residentInfoTable = e )} />
       <div className={styles.submit}>

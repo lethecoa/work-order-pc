@@ -108,12 +108,13 @@ class InfoTable extends React.Component {
                 </span>
                 :
                 <span>
-                  <a onClick={() => this.edit( index )}>编辑</a>
+                  <a disabled={this.state.operation} onClick={() => this.edit( index )}>编辑</a>
                 </span>
             }
             &nbsp;|&nbsp;
             <Popconfirm title="确定提交吗？" onConfirm={() => this.submit( index )}>
-              <a style={{ color: '#C00' }}>提交</a>
+              <a disabled={this.state.operation}
+                style={this.state.operation ? { color: '#b1b8bd' } : { color: '#C00' }}>提交</a>
             </Popconfirm>
           </div>
         );
@@ -123,11 +124,13 @@ class InfoTable extends React.Component {
   constructor( props ) {
     super( props );
     fun.printLoader( moduleName );
+
     this.initData( props.dataSource );
     let columnConfig = props.userType === config.userType.doctor ?
       modular[ props.name ][ 'ritDoctor' ] : modular[ props.name ][ 'ritWorker' ];
     this.columns = this.getColums( columnConfig );
     this.monitor = props.monitor;
+
     this.state = {
       data: props.dataSource,
       pagination: {
@@ -141,6 +144,7 @@ class InfoTable extends React.Component {
       submitCallback: this.props.onSubmit,
       /** 用户操作的类型：保存或者提交 */
       callBackStatus: '',
+      operation: props.operation || false,
     }
   }
   /**
@@ -222,8 +226,8 @@ class InfoTable extends React.Component {
 
     if ( item.monitor <= 0 ) {
       let row = this.rebuildData( item );
-      if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) saveCallback( row );
-      if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) submitCallback( row );
+      if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) saveCallback( index, row );
+      if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) submitCallback( index, row );
     }
   }
   /**
@@ -266,7 +270,7 @@ class InfoTable extends React.Component {
     const { data, submitCallback } = this.state;
     if ( data[ index ][ 'myStatus' ] === config.ritStatus.general ) {
       let row = this.rebuildData( data[ index ] );
-      if ( typeof submitCallback === 'function' ) submitCallback( row );
+      if ( typeof submitCallback === 'function' ) submitCallback( index, row );
     }
     else {
       data[ index ][ 'myStatus' ] = config.ritStatus.general;
@@ -287,6 +291,10 @@ class InfoTable extends React.Component {
       <Table className={styles.table} bordered columns={this.columns} rowKey="rownum"
         dataSource={this.props.dataSource} size="middle" pagination={this.state.pagination} />
     )
+  }
+
+  componentWillReceiveProps( nextProps ) {
+    this.setState( { operation: nextProps.operation } );
   }
 }
 
