@@ -21,15 +21,24 @@ function BaseInfo( props ) {
 		<div className={styles.need}>
 			<div className={styles.title}>基本信息</div>
 			<div className={styles.form}>
+				<FormItem>
+					{getFieldDecorator( 'doctorId', {
+						initialValue:props.doctorId
+					})(<Input style={{ width: 200 }}  disabled type="hidden"/>)}
+				</FormItem>
 				<Row>
 					<Col span={12}>
 						<FormItem {...formItemLayout} label="委托人姓名">
-							<Input style={{ width: 200 }} value={props.doctorName} disabled/>
+							{getFieldDecorator( 'doctorName', {
+								initialValue:props.doctorName
+							})(<Input style={{ width: 200 }} disabled/>)}
 						</FormItem>
 					</Col>
 					<Col span={12}>
 						<FormItem {...formItemLayout} label="委托人联系方式">
-							<Input style={{ width: 200 }} value={props.doctorTel} disabled/>
+							{getFieldDecorator( 'doctorTel', {
+								initialValue:props.doctorTel
+							})(<Input style={{ width: 200 }}  disabled/>)}
 						</FormItem>
 					</Col>
 				</Row>
@@ -41,14 +50,14 @@ function BaseInfo( props ) {
 								rules: [
 									{ required: true, message: '请选择截止日期！' },
 								],
-							} )(
-								<DatePicker style={{ width: 200 }} disabled={props.disabled}/>
-							)}
+							} )(<DatePicker style={{ width: 200 }} disabled={props.disabled}/>)}
 						</FormItem>
 					</Col>
 					<Col span={12}>
 						<FormItem {...formItemLayout} label="委托人数" style={{ display: props.display }}>
-							<Input style={{ width: 200 }} value={props.entrustNumber} disabled/>
+							{getFieldDecorator( 'entrustNumber', {
+								initialValue:props.entrustNumber
+							})(<Input style={{ width: 200 }} disabled/>)}
 						</FormItem>
 					</Col>
 				</Row>
