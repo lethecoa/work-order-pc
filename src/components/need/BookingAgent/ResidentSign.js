@@ -11,7 +11,6 @@ const RangePicker = DatePicker.RangePicker;
 function ResidentSign( props ) {
 	const FormItem = Form.Item;
 	const { getFieldDecorator } = props.form;
-	console.log( fun.getLocalTime( props.agreementDateStart ) )
 	return (
 		<div className={styles.need}>
 			<div className={styles.title}>需求说明</div>
