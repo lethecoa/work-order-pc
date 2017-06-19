@@ -2,7 +2,7 @@ import config from './config';
 import action from './action';
 import model from './model';
 const root = '/';
-
+const worker = '/worker';
 /**
  * url：路由对应的访问路径
  * nane：模块英文名称
@@ -67,6 +67,9 @@ module.exports = {
 		ritDoctor: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel ],
 		ritWorker: [ config.ritField.name, config.ritField.sex, config.ritField.birthday, config.ritField.tel,
 			config.ritField.present, config.ritField.remark, config.ritField.operation ]
+	},
+	workerzxhdtz: {
+		url: worker + 'zxhdtz', name: 'newestActivity',
 	},
 	antenatalCare: {
 		url: 'antenatalCare', name: 'antenatalCare', cn: '孕产妇产检通知', ritRef: 'yfcjtz',
