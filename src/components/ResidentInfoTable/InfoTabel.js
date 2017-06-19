@@ -19,78 +19,78 @@ const CALL_BACK_STATUS = { save: 'save', submit: 'submit' };
  */
 class InfoTable extends React.Component {
   allColumns = {
-    [ name ]: {
-      title: '姓名',
+    [ name.key ]: {
+      title: name.cn,
       width: 60,
-      dataIndex: name,
-      key: name,
+      dataIndex: name.key,
+      key: name.key,
     },
-    [ sex ]: {
-      title: '性别',
+    [ sex.key ]: {
+      title: sex.cn,
       width: 60,
-      dataIndex: sex,
-      key: sex,
+      dataIndex: sex.key,
+      key: sex.key,
     },
-    [ birthday ]: {
-      title: '出生日期',
+    [ birthday.key ]: {
+      title: birthday.cn,
       width: 120,
-      dataIndex: birthday,
-      key: birthday,
+      dataIndex: birthday.key,
+      key: birthday.key,
     },
-    [ tel ]: {
-      title: '联系电话',
+    [ tel.key ]: {
+      title: tel.cn,
       width: 120,
-      dataIndex: tel,
-      key: tel,
+      dataIndex: tel.key,
+      key: tel.key,
     },
-    [ cardDate ]: {
-      title: '建卡时间',
-      dataIndex: cardDate,
-      key: cardDate,
+    [ cardDate.key ]: {
+      title: cardDate.cn,
+      dataIndex: cardDate.key,
+      key: cardDate.key,
     },
-    [ disease ]: {
-      title: '疾病情况',
-      dataIndex: disease,
-      key: disease,
+    [ disease.key ]: {
+      title: disease.cn,
+      dataIndex: disease.key,
+      key: disease.key,
     },
-    [ drugs ]: {
-      title: '药品名称',
-      dataIndex: drugs,
-      key: drugs,
+    [ drugs.key ]: {
+      title: drugs.cn,
+      dataIndex: drugs.key,
+      key: drugs.key,
     },
-    [ present ]: {
-      title: '是否到场',
+    [ present.key ]: {
+      title: present.cn,
       width: 150,
-      dataIndex: present,
-      key: present,
-      render: ( text, record, index ) => this.renderRadioCell( text, index, present )
+      dataIndex: present.key,
+      key: present.key,
+      render: ( text, record, index ) => this.renderRadioCell( text, index, present.key )
     },
-    [ visit ]: {
-      title: '是否可访',
+    [ visit.key ]: {
+      title: visit.cn,
       width: 150,
-      dataIndex: visit,
-      key: visit,
-      render: ( text, record, index ) => this.renderRadioCell( text, index, visit )
+      dataIndex: visit.key,
+      key: visit.key,
+      render: ( text, record, index ) => this.renderRadioCell( text, index, visit.key )
     },
-    [ remark ]: {
-      title: '通知情况',
+    [ remark.key ]: {
+      title: remark.cn,
       width: 280,
-      dataIndex: remark,
-      key: remark,
-      render: ( text, record, index ) => this.renderInputCell( text, index, remark )
+      dataIndex: remark.key,
+      key: remark.key,
+      render: ( text, record, index ) => this.renderInputCell( text, index, remark.key )
     },
-    [ followUp ]: {
-      title: '随访情况',
+    [ followUp.key ]: {
+      title: followUp.cn,
       width: 120,
-      dataIndex: followUp,
-      key: followUp,
-      render: ( text, record, index ) => this.renderFollowUpCellCell( text, index, followUp )
+      dataIndex: followUp.key,
+      key: followUp.key,
+      render: ( text, record, index ) => this.renderFollowUpCellCell( text, index, followUp.key )
     },
-    [ operation ]: {
-      title: '操作栏',
+    [ operation.key ]: {
+      title: operation.cn,
       width: 160,
-      dataIndex: operation,
-      key: operation,
+      dataIndex: operation.key,
+      key: operation.key,
       render: ( text, record, index ) => {
         const myStatus = record.myStatus;
         return (
@@ -172,12 +172,6 @@ class InfoTable extends React.Component {
       if ( this.allColumns.hasOwnProperty( item ) )
         return this.allColumns[ item ];
     } );
-  }
-  /**
-   * 获取该组件的全部数据
-   */
-  getData = () => {
-    return this.state.data;
   }
   /**
    * 创建可编辑的 Input 单元格

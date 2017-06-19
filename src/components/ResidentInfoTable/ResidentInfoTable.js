@@ -25,10 +25,6 @@ class ResidentInfoTable extends React.Component {
       disabled: props.disabled,
       show: props.userType === config.userType.doctor ? '' : 'hide',
     }
-    let userType = props.userType;
-    if ( userType ) {
-      // this.setState
-    }
   }
   // public function
   /**
@@ -96,8 +92,7 @@ class ResidentInfoTable extends React.Component {
           居民信息表样本
         </div>
         <InfoTable name={this.props.name} dataSource={this.state.infoData} monitor={this.props.monitor}
-          onSave={this.props.onSave} onSubmit={this.props.onSubmit}
-          userType={this.props.userType} ref="infoTable" />
+          onSave={this.props.onSave} onSubmit={this.props.onSubmit} userType={this.props.userType} />
       </div>
     );
   }
