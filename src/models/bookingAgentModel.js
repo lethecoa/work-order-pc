@@ -60,52 +60,40 @@ export default {
 			let values = payload.data;
 			values.examineItem = values.examineItem.join( ',' );
 			values.carryMaterial = values.carryMaterial.join( ',' );
-			values.taskDeadlineDate = values.taskDeadlineDate._d;
-			values.examineDateStart = values.allowDate[ 0 ]._d;
-			values.examineDateEnd = values.allowDate[ 1 ]._d;
+			values.examineDateStart = values.allowDate[ 0 ];
+			values.examineDateEnd = values.allowDate[ 1 ];
 			delete(values[ "allowDate" ]);
 			fun.print( payload, 'savePhysicalExam', model.bookingAgent );
 			const data = yield call( savePhysicalExam, values );
 			payload.fun( data );
-			yield put( { type: action.BA_changeSubmitSate } );
+			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},
 		*saveNewBorn( { payload }, { call, put } ) {
 			let values = payload.data;
-			values.taskDeadlineDate = values.taskDeadlineDate._d;
-			values.amInterviewTimeStart = values.allowDate_am[ 0 ]._d;
-			values.amInterviewTimeEnd = values.allowDate_am[ 1 ]._d;
-			values.pmInterviewTimeStart = values.allowDate_pm[ 0 ]._d;
-			values.pmInterviewTimeEnd = values.allowDate_pm[ 1 ]._d;
+			values.amInterviewTimeStart = values.allowDate_am[ 0 ];
+			values.amInterviewTimeEnd = values.allowDate_am[ 1 ];
+			values.pmInterviewTimeStart = values.allowDate_pm[ 0 ];
+			values.pmInterviewTimeEnd = values.allowDate_pm[ 1 ];
 			delete(values[ "allowDate_am" ]);
 			delete(values[ "allowDate_pm" ]);
 			fun.print( payload, 'saveNewBorn', model.bookingAgent );
 			const data = yield call( saveNewBorn, values );
 			payload.fun( data );
-			yield put( { type: action.BA_changeSubmitSate } );
+			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},
 		*savePostpartum( { payload }, { call, put } ) {
 			let values = payload.data;
-			values.taskDeadlineDate = values.taskDeadlineDate._d;
-			values.amInterviewTimeStart = values.allowDate_am[ 0 ]._d;
-			values.amInterviewTimeEnd = values.allowDate_am[ 1 ]._d;
-			values.pmInterviewTimeStart = values.allowDate_pm[ 0 ]._d;
-			values.pmInterviewTimeEnd = values.allowDate_pm[ 1 ]._d;
+			values.amInterviewTimeStart = values.allowDate_am[ 0 ];
+			values.amInterviewTimeEnd = values.allowDate_am[ 1 ];
+			values.pmInterviewTimeStart = values.allowDate_pm[ 0 ];
+			values.pmInterviewTimeEnd = values.allowDate_pm[ 1 ];
 			delete(values[ "allowDate_am" ]);
 			delete(values[ "allowDate_pm" ]);
 			fun.print( payload, 'savePostpartum', model.bookingAgent );
 			const data = yield call( savePostpartum, values );
 			payload.fun( data );
-			yield put( { type: action.BA_changeSubmitSate } );
+			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},
 	},
-	subscriptions: {
-		setup ( { dispatch, history } ) {
-			history.listen( location => {
-				let arr = [ 'signFamily', 'residentSign', 'residentInspect', 'newborn', 'postpartum' ];
-				if ( arr.indexOf( location.pathname ) >= 0 ) {
-					dispatch( { type: action.BA_init } );
-				}
-			} )
-		}
-	},
+	subscriptions: {},
 };

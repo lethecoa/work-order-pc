@@ -12,6 +12,8 @@ import CarryMaterial from './formItme/CarryMaterial/CarryMaterial';
 import NewestActivity from './need/NewestActivity';
 //预约居民签约
 import ResidentSign from './need/BookingAgent/ResidentSign';
+//预约居民体检
+import ResidentInspect from './need/BookingAgent/ResidentInspect';
 export {
 	MainLayout,
 	ResidentInfoTable,
@@ -21,4 +23,5 @@ export {
 	PayModal,
 	NewestActivity,
 	ResidentSign,
+	ResidentInspect,
 }

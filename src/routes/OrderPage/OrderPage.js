@@ -3,7 +3,7 @@ import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 import {Spin, Row, Col, Form, Button, notification, Modal, Radio} from 'antd';
 import {action, model, fun, config, modular} from '../../common';
-import {OrderStep, BaseInfo, ResidentInfoTable, PayModal, NewestActivity, ResidentSign} from '../../components';
+import {OrderStep, BaseInfo, ResidentInfoTable, PayModal, NewestActivity, ResidentSign, ResidentInspect} from '../../components';
 import styles from './OrderPage.less';
 
 const moduleName = 'orderPage';
@@ -172,6 +172,8 @@ const OrderPage = ( {
 					{path === 'workerzxhdtz' ? <NewestActivity disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'residentSign' ? <ResidentSign disabled={disabled} ref={e => ( need = e )} signSite={orgName}/> : ''}
 					{path === 'workeryyjmqy' ? <ResidentSign disabled={disabled} {...serviceDetail}/> : ''}
+					{path === 'residentInspect' ? <ResidentInspect disabled={disabled} ref={e => ( need = e )} examineSite={orgName}/> : ''}
+					{path === 'workeryyjmtj' ? <ResidentInspect disabled={disabled} {...serviceDetail}/> : ''}
 					<ResidentInfoTable name={modular[ path ].name} userType={userType} monitor={1}
 					                   data={residentList} onSave={e => saveRow( e )} onSubmit={e => submitRow( e )}
 					                   disabled={disabled} ref={e => ( residentInfoTable = e )}/>

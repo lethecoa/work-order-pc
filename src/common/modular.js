@@ -45,15 +45,24 @@ module.exports = {
 	},
 	residentInspect: {
 		url: 'residentInspect', name: 'residentInspect', cn: '预约居民体检', ritRef: 'yyjmtj',
+		model: model.bookingAgent, action: action.BA_savePhysicalExam,
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
+		ritWorker: [ name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ],
+	},
+	workeryyjmtj: {
+		url: worker + 'yyjmtj', name: 'residentInspect',
 	},
 	newborn: {
 		url: 'newborn', name: 'newborn', cn: '预约新生儿家庭访视', ritRef: 'yyxsfs',
+		model: model.bookingAgent, action: action.BA_saveNewBorn,
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
+		ritWorker: [ name.key, sex.key, birthday.key, tel.key, visit.key, remark.key, operation.key ],
 	},
 	postpartum: {
 		url: 'postpartum', name: 'postpartum', cn: '预约产后访视', ritRef: 'yychfs',
+		model: model.bookingAgent, action: action.BA_savePostpartum,
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
+		ritWorker: [ name.key, sex.key, birthday.key, tel.key, visit.key, remark.key, operation.key ],
 	},
 	/**
 	 * 慢性病随访通知
