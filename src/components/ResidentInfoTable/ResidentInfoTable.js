@@ -65,7 +65,6 @@ class ResidentInfoTable extends React.Component {
       fun.print( res.entity, '读取Excel完成', moduleName );
       if ( res.success ) {
         this.setState( { infoData: res.entity.rows } );
-        // this.refs.infoTable.dataSource = res.entity.rows;
         this.uploadSuccess();
       } else {
         this.uploadError();
@@ -99,13 +98,12 @@ class ResidentInfoTable extends React.Component {
 
   componentWillReceiveProps( nextProps ) {
     if ( nextProps.data !== this.state.infoData ) {
-      console.log( 'ResidentInfoTable', this.state.infoData );
       this.setState( { infoData: nextProps.data } );
     }
   }
 
   shouldComponentUpdate( nextProps, nextState ) {
-    return nextProps.data !== this.state.infoData;
+    return nextState.data !== this.state.infoData;
   }
 
 }

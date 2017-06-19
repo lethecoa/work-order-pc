@@ -3,6 +3,7 @@ import { Checkbox } from 'antd';
 import { fun } from '../../../common'
 import styles from './CarryMaterial.less';
 
+const moduleName = '所需携带材料控件(CarryMaterial)';
 const CheckboxGroup = Checkbox.Group;
 const materialOptions = [
   { label: '身份证', value: 1 },
@@ -14,16 +15,9 @@ class CarryMaterial extends React.Component {
   constructor( props ) {
     super( props );
 
-    const value = this.props.value || {};
     this.state = {
-      valueList: value.valueList || [ 1 ]
+      value: props.value || [ 1 ]
     };
-  }
-  componentWillReceiveProps( nextProps ) {
-    if ( 'value' in nextProps && nextProps[ 'value' ] !== undefined ) {
-      const value = nextProps.value;
-      this.setState( value );
-    }
   }
   selectOne = ( list ) => {
     let valueList;
@@ -32,7 +26,7 @@ class CarryMaterial extends React.Component {
     } else {
       valueList = list.filter(( item ) => { return item !== 0; } );
     }
-    this.setState( { valueList: valueList } );
+    this.setState( { value: valueList } );
     this.triggerChange( valueList );
   }
   triggerChange = ( changedValue ) => {
@@ -45,8 +39,14 @@ class CarryMaterial extends React.Component {
   render() {
     return (
       <CheckboxGroup options={materialOptions} onChange={this.selectOne}
-        value={this.state.valueList} disabled={this.props.disabled} />
+        value={this.state.value} disabled={this.props.disabled} />
     )
+  }
+  componentWillReceiveProps( nextProps ) {
+    if ( 'value' in nextProps && nextProps[ 'value' ] !== undefined ) {
+      const value = nextProps.value;
+      this.setState( value );
+    }
   }
 }
 
