@@ -3,7 +3,7 @@ import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 import {Spin, Row, Col, Form, Button, notification, Modal, Radio} from 'antd';
 import {action, model, fun, config, modular} from '../../common';
-import {OrderStep, BaseInfo, ResidentInfoTable, PayModal, NewestActivity, ResidentSign, ResidentInspect} from '../../components';
+import {OrderStep, BaseInfo, ResidentInfoTable, PayModal, NewestActivity, ResidentSign, ResidentInspect, Newborn} from '../../components';
 import styles from './OrderPage.less';
 
 const moduleName = 'orderPage';
@@ -16,7 +16,7 @@ let payModal;
 let need;
 
 let entrustNumber;
-
+let dataList;
 const OrderPage = ( {
 	loading,
 	orderModel,
@@ -29,10 +29,10 @@ const OrderPage = ( {
 	const { currentData, currentStep, display, disabled, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel;
 	const { orgName, remainingBalance } = currentData;
 	const { pagination, serviceDetail, residentList } = workerModel ? workerModel : {};
-
 	let path;
 	if ( userType === config.userType.worker ) {
 		path = route.path.substr( route.path.indexOf( '/' ) + 1 );
+		dataList = residentList;
 	} else {
 		path = route.path;
 	}
@@ -49,14 +49,14 @@ const OrderPage = ( {
 			if ( !err ) {
 				need.validateFieldsAndScroll( ( err ) => {
 					if ( !err ) {
-						let data = residentInfoTable.getData();
-						if ( data === undefined ) {
+						dataList = residentInfoTable.getData();
+						if ( dataList === undefined ) {
 							Modal.error( {
 								title: config.NODATA,
 							} );
 							return;
 						}
-						entrustNumber = data.length;
+						entrustNumber = dataList.length;
 						dispatch( { type: fun.fuse( model.order, action.order_changeConfirmState ) } );
 					}
 				} );
@@ -77,9 +77,8 @@ const OrderPage = ( {
 			if ( !errOut ) {
 				need.validateFieldsAndScroll( ( err, values ) => {
 					if ( !err ) {
-						let residentQueryDtoList = residentInfoTable.getData();
 						let result = {
-							data: Object.assign( values, valuesOut, { expenseAccount, residentQueryDtoList } ),
+							data: Object.assign( values, valuesOut, { expenseAccount, residentQueryDtoList: dataList } ),
 							fun: openNotificationWithIcon,
 						};
 						dispatch( { type: fun.fuse( modular[ path ].model, modular[ path ].action ), payload: result } );
@@ -174,8 +173,13 @@ const OrderPage = ( {
 					{path === 'workeryyjmqy' ? <ResidentSign disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'residentInspect' ? <ResidentInspect disabled={disabled} ref={e => ( need = e )} examineSite={orgName}/> : ''}
 					{path === 'workeryyjmtj' ? <ResidentInspect disabled={disabled} {...serviceDetail}/> : ''}
+					{path === 'newborn' ? <Newborn disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'workeryyxsfs' ? <Newborn disabled={disabled} {...serviceDetail}/> : ''}
+					{path === 'postpartum' ? <Newborn disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'workeryychfs' ? <Newborn disabled={disabled} {...serviceDetail}/> : ''}
+
 					<ResidentInfoTable name={modular[ path ].name} userType={userType} monitor={1}
-					                   data={residentList} onSave={e => saveRow( e )} onSubmit={e => submitRow( e )}
+					                   data={dataList} onSave={e => saveRow( e )} onSubmit={e => submitRow( e )}
 					                   disabled={disabled} ref={e => ( residentInfoTable = e )}/>
 					{userType === config.userType.doctor ?
 						<div>

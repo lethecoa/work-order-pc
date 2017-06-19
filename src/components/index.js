@@ -14,6 +14,8 @@ import NewestActivity from './need/NewestActivity';
 import ResidentSign from './need/BookingAgent/ResidentSign';
 //预约居民体检
 import ResidentInspect from './need/BookingAgent/ResidentInspect';
+//预约新生儿访视
+import Newborn from './need/BookingAgent/Newborn';
 export {
 	MainLayout,
 	ResidentInfoTable,
@@ -24,4 +26,5 @@ export {
 	NewestActivity,
 	ResidentSign,
 	ResidentInspect,
+	Newborn,
 }
