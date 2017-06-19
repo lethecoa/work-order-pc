@@ -20,4 +20,5 @@ module.exports = {
 	NA_saveActivity: 'saveActivity',
 	worker_getOrders: 'getOrders',
 	worker_getOrderDetail: 'getOrderDetail',
+	worker_saveOrderDetail: 'saveOrderDetail',
 };

@@ -1,6 +1,6 @@
 import {routerRedux} from 'dva/router';
 import {fun, model, action} from '../common';
-import {getOrders, getOrderDetail} from '../services/workerService';
+import {getOrders, getOrderDetail, saveService} from '../services/workerService';
 
 export default {
 	namespace: model.worker,
@@ -58,6 +58,11 @@ export default {
 			} );
 			yield put( routerRedux.push( url ) );
 
+		},
+		*saveOrderDetail( { payload }, { call } ){
+			fun.print( payload, 'saveOrderDetail', model.worker );
+			const data = yield call( saveService, payload.data );
+			payload.fun( data );
 		}
 	},
 	subscriptions: {
