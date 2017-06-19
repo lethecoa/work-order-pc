@@ -3,8 +3,10 @@ import action from './action';
 import model from './model';
 
 const root = '/';
-const { name, sex, birthday, tel, cardDate, disease, drugs, present,
-	remark, operation, visit, followUp } = config.ritField;
+const {
+	name, sex, birthday, tel, cardDate, disease, drugs, present,
+	remark, operation, visit, followUp
+} = config.ritField;
 const worker = '/worker';
 
 /**
@@ -34,7 +36,9 @@ module.exports = {
 	 */
 	residentSign: {
 		url: 'residentSign', name: 'residentSign', cn: '预约居民签约', ritRef: 'yyjmqy',
+		model: model.bookingAgent, action: action.BA_saveSign,
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
+		ritWorker: [ name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ],
 	},
 	residentInspect: {
 		url: 'residentInspect', name: 'residentInspect', cn: '预约居民体检', ritRef: 'yyjmtj',
