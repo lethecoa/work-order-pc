@@ -8,7 +8,10 @@ import BaseInfo from './BaseInfo/BaseInfo';
 import PayModal from './PayModal/PayModal'
 // 表单项
 import CarryMaterial from './formItme/CarryMaterial/CarryMaterial';
-
+//需求说明
+import NewestActivity from './need/NewestActivity';
+//预约居民签约
+import ResidentSign from './need/BookingAgent/ResidentSign';
 export {
 	MainLayout,
 	ResidentInfoTable,
@@ -16,4 +19,6 @@ export {
 	BaseInfo,
 	CarryMaterial,
 	PayModal,
+	NewestActivity,
+	ResidentSign,
 }

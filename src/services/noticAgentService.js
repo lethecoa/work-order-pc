@@ -6,3 +6,9 @@ export async function savePolicy( data ) {
 		data
 	} )
 }
+export async function saveActivity( data ) {
+	return request( {
+		url: api.saveActivity,
+		data
+	} )
+}

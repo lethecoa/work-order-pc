@@ -23,13 +23,15 @@ const NewestPolicy = ( {
 	workerModel,
 	form,
 	dispatch,
+	route,
 } ) => {
 	const { validateFieldsAndScroll, getFieldDecorator } = form;
 	const { currentData, currentStep, display, disabled, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel;
 	const { userType, doctorId, doctorName, doctorTel, remainingBalance } = currentData;
 	const { pagination, serviceDetail, residentList } = workerModel ? workerModel : {};
 	const { policyContent } = serviceDetail ? serviceDetail : {};
-
+	const path=route.path;
+	console.log(modular[path].ritRef)
 	const handleSubmit = ( expenseAccount ) => {
 		baseInfo.validateFieldsAndScroll( ( errOut, valuesOut ) => {
 			if ( !errOut ) {
@@ -58,7 +60,7 @@ const NewestPolicy = ( {
 	};
 
 	const validAndConfirm = (e) => {
-		console.log(residentInfoTable)
+		console.log(residentInfoTable.getData())
 		//test();
 		baseInfo.validateFieldsAndScroll( ( err ) => {
 			if ( !err ) {

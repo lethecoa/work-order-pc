@@ -48,14 +48,13 @@ export default {
 		*saveSign( { payload }, { call, put } ) {
 			let values = payload.data;
 			values.carryMaterial = values.carryMaterial.join( ',' );
-			values.taskDeadlineDate = values.taskDeadlineDate._d;
-			values.agreementDateStart = values.allowDate[ 0 ]._d;
-			values.agreementDateEnd = values.allowDate[ 1 ]._d;
+			values.agreementDateStart = values.allowDate[ 0 ];
+			values.agreementDateEnd = values.allowDate[ 1 ];
 			delete(values[ "allowDate" ]);
 			fun.print( payload, 'saveSign', model.bookingAgent );
 			const data = yield call( saveSign, values );
 			payload.fun( data );
-			yield put( { type: action.BA_changeSubmitSate } );
+			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},
 		*savePhysicalExam( { payload }, { call, put } ) {
 			let values = payload.data;

@@ -53,7 +53,6 @@ const OrderList = ( {
 	search,
 	onRadioChange,
 } ) => {
-
 	const { resetFields, validateFieldsAndScroll, getFieldDecorator } = form;
 	const { pagination, list: dataSource, total } = workerModel;
 
