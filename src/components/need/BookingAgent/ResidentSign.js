@@ -37,10 +37,9 @@ function ResidentSign( props ) {
 						</RadioGroup>
 					)}
 				</FormItem>
-				//TODO
 				<FormItem label="所需携带材料" {...config.formItemLayout}>
 					{getFieldDecorator( 'carryMaterial', {
-						initialValue: props.carryMaterial ? props.carryMaterial.split( ',' ) : [ 0 ],
+						initialValue: props.carryMaterial ? fun.strToIntArr(props.carryMaterial) : [ 1 ],
 						rules: [
 							{
 								required: true,

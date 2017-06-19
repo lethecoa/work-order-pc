@@ -42,5 +42,17 @@ module.exports = {
 	 */
 	getLocalTime: ( nS ) => {
 		return new Date( parseInt( nS ) ).toLocaleString().replace( /:\d{1,2}$/, ' ' );
+	},
+	/**
+	 * 字符串数组转整形数组
+	 * @param dataStr
+	 * @returns {Array}
+	 */
+	strToIntArr: ( dataStr ) => {
+		let dataStrArr = dataStr.split( "," );//分割成字符串数组
+		let dataIntArr = [];//保存转换后的整型字符串
+		return dataStrArr.map( function ( data ) {
+			return +data;
+		} );
 	}
 };
