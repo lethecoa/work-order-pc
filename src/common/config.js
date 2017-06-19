@@ -23,5 +23,7 @@ module.exports = {
 		notice: 'notice', operation: 'operation', booking: 'booking', remark: 'remark', followUp: 'followUp'
 	},
 	/** 提交成功提示信息  */
-	SUCCESS: '提交成功'
+	SUCCESS: '提交成功',
+	/** 未上传居民信息样本提示信息  */
+	NODATA: '请上传居民信息样本！',
 };
