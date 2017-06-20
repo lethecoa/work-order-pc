@@ -8,7 +8,7 @@ import FollowUpCell from './FollowUpCell';
 
 const moduleName = '信息表控件(infoTable)';
 const RadioGroup = Radio.Group;
-const { name, sex, birthday, tel, cardDate, disease, drugs, present,
+const { name, sex, birthday, tel, cardDate, disease, diseaseCase, drugs, present,
   remark, operation, visit, followUp } = config.ritField;
 const CALL_BACK_STATUS = { save: 'save', submit: 'submit' };
 /**
@@ -45,6 +45,7 @@ class InfoTable extends React.Component {
     },
     [ cardDate.key ]: {
       title: cardDate.cn,
+      width: 200,
       dataIndex: cardDate.key,
       key: cardDate.key,
     },
@@ -54,8 +55,15 @@ class InfoTable extends React.Component {
       dataIndex: disease.key,
       key: disease.key,
     },
+    [ diseaseCase.key ]: {
+      title: diseaseCase.cn,
+      width: 280,
+      dataIndex: diseaseCase.key,
+      key: diseaseCase.key,
+    },
     [ drugs.key ]: {
       title: drugs.cn,
+      width: 280,
       dataIndex: drugs.key,
       key: drugs.key,
     },
