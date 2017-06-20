@@ -63,9 +63,9 @@ function AntenatalCare( props ) {
 				<FormItem label="产检时间" {...config.formItemLayout}
 				          help="时间需精确到小时（日期选择里可以切换时间显示，默认使用当前的时间）">
 					{getFieldDecorator( 'allowDate', {
-						initialValue: [
-							props.antenatalCareDateStart ? moment( fun.getLocalTime( props.antenatalCareDateStart ), 'YYYY-MM-DD HH:00' ) : undefined,
-							props.antenatalCareDateEnd ? moment( fun.getLocalTime( props.antenatalCareDateEnd ), 'YYYY-MM-DD HH:00' ) : undefined ],
+						initialValue: props.antenatalCareDateStart ? [
+							moment( fun.getLocalTime( props.antenatalCareDateStart ), 'YYYY-MM-DD HH:00' ),
+							moment( fun.getLocalTime( props.antenatalCareDateEnd ), 'YYYY-MM-DD HH:00' ) ] : [],
 						rules: [
 							{
 								required: true,

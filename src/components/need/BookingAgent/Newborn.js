@@ -28,9 +28,9 @@ function Newborn( props ) {
 				<FormItem label="上午访视时间" {...config.formItemLayout}
 				          help="时间需精确到小时（日期选择里可以切换时间显示，默认使用当前的时间）">
 					{getFieldDecorator( 'allowDate_am', {
-						initialValue: [
-							props.amInterviewTimeStart ? moment( fun.getLocalTime( props.amInterviewTimeStart ), 'YYYY-MM-DD HH:00' ) : undefined,
-							props.amInterviewTimeEnd ? moment( fun.getLocalTime( props.amInterviewTimeEnd ), 'YYYY-MM-DD HH:00' ) : undefined ],
+						initialValue: props.amInterviewTimeStart ? [
+							moment( fun.getLocalTime( props.amInterviewTimeStart ), 'YYYY-MM-DD HH:00' ),
+							moment( fun.getLocalTime( props.amInterviewTimeEnd ), 'YYYY-MM-DD HH:00' ) ] : [],
 						rules: [
 							{
 								required: true,
@@ -43,9 +43,9 @@ function Newborn( props ) {
 				<FormItem label="下午访视时间" {...config.formItemLayout}
 				          help="时间需精确到小时（日期选择里可以切换时间显示，默认使用当前的时间）">
 					{getFieldDecorator( 'allowDate_pm', {
-						initialValue: [
-							props.pmInterviewTimeStart ? moment( fun.getLocalTime( props.pmInterviewTimeStart ), 'YYYY-MM-DD HH:00' ) : undefined,
-							props.pmInterviewTimeEnd ? moment( fun.getLocalTime( props.pmInterviewTimeEnd ), 'YYYY-MM-DD HH:00' ) : undefined ],
+						initialValue: props.pmInterviewTimeStart ? [
+							moment( fun.getLocalTime( props.pmInterviewTimeStart ), 'YYYY-MM-DD HH:00' ),
+							moment( fun.getLocalTime( props.pmInterviewTimeEnd ), 'YYYY-MM-DD HH:00' ) ] : [],
 						rules: [
 							{
 								required: true,

@@ -62,9 +62,9 @@ function NewestActivity( props ) {
 				<FormItem label="活动时间" {...config.formItemLayout}
 				          help="时间需精确到小时（日期选择里可以切换时间显示，默认使用当前的时间）">
 					{getFieldDecorator( 'allowDate', {
-						initialValue: [
-							props.activityDateStart ? moment( fun.getLocalTime( props.activityDateStart ), 'YYYY-MM-DD HH:00' ) : undefined,
-							props.activityDateEnd ? moment( fun.getLocalTime( props.activityDateEnd ), 'YYYY-MM-DD HH:00' ) : undefined ],
+						initialValue: props.activityDateStart ? [
+							moment( fun.getLocalTime( props.activityDateStart ), 'YYYY-MM-DD HH:00' ),
+							moment( fun.getLocalTime( props.activityDateEnd ), 'YYYY-MM-DD HH:00' ) ] : [],
 						rules: [
 							{
 								required: true,

@@ -37,7 +37,7 @@ function ResidentInspect( props ) {
 				</FormItem>
 				<FormItem label="所需携带材料" {...config.formItemLayout}>
 					{getFieldDecorator( 'carryMaterial', {
-						initialValue: props.carryMaterial ? fun.strToIntArr(props.carryMaterial) : [ 1 ],
+						initialValue: props.carryMaterial ? fun.strToIntArr( props.carryMaterial ) : [ 1 ],
 						rules: [
 							{
 								required: true,
@@ -70,9 +70,9 @@ function ResidentInspect( props ) {
 				<FormItem label="预约体检时间" {...config.formItemLayout}
 				          help="时间需精确到小时（日期选择里可以切换时间显示，默认使用当前的时间）">
 					{getFieldDecorator( 'allowDate', {
-						initialValue: [
-							props.examineDateStart ? moment( fun.getLocalTime( props.examineDateStart ), 'YYYY-MM-DD HH:00' ) : undefined,
-							props.examineDateEnd ? moment( fun.getLocalTime( props.examineDateEnd ), 'YYYY-MM-DD HH:00' ) : undefined ],
+						initialValue: props.examineDateStart ? [
+							moment( fun.getLocalTime( props.examineDateStart ), 'YYYY-MM-DD HH:00' ),
+							moment( fun.getLocalTime( props.examineDateEnd ), 'YYYY-MM-DD HH:00' ) ] : [],
 						rules: [
 							{
 								required: true,

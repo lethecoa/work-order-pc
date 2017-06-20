@@ -39,7 +39,7 @@ function ResidentSign( props ) {
 				</FormItem>
 				<FormItem label="所需携带材料" {...config.formItemLayout}>
 					{getFieldDecorator( 'carryMaterial', {
-						initialValue: props.carryMaterial ? fun.strToIntArr(props.carryMaterial) : [ 1 ],
+						initialValue: props.carryMaterial ? fun.strToIntArr( props.carryMaterial ) : [ 1 ],
 						rules: [
 							{
 								required: true,
@@ -62,9 +62,9 @@ function ResidentSign( props ) {
 				<FormItem label="领取协议或者缴费时间" {...config.formItemLayout}
 				          help="时间需精确到小时（日期选择里可以切换时间显示，默认使用当前的时间）">
 					{getFieldDecorator( 'allowDate', {
-						initialValue: [
-							props.agreementDateStart ? moment( fun.getLocalTime( props.agreementDateStart ), 'YYYY-MM-DD HH:00' ) : undefined,
-							props.agreementDateEnd ? moment( fun.getLocalTime( props.agreementDateEnd ), 'YYYY-MM-DD HH:00' ) : undefined ],
+						initialValue: props.agreementDateStart ? [
+							moment( fun.getLocalTime( props.agreementDateStart ), 'YYYY-MM-DD HH:00' ),
+							moment( fun.getLocalTime( props.agreementDateEnd ), 'YYYY-MM-DD HH:00' ) ] : [],
 						rules: [
 							{
 								required: true,
