@@ -15,6 +15,7 @@ import {
 	NewestPolicy,
 	NewestActivity,
 	AntenatalCare,
+	ChildHealth,
 	Medication,
 } from '../../components';
 import styles from './OrderPage.less';
@@ -200,6 +201,8 @@ const OrderPage = ( {
 					{path === 'workerzxhdtz' ? <NewestActivity disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'antenatalCare' ? <AntenatalCare disabled={disabled} ref={e => ( need = e )} antenatalCareSite={orgName}/> : ''}
 					{path === 'workeryfcjtz' ? <AntenatalCare disabled={disabled} {...serviceDetail}/> : ''}
+					{path === 'childHealth' ? <ChildHealth disabled={disabled} ref={e => ( need = e )} interviewSite={orgName}/> : ''}
+					{path === 'workeretsftz' ? <ChildHealth disabled={disabled} {...serviceDetail}/> : ''}
 
 					{path === 'medication' ? <Medication disabled={disabled} ref={e => ( need = e )}/> : ''}
 					{path === 'workeryytx00' ? <Medication disabled={disabled} {...serviceDetail}/> : ''}

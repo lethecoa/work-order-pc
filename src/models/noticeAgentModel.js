@@ -48,8 +48,12 @@ export default {
 			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},
 		*saveChildren( { payload }, { call, put } ) {
+			let values = payload.data;
+			values.interviewDateStart = values.allowDate[ 0 ];
+			values.interviewDateEnd = values.allowDate[ 1 ];
+			delete(values[ "allowDate" ]);
 			fun.print( payload, 'saveChildren', model.noticeAgent );
-			const data = yield call( saveChildren, payload.data );
+			const data = yield call( saveChildren, values );
 			payload.fun( data );
 			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},
