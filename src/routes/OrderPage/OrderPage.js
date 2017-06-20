@@ -14,6 +14,7 @@ import {
 	ChronicDisease,
 	NewestPolicy,
 	NewestActivity,
+	AntenatalCare,
 	Medication,
 } from '../../components';
 import styles from './OrderPage.less';
@@ -111,7 +112,7 @@ const OrderPage = ( {
 	};
 	/** 客服端-保存单条数据 */
 	const saveRow = ( index, row ) => {
-		console.log('dataList=',dataList);
+		console.log( 'dataList=', dataList );
 		console.log( '================= save: ', index, row );
 		orderData.residentList[ 0 ] = row;
 		let result = {
@@ -190,12 +191,15 @@ const OrderPage = ( {
 					{path === 'workeryyxsfs' ? <Newborn disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'postpartum' ? <Newborn disabled={disabled} ref={e => ( need = e )}/> : ''}
 					{path === 'workeryychfs' ? <Newborn disabled={disabled} {...serviceDetail}/> : ''}
+
 					{path === 'chronicDisease' ? <ChronicDisease disabled={disabled} ref={e => ( need = e )} interviewSite={orgName}/> : ''}
 					{path === 'workermbsftz' ? <ChronicDisease disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'newestPolicy' ? <NewestPolicy disabled={disabled} ref={e => ( need = e )}/> : ''}
 					{path === 'workerzxzctz' ? <NewestPolicy disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'newestActivity' ? <NewestActivity disabled={disabled} ref={e => ( need = e )}/> : ''}
 					{path === 'workerzxhdtz' ? <NewestActivity disabled={disabled} {...serviceDetail}/> : ''}
+					{path === 'antenatalCare' ? <AntenatalCare disabled={disabled} ref={e => ( need = e )} antenatalCareSite={orgName}/> : ''}
+					{path === 'workeryfcjtz' ? <AntenatalCare disabled={disabled} {...serviceDetail}/> : ''}
 
 					{path === 'medication' ? <Medication disabled={disabled} ref={e => ( need = e )}/> : ''}
 					{path === 'workeryytx00' ? <Medication disabled={disabled} {...serviceDetail}/> : ''}

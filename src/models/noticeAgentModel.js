@@ -36,8 +36,14 @@ export default {
 			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},
 		*saveGravida( { payload }, { call, put } ) {
+			let values = payload.data;
+			values.antenatalCareItem = values.antenatalCareItem.join( ',' );
+			values.carryMaterial = values.carryMaterial.join( ',' );
+			values.antenatalCareDateStart = values.allowDate[ 0 ];
+			values.antenatalCareDateEnd = values.allowDate[ 1 ];
+			delete(values[ "allowDate" ]);
 			fun.print( payload, 'saveGravida', model.noticeAgent );
-			const data = yield call( saveGravida, payload.data );
+			const data = yield call( saveGravida, values );
 			payload.fun( data );
 			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
 		},

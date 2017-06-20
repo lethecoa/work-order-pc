@@ -20,6 +20,8 @@ import ChronicDisease from './need/NoticeAgent/ChronicDisease';
 import NewestPolicy from './need/NoticeAgent/NewestPolicy';
 //最新活动通知
 import NewestActivity from './need/NoticeAgent/NewestActivity';
+//孕妇产检
+import AntenatalCare from './need/NoticeAgent/AntenatalCare';
 //用药提醒
 import Medication from './need/TrackingReminder/Medication';
 export {
@@ -35,5 +37,6 @@ export {
 	ChronicDisease,
 	NewestPolicy,
 	NewestActivity,
+	AntenatalCare,
 	Medication,
 }
