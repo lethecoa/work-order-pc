@@ -62,7 +62,7 @@ export default {
 		*saveOrderDetail( { payload }, { call } ){
 			fun.print( payload, 'saveOrderDetail', model.worker );
 			const data = yield call( saveService, payload.data );
-			payload.fun( data );
+			payload.fun( data,payload.index );
 		}
 	},
 	subscriptions: {

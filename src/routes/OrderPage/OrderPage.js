@@ -51,8 +51,8 @@ const OrderPage = ( {
 		dataList = residentList;
 	} else {
 		path = route.path;
-		if(!disabled){
-			dataList=[];
+		if ( !disabled ) {
+			dataList = [];
 		}
 	}
 	const orderData = {
@@ -135,6 +135,7 @@ const OrderPage = ( {
 		let result = {
 			data: orderData,
 			fun: openNotificationWithIcon,
+			index: index,
 		};
 		dispatch( { type: fun.fuse( model.worker, action.worker_saveOrderDetail ), payload: result } );
 	};
@@ -143,9 +144,12 @@ const OrderPage = ( {
 		dispatch( routerRedux.push( { pathname: modular.index.url + modular.orderList.url, query: pagination, } ) );
 	};
 	/** 显示提交结果 */
-	const openNotificationWithIcon = ( data ) => {
+	const openNotificationWithIcon = ( data, index ) => {
 		payModal.handleOver();
 		if ( data.success ) {
+			if ( index !== undefined ) {
+				dataList.splice( index, 1 );
+			}
 			notification[ 'success' ]( {
 				message: config.SUCCESS,
 			} );
