@@ -192,6 +192,7 @@ const OrderPage = ( {
 				}
 				<Form onSubmit={showModal}>
 					<BaseInfo {...baseInfoProps} ref={e => ( baseInfo = e )}/>
+					{path === 'signFamily' ? <ResidentSign disabled={disabled} ref={e => ( need = e )} signSite={orgName}/> : ''}
 					{path === 'residentSign' ? <ResidentSign disabled={disabled} ref={e => ( need = e )} signSite={orgName}/> : ''}
 					{path === 'workeryyjmqy' ? <ResidentSign disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'residentInspect' ? <ResidentInspect disabled={disabled} ref={e => ( need = e )} examineSite={orgName}/> : ''}

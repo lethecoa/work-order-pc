@@ -27,7 +27,8 @@ module.exports = {
 	 * 签约家庭
 	 */
 	signFamily: {
-		url: 'signFamily', name: 'signFamily', cn: '签约家庭', ritRef: 'dljmqy',
+		url: 'signFamily', name: 'signFamily', cn: '签约家庭', ritRef: 'yyjmqy',
+		model: model.bookingAgent, action: action.BA_saveSign, monitor: 1,
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, present.key, operation.key ]
 	},

@@ -32,7 +32,7 @@ function RouterConfig( { history, app } ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
 							registerModel( app, require( '../models/bookingAgentModel' ) );
-							cb( null, require( './SignFamily/SignFamily' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
 				},
