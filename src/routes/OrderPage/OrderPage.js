@@ -63,12 +63,12 @@ const OrderPage = ( {
 	};
 	/** 医生端-校验表单输入数据*/
 	const validAndConfirm = () => {
-		baseInfo.validateFieldsAndScroll( ( err ) => {
-			if ( !err ) {
+		baseInfo.validateFieldsAndScroll( ( errOut ) => {
+			if ( !errOut ) {
 				need.validateFieldsAndScroll( ( err ) => {
 					if ( !err ) {
 						dataList = residentInfoTable.getData();
-						if ( dataList === undefined ) {
+						if ( dataList === undefined || dataList.length === 0 ) {
 							Modal.error( {
 								title: config.NODATA,
 							} );
