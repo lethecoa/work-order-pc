@@ -158,8 +158,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.hypertension,
-					name: 'Hypertension',
+					path: modular.hypertension.url,
+					name: modular.hypertension.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
@@ -169,8 +169,8 @@ function RouterConfig( { history, app } ) {
 					},
 				},
 				{
-					path: urlMap.diabetes,
-					name: 'Diabetes',
+					path: modular.diabetes.url,
+					name: modular.diabetes.name,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );
@@ -306,6 +306,26 @@ function RouterConfig( { history, app } ) {
 				{
 					path: modular.workeryylxgz.url,
 					name: modular.workeryylxgz.url,
+					getComponent( nextState, cb ) {
+						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
+						} );
+					},
+				},
+				{
+					path: modular.workergxysf0.url,
+					name: modular.workergxysf0.url,
+					getComponent( nextState, cb ) {
+						require.ensure( [], ( require ) => {
+							registerModel( app, require( '../models/orderModel' ) );
+							cb( null, require( './OrderPage/OrderPage' ) );
+						} );
+					},
+				},
+				{
+					path: modular.workertnbsf0.url,
+					name: modular.workertnbsf0.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
 							registerModel( app, require( '../models/orderModel' ) );

@@ -137,8 +137,24 @@ module.exports = {
 	workeryylxgz: {
 		url: worker + 'yylxgz', name: 'curativeEffect', monitor: 1,
 	},
-	hypertension: 'hypertension',
-	diabetes: 'diabetes',
+	hypertension: {
+		url: 'hypertension', name: 'hypertension', cn: '高血压随访', ritRef: 'gxysf0',
+		model: model.chronicDisease, action: action.CD_saveBlood, monitor: 1,
+		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
+		ritWorker: [ name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ]
+	},
+	workergxysf0: {
+		url: worker + 'gxysf0', name: 'hypertension', monitor: 1,
+	},
+	diabetes: {
+		url: 'diabetes', name: 'diabetes', cn: '糖尿病随访', ritRef: 'tnbsf0',
+		model: model.chronicDisease, action: action.CD_saveSugar, monitor: 1,
+		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
+		ritWorker: [ name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ]
+	},
+	workertnbsf0: {
+		url: worker + 'tnbsf0', name: 'diabetes', monitor: 1,
+	},
 	/**
 	 * 订单列表页
 	 */

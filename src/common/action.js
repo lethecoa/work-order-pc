@@ -23,6 +23,8 @@ module.exports = {
 	NA_saveChildren: 'saveChildren',
 	TR_saveDrug: 'saveDrug',
 	TR_saveDrugeffect: 'saveDrugeffect',
+	CD_saveBlood:'saveBlood ',
+	CD_saveSugar: 'saveSugar',
 	worker_getOrders: 'getOrders',
 	worker_getOrderDetail: 'getOrderDetail',
 	worker_saveOrderDetail: 'saveOrderDetail',

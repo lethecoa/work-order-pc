@@ -27,6 +27,10 @@ module.exports = {
 	saveDrug: config.api + '/workorder/saveDrug',
 	/** 保存用药疗效跟踪 */
 	saveDrugeffect: config.api + '/workorder/saveDrugeffect',
+	/** 保存高血压随访 */
+	saveBlood: config.api + '/workorder/saveBlood',
+	/** 保存糖尿病随访 */
+	saveSugar: config.api + '/workorder/saveSugar',
 	/** 查询委托单列表 */
 	getOrders: config.api + '/callCenter/getOrders',
 	/** 查询委托单明细 */

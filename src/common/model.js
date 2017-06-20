@@ -6,5 +6,6 @@ module.exports = {
 	bookingAgent: 'bookingAgentModel',
 	chronicDisease: 'chronicDiseaseModel',
 	noticeAgent: 'noticeAgentModel',
-	trackingReminder: 'trackingReminderModel'
+	trackingReminder: 'trackingReminderModel',
+	chronicDisease: 'chronicDiseaseModel',
 }

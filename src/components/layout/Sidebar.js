@@ -36,8 +36,8 @@ function Sidebar() {
 					<TreeNode key={modular.curativeEffect.url} title={modular.curativeEffect.cn}/>
 				</TreeNode>
 				<TreeNode key="chronicDiseaseMenu" title="慢病随访">
-					<TreeNode key="hypertension" title="高血压随访"/>
-					<TreeNode key="diabetes" title="糖尿病随访"/>
+					<TreeNode key={modular.hypertension.url} title={modular.hypertension.cn}/>
+					<TreeNode key={modular.diabetes.url} title={modular.diabetes.cn}/>
 				</TreeNode>
 			</TreeNode>
 		</Tree>
