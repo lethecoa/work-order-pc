@@ -26,6 +26,10 @@ import AntenatalCare from './need/NoticeAgent/AntenatalCare';
 import ChildHealth from './need/NoticeAgent/ChildHealth';
 //用药提醒
 import Medication from './need/TrackingReminder/Medication';
+//高血压随访
+import Hypertension from './need/ChronicDisease/Hypertension';
+//糖尿病随访
+import Diabetes from './need/ChronicDisease/Diabetes';
 export {
 	MainLayout,
 	ResidentInfoTable,
@@ -42,4 +46,6 @@ export {
 	AntenatalCare,
 	ChildHealth,
 	Medication,
+	Hypertension,
+	Diabetes,
 }

@@ -17,6 +17,8 @@ import {
 	AntenatalCare,
 	ChildHealth,
 	Medication,
+	Hypertension,
+	Diabetes,
 } from '../../components';
 import styles from './OrderPage.less';
 
@@ -49,8 +51,10 @@ const OrderPage = ( {
 		dataList = residentList;
 	} else {
 		path = route.path;
+		if(!disabled){
+			dataList=[];
+		}
 	}
-
 	const orderData = {
 		orderHandlerId,
 		orderHandlerName,
@@ -208,6 +212,11 @@ const OrderPage = ( {
 					{path === 'workeryytx00' ? <Medication disabled={disabled} {...serviceDetail}/> : ''}
 					{path === 'curativeEffect' ? <Medication disabled={disabled} ref={e => ( need = e )}/> : ''}
 					{path === 'workeryylxgz' ? <Medication disabled={disabled} {...serviceDetail}/> : ''}
+
+					{path === 'hypertension' ? <Hypertension disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'workergxysf0' ? <Hypertension disabled={disabled} {...serviceDetail}/> : ''}
+					{path === 'diabetes' ? <Diabetes disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'workertnbsf0' ? <Diabetes disabled={disabled} {...serviceDetail}/> : ''}
 
 					<ResidentInfoTable name={modular[ path ].name} userType={userType} monitor={modular[ path ].monitor}
 					                   data={dataList} onSave={e => saveRow( e )} onSubmit={e => submitRow( e )}
