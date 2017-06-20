@@ -20,6 +20,8 @@ import ChronicDisease from './need/NoticeAgent/ChronicDisease';
 import NewestPolicy from './need/NoticeAgent/NewestPolicy';
 //最新活动通知
 import NewestActivity from './need/NoticeAgent/NewestActivity';
+//用药提醒
+import Medication from './need/TrackingReminder/Medication';
 export {
 	MainLayout,
 	ResidentInfoTable,
@@ -33,4 +35,5 @@ export {
 	ChronicDisease,
 	NewestPolicy,
 	NewestActivity,
+	Medication,
 }

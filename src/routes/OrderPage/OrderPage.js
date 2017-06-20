@@ -14,6 +14,7 @@ import {
 	ChronicDisease,
 	NewestPolicy,
 	NewestActivity,
+	Medication,
 } from '../../components';
 import styles from './OrderPage.less';
 
@@ -110,6 +111,8 @@ const OrderPage = ( {
 	};
 	/** 客服端-保存单条数据 */
 	const saveRow = ( index, row ) => {
+		console.log('dataList=',dataList);
+		console.log( '================= save: ', index, row );
 		orderData.residentList[ 0 ] = row;
 		let result = {
 			data: orderData,
@@ -120,6 +123,7 @@ const OrderPage = ( {
 	};
 	/** 客服端-提交单条数据 */
 	const submitRow = ( index, row ) => {
+		console.log( '================= submit: ', index, row );
 		orderData.residentList[ 0 ] = row;
 		orderData.residentList[ 0 ].status = 2;
 		let result = {
@@ -193,7 +197,12 @@ const OrderPage = ( {
 					{path === 'newestActivity' ? <NewestActivity disabled={disabled} ref={e => ( need = e )}/> : ''}
 					{path === 'workerzxhdtz' ? <NewestActivity disabled={disabled} {...serviceDetail}/> : ''}
 
-					<ResidentInfoTable name={modular[ path ].name} userType={userType} monitor={1}
+					{path === 'medication' ? <Medication disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'workeryytx00' ? <Medication disabled={disabled} {...serviceDetail}/> : ''}
+					{path === 'curativeEffect' ? <Medication disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'workeryylxgz' ? <Medication disabled={disabled} {...serviceDetail}/> : ''}
+
+					<ResidentInfoTable name={modular[ path ].name} userType={userType} monitor={modular[ path ].monitor}
 					                   data={dataList} onSave={e => saveRow( e )} onSubmit={e => submitRow( e )}
 					                   disabled={disabled} ref={e => ( residentInfoTable = e )}/>
 					{userType === config.userType.doctor ?
