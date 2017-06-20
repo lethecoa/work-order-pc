@@ -50,6 +50,7 @@ class InfoTable extends React.Component {
     },
     [ disease.key ]: {
       title: disease.cn,
+      width: 280,
       dataIndex: disease.key,
       key: disease.key,
     },
@@ -164,6 +165,9 @@ class InfoTable extends React.Component {
         }
         if ( !obj.hasOwnProperty( present.key ) ) {
           obj[ present.key ] = '0';
+        }
+        if ( !obj.hasOwnProperty( visit.key ) ) {
+          obj[ visit.key ] = '0';
         }
       } );
     }

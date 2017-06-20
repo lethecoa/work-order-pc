@@ -80,6 +80,7 @@ class ResidentInfoTable extends React.Component {
     return (
       <div className={styles.normal}>
         <div className={styles.title}>
+          <iframe ref="ifile" style={{ display: 'none' }}></iframe>
           <div className={styles.button}>
             <Button size="small" onClick={this.getData}>打印测试数据</Button>&nbsp;
             <Button size="small" disabled={this.props.disabled} onClick={this.download}
