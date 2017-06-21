@@ -49,14 +49,28 @@ const OrderList = ( {
 	form,
 	loading,
 	workerModel,
-	handlerRowClick,
-	search,
-	onRadioChange,
+	dispatch,
 } ) => {
-	console.log('===orderList===');
+	console.log( '===orderList===' );
 	const { resetFields, validateFieldsAndScroll, getFieldDecorator } = form;
 	const { pagination, list: dataSource, total } = workerModel;
-
+	/** 查询 */
+	const search = ( values ) => {
+		if ( values.allowDate[ 0 ] && values.allowDate[ 1 ] ) {
+			values.dateStart = values.allowDate[ 0 ].format( 'YYYY-MM-DD' );
+			values.dateEnd = values.allowDate[ 1 ].format( 'YYYY-MM-DD' );
+		}
+		delete(values[ "allowDate" ]);
+		dispatch( { type: fun.fuse( model.worker, action.worker_getOrders ), payload: values } );
+	};
+	/** 列表行点击 */
+	const handlerRowClick = ( record, index ) => {
+		dispatch( {
+			type: fun.fuse( model.worker, action.worker_getOrderDetail ),
+			payload: { order: record, url: modular.worker + record.itemId }
+		} );
+	};
+	/** 点击查询按钮 */
 	const handlerSubmit = ( e ) => {
 		e.preventDefault();
 		validateFieldsAndScroll( ( err, values ) => {
@@ -65,10 +79,12 @@ const OrderList = ( {
 			}
 		} );
 	};
+	/** 切换已处理、未处理 */
 	const handlerRadioChange = ( e ) => {
 		resetFields();
-		onRadioChange( e.target.value );
+		dispatch( { type: fun.fuse( model.worker, action.worker_getOrders ), payload: { status: e.target.value } } );
 	};
+	/** 翻页 */
 	const handlerPageChange = ( page ) => {
 		validateFieldsAndScroll( ( err, values ) => {
 			if ( !err ) {
@@ -139,29 +155,5 @@ const mapStateToProps = ( state ) => {
 	};
 };
 
-const mapDispatchToProps = ( dispatch ) => {
-	return {
-		search: ( values ) => {
-			if ( values.allowDate[ 0 ] && values.allowDate[ 1 ] ) {
-				values.dateStart = values.allowDate[ 0 ].format( 'YYYY-MM-DD' );
-				values.dateEnd = values.allowDate[ 1 ].format( 'YYYY-MM-DD' );
-			}
-			delete(values[ "allowDate" ]);
-			dispatch( { type: fun.fuse( model.worker, action.worker_getOrders ), payload: values } );
-		},
-		handlerRowClick: ( record, index ) => {
-			console.log(modular.worker + record.itemId);
-			dispatch( {
-				type: fun.fuse( model.worker, action.worker_getOrderDetail ),
-				payload: { order: record, url: modular.worker + record.itemId }
-			} );
-			//dispatch( routerRedux.push( '/workerSignFamily' ) );
-		},
-		onRadioChange: ( value ) => {
-			dispatch( { type: fun.fuse( model.worker, action.worker_getOrders ), payload: { status: value } } );
-		}
-	};
-};
-
-export default connect( mapStateToProps, mapDispatchToProps )( Form.create()( OrderList ) );
+export default connect( mapStateToProps )( Form.create()( OrderList ) );
 
