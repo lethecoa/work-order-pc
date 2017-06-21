@@ -93,28 +93,21 @@ class ResidentInfoTable extends React.Component {
           居民信息表样本
         </div>
         <InfoTable name={this.props.name} dataSource={this.state.dataSource} monitor={this.props.monitor}
-          onSave={this.props.onSave} onSubmit={this.props.onSubmit} userType={this.props.userType}
-          operation={this.state.operation} />
+          onSave={this.props.onSave} onSubmit={this.props.onSubmit} userType={this.props.userType} />
       </div>
     );
   }
 
   componentWillReceiveProps( nextProps ) {
     let data = nextProps.data;
-    let operation = true;
     if ( data !== this.state.dataSource ) {
-      if ( typeof data !== 'undefined' && data.length > 0 ) {
-        operation = data[ 0 ].status === '2' ? true : false;
-      }
-      this.setState( { dataSource: data, operation: operation } );
+      this.setState( { dataSource: data } );
     }
   }
 
   shouldComponentUpdate( nextProps, nextState ) {
-    return nextState.dataSource !== this.state.dataSource ||
-      nextState.operation !== this.state.operation;
+    return nextProps.data !== this.state.dataSource || nextState.dataSource !== this.state.dataSource;
   }
-
 }
 
 export default ResidentInfoTable;

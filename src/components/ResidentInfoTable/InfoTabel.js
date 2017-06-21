@@ -134,7 +134,6 @@ class InfoTable extends React.Component {
     super( props );
     fun.printLoader( moduleName );
 
-    this.initData( props.dataSource );
     let columnConfig = props.userType === config.userType.doctor ?
       modular[ props.name ][ 'ritDoctor' ] : modular[ props.name ][ 'ritWorker' ];
     this.columns = this.getColums( columnConfig );
@@ -153,31 +152,7 @@ class InfoTable extends React.Component {
       submitCallback: this.props.onSubmit,
       /** 用户操作的类型：保存或者提交 */
       callBackStatus: '',
-      operation: props.operation || false,
-    }
-  }
-  /**
-   * 初始化数据，将可编辑的字段改为 object 类型
-   */
-  initData = ( data ) => {
-    if ( typeof data !== 'undefined' && data.length > 0 ) {
-      data.forEach( function ( item, index, arr ) {
-        let obj = arr[ index ];
-        obj.myStatus = config.ritStatus.general;
-        // 监听数量，代表每一列有多少个可编辑单元格，
-        // 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
-        obj.monitor = 0;
-
-        if ( !obj.hasOwnProperty( remark.key ) ) {
-          obj[ remark.key ] = '';
-        }
-        if ( !obj.hasOwnProperty( present.key ) ) {
-          obj[ present.key ] = '0';
-        }
-        if ( !obj.hasOwnProperty( visit.key ) ) {
-          obj[ visit.key ] = '0';
-        }
-      } );
+      operation: false,
     }
   }
   /**
@@ -301,12 +276,19 @@ class InfoTable extends React.Component {
   render() {
     return (
       <Table className={styles.table} bordered columns={this.columns} rowKey="rownum"
-        dataSource={this.props.dataSource} size="middle" pagination={this.state.pagination} />
+        dataSource={this.state.data} size="middle" pagination={this.state.pagination} />
     )
   }
 
   componentWillReceiveProps( nextProps ) {
-    this.setState( { operation: nextProps.operation } );
+    let data = nextProps.dataSource;
+    let operation = true;
+    if ( data !== this.state.data ) {
+      if ( typeof data !== 'undefined' && data.length > 0 ) {
+        operation = data[ 0 ].status === '2' ? true : false;
+      }
+      this.setState( { data: data, operation: operation } );
+    }
   }
 }
 
