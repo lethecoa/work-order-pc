@@ -41,6 +41,7 @@ const OrderPage = ( {
 	route,
 	user,
 } ) => {
+	console.log('===orderPage===');
 	const { userType, orderHandlerId, orderHandlerName } = user;
 	const { reset, currentData, currentStep, display, disabled, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel;
 	const { orgName, remainingBalance } = currentData;
@@ -281,7 +282,6 @@ const OrderPage = ( {
 };
 
 const mapStateToProps = ( state ) => {
-	fun.print( state, 'state', moduleName );
 	return {
 		...state,
 		loading: state.loading.models.orderModel,

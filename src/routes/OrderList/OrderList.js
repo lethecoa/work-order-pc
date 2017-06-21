@@ -53,6 +53,7 @@ const OrderList = ( {
 	search,
 	onRadioChange,
 } ) => {
+	console.log('===orderList===');
 	const { resetFields, validateFieldsAndScroll, getFieldDecorator } = form;
 	const { pagination, list: dataSource, total } = workerModel;
 
@@ -132,7 +133,6 @@ const OrderList = ( {
 };
 
 const mapStateToProps = ( state ) => {
-	fun.print( state, 'state', moduleName );
 	return {
 		...state,
 		loading: state.loading.models.workerModel,
