@@ -107,24 +107,23 @@ class InfoTable extends React.Component {
             {
               myStatus === config.ritStatus.editing ?
                 <span>
-                  <Popconfirm title="确定保存吗？" onConfirm={() => this.save( index )}>
-                    <a>保存</a>
-                  </Popconfirm>
+                  <a onClick={() => this.save( index )}>保存</a>
                   &nbsp;|&nbsp;
-                    <Popconfirm title="取销将不保存" onConfirm={() => this.cancel( index )}>
+                  <Popconfirm title="取销将不保存" onConfirm={() => this.cancel( index )}>
                     <a>取销</a>
                   </Popconfirm>
                 </span>
                 :
-                <span>
-                  <a disabled={this.state.operation} onClick={() => this.edit( index )}>编辑</a>
+                <span className={this.state.operation ? 'hide' : ''}>
+                  <a onClick={() => this.edit( index )}>编辑</a>
+                  &nbsp;|&nbsp;
                 </span>
             }
-            &nbsp;|&nbsp;
-            <Popconfirm title="确定提交吗？" onConfirm={() => this.submit( index )}>
-              <a disabled={this.state.operation}
-                style={this.state.operation ? { color: '#b1b8bd' } : { color: '#C00' }}>提交</a>
-            </Popconfirm>
+            <a className={this.state.operation ? 'hide' : ''}
+              onClick={this.submit( index )}
+              style={this.state.operation ? { color: '#b1b8bd' } : { color: '#C00' }}>提交</a>
+            <a className={!this.state.operation ? 'hide' : ''}
+              onClick={() => this.revoke( index )}>撤回</a>
           </div>
         );
       }
@@ -133,10 +132,6 @@ class InfoTable extends React.Component {
   constructor( props ) {
     super( props );
     fun.printLoader( moduleName );
-
-    let columnConfig = props.userType === config.userType.doctor ?
-      modular[ props.name ][ 'ritDoctor' ] : modular[ props.name ][ 'ritWorker' ];
-    this.columns = this.getColums( columnConfig );
     this.monitor = props.monitor;
 
     this.state = {
@@ -153,12 +148,16 @@ class InfoTable extends React.Component {
       /** 用户操作的类型：保存或者提交 */
       callBackStatus: '',
       operation: false,
+      columns: this.getColums(),
+      parentName: props.name,
     }
   }
   /**
    * 获取表头数据
    */
-  getColums = ( columnConfig ) => {
+  getColums = () => {
+    let columnConfig = this.props.userType === config.userType.doctor ?
+      modular[ this.props.name ][ 'ritDoctor' ] : modular[ this.props.name ][ 'ritWorker' ];
     return columnConfig.map(( item, index, arr ) => {
       if ( this.allColumns.hasOwnProperty( item ) )
         return this.allColumns[ item ];
@@ -214,7 +213,10 @@ class InfoTable extends React.Component {
     if ( item.monitor <= 0 ) {
       let row = this.rebuildData( item );
       if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) saveCallback( index, row );
-      if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) submitCallback( index, row );
+      if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) {
+        row[ 'status' ] = '2';
+        submitCallback( index, row );
+      }
     }
   }
   /**
@@ -257,12 +259,22 @@ class InfoTable extends React.Component {
     const { data, submitCallback } = this.state;
     if ( data[ index ][ 'myStatus' ] === config.ritStatus.general ) {
       let row = this.rebuildData( data[ index ] );
+      row[ 'status' ] = '2';
       if ( typeof submitCallback === 'function' ) submitCallback( index, row );
     }
     else {
       data[ index ][ 'myStatus' ] = config.ritStatus.general;
       this.setState( { data: data, callBackStatus: CALL_BACK_STATUS.submit } );
     }
+  }
+  /**
+   * 撤销已处理的数据
+   */
+  revoke = ( index ) => {
+    const { data, submitCallback } = this.state;
+    let row = this.rebuildData( data[ index ] );
+    row[ 'status' ] = '1';
+    if ( typeof submitCallback === 'function' ) submitCallback( index, row );
   }
   /**
    * 确认撤销：取消刚刚录入的数据，并回到非编辑状态
@@ -275,8 +287,9 @@ class InfoTable extends React.Component {
 
   render() {
     return (
-      <Table className={styles.table} bordered columns={this.columns} rowKey="rownum"
-        dataSource={this.state.data} size="middle" pagination={this.state.pagination} />
+      <Table className={styles.table} bordered columns={this.state.columns} rowKey="rownum"
+        dataSource={this.state.data} size="middle" pagination={this.state.pagination}
+        name={this.state.parentName} />
     )
   }
 
@@ -289,6 +302,8 @@ class InfoTable extends React.Component {
       }
       this.setState( { data: data, operation: operation } );
     }
+    if ( nextProps.name != this.state.parentName )
+      this.setState( { columns: this.getColums() } );
   }
 }
 
