@@ -114,15 +114,15 @@ class InfoTable extends React.Component {
                   </Popconfirm>
                 </span>
                 :
-                <span className={this.state.operation ? 'hide' : ''}>
+                <span className={this.state.operationStatus ? 'hide' : ''}>
                   <a onClick={() => this.edit( index )}>编辑</a>
                   &nbsp;|&nbsp;
                 </span>
             }
-            <a className={this.state.operation ? 'hide' : ''}
-              onClick={this.submit( index )}
-              style={this.state.operation ? { color: '#b1b8bd' } : { color: '#C00' }}>提交</a>
-            <a className={!this.state.operation ? 'hide' : ''}
+            <a className={this.state.operationStatus ? 'hide' : ''}
+              onClick={() => this.submit( index )}
+              style={this.state.operationStatus ? { color: '#b1b8bd' } : { color: '#C00' }}>提交</a>
+            <a className={!this.state.operationStatus ? 'hide' : ''}
               onClick={() => this.revoke( index )}>撤回</a>
           </div>
         );
@@ -147,7 +147,7 @@ class InfoTable extends React.Component {
       submitCallback: this.props.onSubmit,
       /** 用户操作的类型：保存或者提交 */
       callBackStatus: '',
-      operation: false,
+      operationStatus: false,
       columns: this.getColums(),
       parentName: props.name,
     }
@@ -288,19 +288,18 @@ class InfoTable extends React.Component {
   render() {
     return (
       <Table className={styles.table} bordered columns={this.state.columns} rowKey="rownum"
-        dataSource={this.state.data} size="middle" pagination={this.state.pagination}
-        name={this.state.parentName} />
+        dataSource={this.state.data} size="middle" pagination={this.state.pagination} />
     )
   }
 
   componentWillReceiveProps( nextProps ) {
     let data = nextProps.dataSource;
-    let operation = true;
+    let operationStatus = true;
     if ( data !== this.state.data ) {
       if ( typeof data !== 'undefined' && data.length > 0 ) {
-        operation = data[ 0 ].status === '2' ? true : false;
+        operationStatus = data[ 0 ].status === '2' ? true : false;
       }
-      this.setState( { data: data, operation: operation } );
+      this.setState( { data: data, operationStatus: operationStatus } );
     }
     if ( nextProps.name != this.state.parentName )
       this.setState( { columns: this.getColums() } );
