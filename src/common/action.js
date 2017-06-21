@@ -9,6 +9,7 @@ module.exports = {
 	order_initWorker: 'initWorker',
 	order_changeConfirmState: 'changeConfirmState',
 	order_changeSubmitSate: 'changeSubmitSate',
+	order_changeReset:'changeReset',
 	BA_init: 'intiState',
 	BA_changeConfirmState: 'changeConfirmState',
 	BA_changeSubmitSate: 'changeSubmitSate',

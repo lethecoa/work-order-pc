@@ -22,6 +22,7 @@ export default {
 				displayBack: 'block',
 				displayNew: 'none',
 				submitDisabled: false,
+				reset:true,
 				currentData,
 			}
 		},
@@ -31,6 +32,12 @@ export default {
 				display: 'block',
 				disabled: true,
 				currentData,
+			}
+		},
+		changeReset:(state)=>{
+			return{
+				...state,
+				reset:false,
 			}
 		},
 		changeConfirmState: ( state ) => {

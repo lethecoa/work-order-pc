@@ -42,7 +42,7 @@ const OrderPage = ( {
 	user,
 } ) => {
 	const { userType, orderHandlerId, orderHandlerName } = user;
-	const { currentData, currentStep, display, disabled, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel;
+	const { reset, currentData, currentStep, display, disabled, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel;
 	const { orgName, remainingBalance } = currentData;
 	const { pagination, serviceDetail, residentList } = workerModel ? workerModel : {};
 
@@ -145,6 +145,9 @@ const OrderPage = ( {
 	const backToList = () => {
 		dispatch( routerRedux.push( { pathname: modular.index.url + modular.orderList.url, query: pagination, } ) );
 	};
+	const changeReset = () => {
+		dispatch( { type: fun.fuse( model.order, action.order_changeReset ) } );
+	};
 	/** 初始化数据，将可编辑的字段改为 object 类型 */
 	const formatData = ( data ) => {
 		if ( typeof data !== 'undefined' && data.length > 0 ) {
@@ -186,6 +189,7 @@ const OrderPage = ( {
 	};
 	/** 基本信息参数 */
 	const baseInfoProps = {
+		reset,
 		...currentData,
 		entrustNumber: currentData.entrustNumber ? currentData.entrustNumber : entrustNumber,
 		display: display,
@@ -216,7 +220,7 @@ const OrderPage = ( {
 					</div>
 				}
 				<Form onSubmit={showModal}>
-					<BaseInfo {...baseInfoProps} ref={e => ( baseInfo = e )}/>
+					<BaseInfo {...baseInfoProps} ref={e => ( baseInfo = e )} onChange={changeReset}/>
 					{path === 'signFamily' ? <ResidentSign disabled={disabled} ref={e => ( need = e )} signSite={orgName}/> : ''}
 					{path === 'residentSign' ? <ResidentSign disabled={disabled} ref={e => ( need = e )} signSite={orgName}/> : ''}
 					{path === 'workeryyjmqy' ? <ResidentSign disabled={disabled} {...serviceDetail} /> : ''}
