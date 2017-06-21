@@ -82,7 +82,7 @@ class ResidentInfoTable extends React.Component {
         <div className={styles.title}>
           <iframe ref="ifile" style={{ display: 'none' }}></iframe>
           <div className={styles.button}>
-            <Button size="small" onClick={this.getData}>打印测试数据</Button>&nbsp;
+            {/*<Button size="small" onClick={this.getData}>打印测试数据</Button>&nbsp;*/}
             <Button size="small" disabled={this.props.disabled} onClick={this.download}
               icon="download" className={this.state.show}>下载该表格</Button>&nbsp;
             <Upload action={api.uploadExcel} onChange={this.upload}
@@ -103,10 +103,14 @@ class ResidentInfoTable extends React.Component {
     if ( data !== this.state.dataSource ) {
       this.setState( { dataSource: data } );
     }
+    if ( nextProps.disabled !== this.state.disabled ) {
+      this.setState( { disabled: nextProps.disabled } );
+    }
   }
 
   shouldComponentUpdate( nextProps, nextState ) {
-    return nextProps.data !== this.state.dataSource || nextState.dataSource !== this.state.dataSource;
+    return nextProps.data !== this.state.dataSource || nextState.dataSource !== this.state.dataSource
+      || nextProps.disabled !== this.state.disabled;
   }
 }
 
