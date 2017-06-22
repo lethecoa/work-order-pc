@@ -261,7 +261,7 @@ class InfoTable extends React.Component {
     if ( data[ index ][ 'myStatus' ] === config.ritStatus.general ) {
       let row = this.rebuildData( data[ index ] );
       row[ 'status' ] = '2';
-      if ( typeof submitCallback === 'function' ) submitCallback( row, successCallback );
+      if ( typeof submitCallback === 'function' ) submitCallback( row, this.successCallback );
     }
     else {
       data[ index ][ 'myStatus' ] = config.ritStatus.general;
@@ -286,7 +286,7 @@ class InfoTable extends React.Component {
     const { data, submitCallback } = this.state;
     let row = this.rebuildData( data[ index ] );
     row[ 'status' ] = '1';
-    if ( typeof submitCallback === 'function' ) submitCallback( index, row );
+    if ( typeof submitCallback === 'function' ) submitCallback( row, this.successCallback );
   }
   /**
    * 确认撤销：取消刚刚录入的数据，并回到非编辑状态
