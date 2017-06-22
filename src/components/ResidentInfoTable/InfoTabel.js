@@ -116,12 +116,13 @@ class InfoTable extends React.Component {
                 :
                 <span className={this.state.operationStatus ? 'hide' : ''}>
                   <a onClick={() => this.edit( index )}>编辑</a>
-                  &nbsp;|&nbsp;
                 </span>
             }
-            <a className={this.state.operationStatus ? 'hide' : ''}
-              onClick={() => this.submit( index )}
-              style={this.state.operationStatus ? { color: '#b1b8bd' } : { color: '#C00' }}>提交</a>
+            <span className={this.state.operationStatus ? 'hide' : ''}>
+              &nbsp;|&nbsp;
+              <a onClick={() => this.submit( index )}
+                style={this.state.operationStatus ? { color: '#b1b8bd' } : { color: '#C00' }}>提交</a>
+            </span>
             <a className={!this.state.operationStatus ? 'hide' : ''}
               onClick={() => this.revoke( index )}>撤回</a>
           </div>
@@ -260,12 +261,23 @@ class InfoTable extends React.Component {
     if ( data[ index ][ 'myStatus' ] === config.ritStatus.general ) {
       let row = this.rebuildData( data[ index ] );
       row[ 'status' ] = '2';
-      if ( typeof submitCallback === 'function' ) submitCallback( index, row );
+      if ( typeof submitCallback === 'function' ) submitCallback( row, successCallback );
     }
     else {
       data[ index ][ 'myStatus' ] = config.ritStatus.general;
       this.setState( { data: data, callBackStatus: CALL_BACK_STATUS.submit } );
     }
+  }
+  /**
+   * 成功后调用
+   */
+  successCallback = ( serviceId ) => {
+    let index = this.state.data.map(( item, index, arr ) => {
+      if ( row.serviceId !== serviceId )
+        return index;
+    } );
+    if ( index !== 'undefined' && index > 0 )
+      this.setState( { dataSource: this.state.dataSource.splice( index, 1 ) } );
   }
   /**
    * 撤销已处理的数据
