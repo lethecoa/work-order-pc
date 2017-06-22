@@ -41,7 +41,7 @@ const OrderPage = ( {
 	route,
 	user,
 } ) => {
-	console.log('===orderPage===');
+	fun.printLoader('orderPage');
 	const { userType, orderHandlerId, orderHandlerName } = user;
 	const { reset, currentData, currentStep, display, disabled, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel;
 	const { orgName, remainingBalance } = currentData;
@@ -134,7 +134,6 @@ const OrderPage = ( {
 	const submitRow = ( index, row ) => {
 		console.log( '================= submit: ', index, row );
 		orderData.residentList[ 0 ] = row;
-		orderData.residentList[ 0 ].status = 2;
 		let result = {
 			data: orderData,
 			fun: openNotificationWithIcon,
@@ -191,6 +190,7 @@ const OrderPage = ( {
 	/** 基本信息参数 */
 	const baseInfoProps = {
 		reset,
+		//path,
 		...currentData,
 		entrustNumber: currentData.entrustNumber ? currentData.entrustNumber : entrustNumber,
 		display: display,
