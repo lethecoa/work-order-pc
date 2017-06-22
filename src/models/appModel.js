@@ -9,18 +9,20 @@ export default {
 	},
 	reducers: {
 		init( state, { payload: user } ) {
-			console.log('===appModel===init===');
 			return {
 				...state, user
 			}
 		}
 	},
 	effects: {
-		*checkLogin( {}, { call, put } ) {
+		*checkLogin( {}, { select, put } ) {
 			let user = storeage.get( config.local.user );
 			fun.print( user, '存储在浏览器内的user数据' );
 			if ( user && user.userType === config.userType.doctor ) {
-				yield put( { type: action.app_init, payload: user } );
+				const stateUser = yield select( state => state.appModel.user );
+				if ( !stateUser || fun.isEmptyObject( stateUser ) ) {
+					yield put( { type: action.app_init, payload: user } );
+				}
 			}
 			else {
 				yield put( routerRedux.push( urlMap.login ) );
@@ -42,11 +44,13 @@ export default {
 	subscriptions: {
 		setup ( { dispatch, history } ) {
 			history.listen( ( { pathname, query } ) => {
-				if ( pathname === '/orderList' ) {
-					let user = { userType: config.userType.worker };
-					user = Object.assign( {}, user, query );
-					storeage.set( config.local.user, user );
-					dispatch( { type: action.app_init, payload: user } );
+				if ( pathname === '/orderList') {
+					if(query.orderHandlerId){
+						let user = { userType: config.userType.worker };
+						user = Object.assign( {}, user, query );
+						storeage.set( config.local.user, user );
+						dispatch( { type: action.app_init, payload: user } );
+					}
 				} else if ( pathname !== '/login' && pathname.indexOf( 'worker' ) < 0 ) {
 					dispatch( { type: action.checkLogin } );
 				}
