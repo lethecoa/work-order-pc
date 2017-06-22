@@ -29,6 +29,11 @@ class BaseInfo extends Component {
 		}
 	}
 
+	disabledDate = ( current ) => {
+		// Can not select days before today and today
+		return current && current.valueOf() < Date.now();
+	};
+
 	render() {
 		const { getFieldDecorator } = this.props.form;
 		return (
@@ -64,7 +69,11 @@ class BaseInfo extends Component {
 									rules: [
 										{ required: true, message: '请选择截止日期！' },
 									],
-								} )( <DatePicker style={{ width: 200 }} disabled={this.props.disabled}/> )}
+								} )( <DatePicker
+									style={{ width: 200 }}
+									disabled={this.props.disabled}
+									disabledDate={this.disabledDate}
+								/> )}
 							</FormItem>
 						</Col>
 						<Col span={12}>
