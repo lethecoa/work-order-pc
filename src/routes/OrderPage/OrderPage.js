@@ -43,9 +43,10 @@ const OrderPage = ( {
 } ) => {
 	fun.printLoader( 'orderPage' );
 	const { userType, orderHandlerId, orderHandlerName } = user;
-	const { currentData, currentStep, display, disabled, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel;
-	const { orgName, remainingBalance } = currentData;
+	const { currentStep, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel ? orderModel : {};
 	const { pagination, serviceDetail, residentList } = workerModel ? workerModel : {};
+	const { currentData, display, disabled } = workerModel ? workerModel : orderModel;
+	const { orgName, remainingBalance } = currentData;
 
 	/** 获取页面path,初始化dataList */
 	let path;
@@ -277,7 +278,7 @@ const OrderPage = ( {
 const mapStateToProps = ( state ) => {
 	return {
 		...state,
-		loading: state.loading.models.orderModel,
+		loading: state.orderModel ? state.loading.models.orderModel : state.loading.models.workerModel,
 		user: state.appModel.user,
 	};
 };

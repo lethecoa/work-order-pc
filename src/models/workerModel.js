@@ -8,6 +8,8 @@ export default {
 		pagination: {
 			pageSize: 10,
 		},
+		display: 'block',
+		disabled: true,
 	},
 	reducers: {
 		save( state, { payload: { list, total, pagination } } ) {
@@ -61,7 +63,7 @@ export default {
 			yield put( routerRedux.push( url ) );
 
 		},
-		*saveOrderDetail( { payload }, { call, select, put } ){
+		*saveOrderDetail( { payload }, { call } ){
 			fun.print( payload, 'saveOrderDetail', model.worker );
 			const data = yield call( saveService, payload.data );
 			payload.fun( data );

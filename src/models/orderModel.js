@@ -26,14 +26,6 @@ export default {
 				currentData,
 			}
 		},
-		initWorkerState: ( state, { payload: { currentData } } ) => {
-			console.log('===orderModel===initWorkerState===');
-			return {
-				display: 'block',
-				disabled: true,
-				currentData,
-			}
-		},
 		changeConfirmState: ( state ) => {
 			console.log('===orderModel===changeConfirmStatet===');
 			return {
@@ -56,15 +48,6 @@ export default {
 		}
 	},
 	effects: {
-		*initWorker( {}, { put, select } ){
-			const currentData = yield select( state => state.workerModel.currentData );
-			yield put( {
-				type: 'initWorkerState',
-				payload: {
-					currentData: currentData,
-				},
-			} );
-		},
 		*initDoctor( {}, { put, select } ){
 			const currentData = yield select( state => state.appModel.user );
 			yield put( {
@@ -76,11 +59,7 @@ export default {
 	subscriptions: {
 		setup ( { dispatch, history } ) {
 			history.listen( location => {
-				if ( location.pathname.indexOf( 'worker' ) >= 0 ) {
-					dispatch( { type: action.order_initWorker } );
-				} else if ( location.pathname !== '/orderList' ) {
-					dispatch( { type: action.order_init } );
-				}
+				dispatch( { type: action.order_init } );
 			} )
 		}
 	},
