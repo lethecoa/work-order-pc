@@ -131,13 +131,13 @@ const OrderPage = ( {
 
 	};
 	/** 客服端-提交单条数据 */
-	const submitRow = ( index, row ) => {
-		console.log( '================= submit: ', index, row );
+	const submitRow = ( row, callBack ) => {
+		console.log( '================= submit: ', row );
 		orderData.residentList[ 0 ] = row;
 		let result = {
 			data: orderData,
 			fun: openNotificationWithIcon,
-			index: index,
+			callBack: callBack,
 		};
 		dispatch( { type: fun.fuse( model.worker, action.worker_saveOrderDetail ), payload: result } );
 	};
@@ -246,7 +246,8 @@ const OrderPage = ( {
 					{path === 'workertnbsf0' ? <Diabetes disabled={disabled} {...serviceDetail} /> : ''}
 
 					<ResidentInfoTable name={modular[ path ].name} userType={userType} monitor={modular[ path ].monitor}
-					                   data={formatData( dataList )} onSave={( i, r ) => saveRow( i, r )} onSubmit={( i, r ) => submitRow( i, r )}
+					                   data={formatData( dataList )} onSave={( i, r ) => saveRow( i, r )}
+					                   onSubmit={( r, callBack ) => submitRow( r, callBack )}
 					                   disabled={disabled} ref={e => ( residentInfoTable = e )}/>
 					{userType === config.userType.doctor ?
 						<div>

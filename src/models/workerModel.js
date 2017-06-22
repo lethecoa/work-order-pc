@@ -11,16 +11,12 @@ export default {
 	},
 	reducers: {
 		save( state, { payload: { list, total, pagination } } ) {
-			console.log('===workerModel===save===');
+			console.log( '===workerModel===save===' );
 			return { ...state, list, total, pagination };
 		},
 		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList } } ) {
-			console.log('===workerModel===saveCurrentOrder===');
+			console.log( '===workerModel===saveCurrentOrder===' );
 			return { ...state, currentData, serviceDetail, residentList };
-		},
-		saveResidentList( state, { payload: { residentList } } ){
-			console.log('===workerModel===saveResidentList===');
-			return { ...state, residentList };
 		},
 	},
 	effects: {
@@ -68,13 +64,10 @@ export default {
 		*saveOrderDetail( { payload }, { call, select, put } ){
 			fun.print( payload, 'saveOrderDetail', model.worker );
 			const data = yield call( saveService, payload.data );
-			payload.fun( data, payload.index );
-			const residentList = yield select( state => state.workerModel.residentList );
-			residentList.splice( payload.index, 1 );
-			yield put( {
-				type: 'saveResidentList',
-				payload: { residentList },
-			} );
+			payload.fun( data );
+			if ( data.success ) {
+				payload.callBack( payload.data.residentList[ 0 ].serviceId );
+			}
 		}
 	},
 	subscriptions: {
