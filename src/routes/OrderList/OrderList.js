@@ -97,7 +97,7 @@ const OrderList = ( {
 	return (
 		<div>
 			<Form className={styles.form} layout="inline" onSubmit={handlerSubmit}>
-				<FormItem>
+				<FormItem className={styles.fLeft}>
 					{getFieldDecorator( 'status', {
 						initialValue: pagination.status,
 					} )( <RadioGroup className={styles.tab} onChange={handlerRadioChange}>
