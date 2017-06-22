@@ -9,6 +9,7 @@ export default {
   },
   reducers: {
     setInfo: ( state, { payload: loginInfo } ) => {
+	    console.log('===loginModel===setInfo===');
       return {
         ...state, loginInfo
       }

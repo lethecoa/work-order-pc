@@ -11,12 +11,15 @@ export default {
 	},
 	reducers: {
 		save( state, { payload: { list, total, pagination } } ) {
+			console.log('===workerModel===save===');
 			return { ...state, list, total, pagination };
 		},
 		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList } } ) {
+			console.log('===workerModel===saveCurrentOrder===');
 			return { ...state, currentData, serviceDetail, residentList };
 		},
 		saveResidentList( state, { payload: { residentList } } ){
+			console.log('===workerModel===saveResidentList===');
 			return { ...state, residentList };
 		},
 	},
