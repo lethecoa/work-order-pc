@@ -175,9 +175,9 @@ const OrderPage = ( {
 	const openNotificationWithIcon = ( data, index ) => {
 		payModal.handleOver();
 		if ( data.success ) {
-			if ( index !== undefined ) {
-				dataList.splice( index, 1 );
-			}
+			// if ( index !== undefined ) {
+			// 	dataList.splice( index, 1 );
+			// }
 			notification[ 'success' ]( {
 				message: config.SUCCESS,
 			} );
@@ -201,7 +201,7 @@ const OrderPage = ( {
 		handleSubmit: handleSubmit,
 		remainingBalance: remainingBalance,
 	};
-
+fun.print(dataList,'dataList','orderPage');
 	return (
 		<div className={styles.wrap}>
 			<Spin spinning={loading}>

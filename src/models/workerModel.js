@@ -16,6 +16,9 @@ export default {
 		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList } } ) {
 			return { ...state, currentData, serviceDetail, residentList };
 		},
+		saveResidentList( state, { payload: { residentList } } ){
+			return { ...state, residentList };
+		},
 	},
 	effects: {
 		*getOrders( { payload: { page = 1, status = "1", serverPackName = "0", dateStart = undefined, dateEnd = undefined } }, { call, put, select } ) {
@@ -59,10 +62,16 @@ export default {
 			yield put( routerRedux.push( url ) );
 
 		},
-		*saveOrderDetail( { payload }, { call } ){
+		*saveOrderDetail( { payload }, { call, select, put } ){
 			fun.print( payload, 'saveOrderDetail', model.worker );
 			const data = yield call( saveService, payload.data );
-			payload.fun( data,payload.index );
+			payload.fun( data, payload.index );
+			const residentList = yield select( state => state.workerModel.residentList );
+			residentList.splice( payload.index, 1 );
+			yield put( {
+				type: 'saveResidentList',
+				payload: { residentList },
+			} );
 		}
 	},
 	subscriptions: {
