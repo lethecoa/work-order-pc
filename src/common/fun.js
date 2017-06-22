@@ -55,8 +55,19 @@ module.exports = {
 			return +data;
 		} );
 	},
+	/**
+	 * 判断是否为空对象
+	 * @param obj
+	 * @returns {boolean}
+	 */
+	isEmptyObject: ( obj ) => {
+		for ( let key in obj ) {
+			return false
+		}
+		return true
+	},
 	/** 显示提交结果 */
-	showResult: ( data, msg, funName, fun ) => {
+	showResult: ( data, msg, funName ) => {
 		if ( data.success ) {
 			notification[ 'success' ]( {
 				message: msg ? msg : config.SUCCESS,
@@ -67,8 +78,5 @@ module.exports = {
 			} );
 			console.log( 'request >>> ' + funName + ': ', data.message );
 		}
-		// if(fun typeof 'function') {
-		//
-		// })
 	},
 };
