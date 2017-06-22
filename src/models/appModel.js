@@ -9,6 +9,7 @@ export default {
 	},
 	reducers: {
 		init( state, { payload: user } ) {
+			console.log('===appModel===init===');
 			return {
 				...state, user
 			}

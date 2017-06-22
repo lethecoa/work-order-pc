@@ -13,7 +13,7 @@ export default {
 	},
 	reducers: {
 		initState: ( state, { payload: { currentData } } ) => {
-			console.log( '===initState===' );
+			console.log('===orderModel===initState===');
 			return {
 				currentStep: 0,
 				display: 'none',
@@ -27,20 +27,15 @@ export default {
 			}
 		},
 		initWorkerState: ( state, { payload: { currentData } } ) => {
-			console.log( '===initWorkerState===' );
+			console.log('===orderModel===initWorkerState===');
 			return {
 				display: 'block',
 				disabled: true,
 				currentData,
 			}
 		},
-		changeReset:(state)=>{
-			return{
-				...state,
-				reset:false,
-			}
-		},
 		changeConfirmState: ( state ) => {
+			console.log('===orderModel===changeConfirmStatet===');
 			return {
 				...state,
 				currentStep: state.currentStep == 1 ? 0 : 1,
@@ -50,6 +45,7 @@ export default {
 			}
 		},
 		changeSubmitSate: ( state ) => {
+			console.log('===orderModel===changeSubmitSatet===');
 			return {
 				...state,
 				currentStep: 3,

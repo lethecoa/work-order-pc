@@ -15,9 +15,17 @@ const formItemLayout = {
 };
 
 class BaseInfo extends Component {
+	constructor( props ) {
+		super( props );
+		this.state = {
+			path: props.path,
+		}
+	}
+
 	componentWillReceiveProps( nextProps ) {
-		if ( nextProps.reset ) {
+		if ( nextProps.path !== this.state.path ) {
 			this.props.form.resetFields();
+			this.state.path = nextProps.path;
 		}
 	}
 
@@ -56,7 +64,7 @@ class BaseInfo extends Component {
 									rules: [
 										{ required: true, message: '请选择截止日期！' },
 									],
-								} )( <DatePicker style={{ width: 200 }} disabled={this.props.disabled} onChange={this.props.onChange}/> )}
+								} )( <DatePicker style={{ width: 200 }} disabled={this.props.disabled}/> )}
 							</FormItem>
 						</Col>
 						<Col span={12}>
