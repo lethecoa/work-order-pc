@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox, Row, Col,Form  } from 'antd';
 import { config } from '../../common'
-const moduleName = '糖尿病症状选择(SugarSymptom)';
+const moduleName = '糖尿病症状选择(DiabetesSymptom)';
 const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
 const symptomOptions = [

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Radio, InputNumber, Row, Col} from 'antd';
-import styles from './SugarA.less';
+import styles from './DiabetesA.less';
 import {config} from '../../common'
 import {MedicationInfo} from '../../components';
 
@@ -17,7 +17,7 @@ const formItemLayout = {
     sm: {span: 16},
   },
 };
-class SugarA extends React.Component {
+class DiabetesA extends React.Component {
   state = {
     value: 1,
   }
@@ -29,7 +29,7 @@ class SugarA extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const disable=true;
+    const disable=!this.props.disabled;
     return (
       <div className={styles.need}>
         <div className={styles.title}>随访项目</div>
@@ -209,4 +209,4 @@ class SugarA extends React.Component {
     );
   }
 }
-export default Form.create()(SugarA);
+export default Form.create()(DiabetesA);

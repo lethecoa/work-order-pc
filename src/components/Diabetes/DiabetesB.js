@@ -1,8 +1,8 @@
 import React from 'react';
 import {Form, Input, Table, Row,Checkbox,Col} from 'antd';
-import styles from './SugarB.less';
+import styles from './DiabetesB.less';
 import {config, fun} from '../../common';
-import {SugarSymptom} from '../../components';
+import {DiabetesSymptom} from '../../components';
 
 const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
@@ -18,9 +18,9 @@ const formItemLayout = {
   },
 };
 
-class SugarB extends React.Component {
+class DiabetesB extends React.Component {
   render() {
-    const disable=true;
+    const disable=!this.props.disabled;
     const { getFieldDecorator } = this.props.form;
     return (
       <div className={styles.need}>
@@ -36,7 +36,7 @@ class SugarB extends React.Component {
                 message: '请至少选择其中一项！'
               },
             ],
-          } )( <SugarSymptom disabled={disable}/> )}
+          } )( <DiabetesSymptom disabled={disable}/> )}
         </FormItem>
     </Col>
   </Row>
@@ -55,4 +55,4 @@ class SugarB extends React.Component {
     );
   }
 }
-export default Form.create()(SugarB);
+export default Form.create()(DiabetesB);

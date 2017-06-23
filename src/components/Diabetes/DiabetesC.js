@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, DatePicker,InputNumber,Row, Col} from 'antd';
 import { config } from '../../common'
-import styles from './SugarC.less';
+import styles from './DiabetesC.less';
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -14,7 +14,7 @@ const formItemLayout = {
     sm: {span: 16},
   },
 };
-class SugarC extends React.Component {
+class DiabetesC extends React.Component {
   constructor( props ) {
     super( props );
     this.state = {
@@ -23,7 +23,7 @@ class SugarC extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const disable=true;
+    const disable=!this.props.disabled;
     return (
       <div className={styles.need}>
         <div className={styles.title}>随访项目</div>
@@ -55,5 +55,5 @@ class SugarC extends React.Component {
     );
   }
 }
-export default Form.create()(SugarC);
+export default Form.create()(DiabetesC);
 
