@@ -41,7 +41,7 @@ const OrderPage = ( {
 	fun.printLoader( 'orderPage' );
 	const { userType, orderHandlerId, orderHandlerName } = user;
 	const { currentStep, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel ? orderModel : {};
-	const { pagination, serviceDetail, residentList } = workerModel ? workerModel : {};
+	const { serviceDetail, residentList } = workerModel ? workerModel : {};
 	const { currentData, display, disabled } = workerModel ? workerModel : orderModel;
 	const { orgName, remainingBalance } = currentData;
 
@@ -130,7 +130,7 @@ const OrderPage = ( {
 	};
 	/** 客服端-返回列表页 */
 	const backToList = () => {
-		dispatch( routerRedux.push( { pathname: modular.index.url + modular.orderList.url, query: pagination, } ) );
+		dispatch( routerRedux.push( { pathname: modular.index.url + modular.orderList.url, } ) );
 	};
 	/** 基本信息参数 */
 	const baseInfoProps = {

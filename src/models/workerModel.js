@@ -7,6 +7,9 @@ export default {
 	state: {
 		pagination: {
 			pageSize: 10,
+			page: 1,
+			status: "1",
+			serverPackName: "0",
 		},
 		display: 'block',
 		disabled: true,
@@ -22,6 +25,25 @@ export default {
 		},
 	},
 	effects: {
+		*initOrderList( {}, { put, select, call } ){
+			const pagination = yield select( state => state.workerModel.pagination );
+			const data = yield call( getOrders, {
+				dateStart: pagination.dateStart,
+				dateEnd: pagination.dateEnd,
+				pageSize: pagination.pageSize,
+				serverPackName: pagination.serverPackName,
+				pageNumber: pagination.page,
+				status: pagination.status
+			} );
+			yield put( {
+				type: 'save',
+				payload: {
+					list: data.entity.rows,
+					total: parseInt( data.entity.total, 10 ),
+					pagination,
+				},
+			} );
+		},
 		*getOrders( { payload: { page = 1, status = "1", serverPackName = "0", dateStart = undefined, dateEnd = undefined } }, { call, put, select } ) {
 			const pagination = yield select( state => state.workerModel.pagination );
 			const data = yield call( getOrders, {
@@ -46,15 +68,14 @@ export default {
 				},
 			} );
 		},
-		*getOrderDetail( { payload: { status = 1, order, url, orderId } }, { put, call, select } ){
-			const currentData = order ? order : yield select( state => state.workerModel.currentData );
+		*getOrderDetail( { payload: { order, url } }, { put, call } ){
 			const data = yield call( getOrderDetail, {
-				orderId: order ? order.orderId : orderId,
+				orderId: order.orderId,
 			} );
 			yield put( {
 				type: 'saveCurrentOrder',
 				payload: {
-					currentData: currentData,
+					currentData: order,
 					serviceDetail: data.entity.serviceDetail,
 					residentList: data.entity.residentList,
 				},
@@ -79,10 +100,9 @@ export default {
 	},
 	subscriptions: {
 		setup ( { dispatch, history } ) {
-			history.listen( ( { pathname, query } ) => {
-				fun.print( query, 'query', model.worker );
+			history.listen( ( { pathname } ) => {
 				if ( pathname === '/orderList' ) {
-					dispatch( { type: action.worker_getOrders, payload: query, } )
+					dispatch( { type: action.worker_initOrderList } )
 				}
 			} )
 		},
