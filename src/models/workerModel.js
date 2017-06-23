@@ -50,7 +50,6 @@ export default {
 			const currentData = order ? order : yield select( state => state.workerModel.currentData );
 			const data = yield call( getOrderDetail, {
 				orderId: order ? order.orderId : orderId,
-				status: status,
 			} );
 			yield put( {
 				type: 'saveCurrentOrder',
