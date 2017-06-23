@@ -35,7 +35,9 @@ module.exports = {
 		operation: { key: 'operation', cn: '操作栏', need: false },
 		// notice: 'notice', booking: 'booking'
 	},
-	/** 提交成功提示信息  */
+	/** 订单提交成功提示信息  */
+	SUBMIT_SUCCESS: '您的订单已提交成功，请等待客服处理',
+	/** 默认成功提示信息  */
 	SUCCESS: '操作成功',
 	/** 未上传居民信息样本提示信息  */
 	NODATA: '请上传居民信息样本！',
