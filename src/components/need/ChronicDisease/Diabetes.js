@@ -43,15 +43,15 @@ function Diabetes( props ) {
 					} )(
 						<RadioGroup disabled={props.disabled}>
 							<Radio value={1}>方案一：协助医生随访糖尿病患者的体征、生活方式、辅助检查、用药情况</Radio>
-              <Button type="primary"size={size}   icon="play-circle"   id={1}  onClick={showPlan}>{text}</Button>
+              <Button type="primary"size={size} disbaled={props.disabled}  icon="play-circle"   id={1}  onClick={showPlan}>{text}</Button>
               <br/>
 
 							<Radio value={2}>方案二：协助医生随访糖尿病患者的症状</Radio>
-              <Button type="primary" size={size}  icon="play-circle"  id={2}  onClick={showPlan}>{text}</Button>
+              <Button type="primary" size={size} disbaled={props.disabled} icon="play-circle"  id={2}  onClick={showPlan}>{text}</Button>
               <br/>
 
 							<Radio value={3}>方案三：协助医生随访糖尿病患者的血糖数值</Radio>
-              <Button type="primary" size={size}  icon="play-circle"  id={3} onClick={showPlan}>{text}</Button>
+              <Button type="primary" size={size} disbaled={props.disabled} icon="play-circle"  id={3} onClick={showPlan}>{text}</Button>
               <br/>
 						</RadioGroup>
 					)}
