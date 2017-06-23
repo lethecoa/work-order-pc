@@ -1,6 +1,6 @@
 import moment from 'moment';
 import config from './config';
-
+import {notification, Modal} from 'antd';
 module.exports = {
 	/**
 	 * 包装系统的console，指定force=true可以强制在非Debug模式下打印信息
@@ -54,5 +54,29 @@ module.exports = {
 		return dataStrArr.map( function ( data ) {
 			return +data;
 		} );
-	}
+	},
+	/**
+	 * 判断是否为空对象
+	 * @param obj
+	 * @returns {boolean}
+	 */
+	isEmptyObject: ( obj ) => {
+		for ( let key in obj ) {
+			return false
+		}
+		return true
+	},
+	/** 显示提交结果 */
+	showResult: ( data, msg, funName ) => {
+		if ( data.success ) {
+			notification[ 'success' ]( {
+				message: msg ? msg : config.SUCCESS,
+			} );
+		} else {
+			Modal.error( {
+				title: data.message,
+			} );
+			console.log( 'request >>> ' + funName + ': ', data.message );
+		}
+	},
 };

@@ -62,7 +62,8 @@ function Login( { dispatch, loading, loginInfo = {},
               rules: [
                 {
                   required: true,
-                  message: '请填写用户名！'
+                  pattern: /^(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$/,
+                  message: '您输入的手机号码有误！'
                 },
               ],
             } )( <Input prefix={<Icon type="user" />} onPressEnter={login} placeholder="请输入您的手机号" /> )}

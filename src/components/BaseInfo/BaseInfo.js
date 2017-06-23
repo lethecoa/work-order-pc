@@ -15,11 +15,24 @@ const formItemLayout = {
 };
 
 class BaseInfo extends Component {
-	componentWillReceiveProps( nextProps ) {
-		if ( nextProps.reset ) {
-			this.props.form.resetFields();
+	constructor( props ) {
+		super( props );
+		this.state = {
+			path: props.path,
 		}
 	}
+
+	componentWillReceiveProps( nextProps ) {
+		if ( nextProps.path !== this.state.path ) {
+			this.props.form.resetFields();
+			this.state.path = nextProps.path;
+		}
+	}
+
+	disabledDate = ( current ) => {
+		// Can not select days before today and today
+		return current && current.valueOf() < Date.now();
+	};
 
 	render() {
 		const { getFieldDecorator } = this.props.form;
@@ -56,7 +69,11 @@ class BaseInfo extends Component {
 									rules: [
 										{ required: true, message: '请选择截止日期！' },
 									],
-								} )( <DatePicker style={{ width: 200 }} disabled={this.props.disabled} onChange={this.props.onChange}/> )}
+								} )( <DatePicker
+									style={{ width: 200 }}
+									disabled={this.props.disabled}
+									disabledDate={this.disabledDate}
+								/> )}
 							</FormItem>
 						</Col>
 						<Col span={12}>

@@ -8,12 +8,16 @@ export default {
 		pagination: {
 			pageSize: 10,
 		},
+		display: 'block',
+		disabled: true,
 	},
 	reducers: {
 		save( state, { payload: { list, total, pagination } } ) {
+			console.log( '===workerModel===save===' );
 			return { ...state, list, total, pagination };
 		},
 		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList } } ) {
+			console.log( '===workerModel===saveCurrentOrder===' );
 			return { ...state, currentData, serviceDetail, residentList };
 		},
 	},
@@ -46,7 +50,6 @@ export default {
 			const currentData = order ? order : yield select( state => state.workerModel.currentData );
 			const data = yield call( getOrderDetail, {
 				orderId: order ? order.orderId : orderId,
-				status: status,
 			} );
 			yield put( {
 				type: 'saveCurrentOrder',
@@ -62,7 +65,10 @@ export default {
 		*saveOrderDetail( { payload }, { call } ){
 			fun.print( payload, 'saveOrderDetail', model.worker );
 			const data = yield call( saveService, payload.data );
-			payload.fun( data,payload.index );
+			payload.fun( data );
+			if ( data.success ) {
+				payload.callBack( payload.data.residentList[ 0 ].serviceId );
+			}
 		}
 	},
 	subscriptions: {

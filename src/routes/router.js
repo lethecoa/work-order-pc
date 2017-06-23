@@ -208,7 +208,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workeryyjmqy.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -218,7 +217,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workeryyjmtj.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -228,7 +226,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workeryyxsfs.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -238,7 +235,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workeryychfs.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -248,7 +244,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workermbsftz.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -258,7 +253,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workerzxzctz.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -268,7 +262,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workerzxhdtz.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -278,7 +271,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workeryfcjtz.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -288,7 +280,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workeretsftz.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -298,7 +289,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workeryytx00.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -308,7 +298,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workeryylxgz.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -318,7 +307,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workergxysf0.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},
@@ -328,7 +316,6 @@ function RouterConfig( { history, app } ) {
 					name: modular.workertnbsf0.url,
 					getComponent( nextState, cb ) {
 						require.ensure( [], ( require ) => {
-							registerModel( app, require( '../models/orderModel' ) );
 							cb( null, require( './OrderPage/OrderPage' ) );
 						} );
 					},

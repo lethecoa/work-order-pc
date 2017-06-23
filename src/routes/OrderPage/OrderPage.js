@@ -41,11 +41,12 @@ const OrderPage = ( {
 	route,
 	user,
 } ) => {
-	console.log('===orderPage===');
+	fun.printLoader( 'orderPage' );
 	const { userType, orderHandlerId, orderHandlerName } = user;
-	const { reset, currentData, currentStep, display, disabled, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel;
-	const { orgName, remainingBalance } = currentData;
+	const { currentStep, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel ? orderModel : {};
 	const { pagination, serviceDetail, residentList } = workerModel ? workerModel : {};
+	const { currentData, display, disabled } = workerModel ? workerModel : orderModel;
+	const { orgName, remainingBalance } = currentData;
 
 	/** 获取页面path,初始化dataList */
 	let path;
@@ -131,23 +132,19 @@ const OrderPage = ( {
 
 	};
 	/** 客服端-提交单条数据 */
-	const submitRow = ( index, row ) => {
-		console.log( '================= submit: ', index, row );
+	const submitRow = ( row, callBack ) => {
+		console.log( '================= submit: ', row );
 		orderData.residentList[ 0 ] = row;
-		orderData.residentList[ 0 ].status = 2;
 		let result = {
 			data: orderData,
 			fun: openNotificationWithIcon,
-			index: index,
+			callBack: callBack,
 		};
 		dispatch( { type: fun.fuse( model.worker, action.worker_saveOrderDetail ), payload: result } );
 	};
 	/** 客服端-返回列表页 */
 	const backToList = () => {
 		dispatch( routerRedux.push( { pathname: modular.index.url + modular.orderList.url, query: pagination, } ) );
-	};
-	const changeReset = () => {
-		dispatch( { type: fun.fuse( model.order, action.order_changeReset ) } );
 	};
 	/** 初始化数据，将可编辑的字段改为 object 类型 */
 	const formatData = ( data ) => {
@@ -176,9 +173,6 @@ const OrderPage = ( {
 	const openNotificationWithIcon = ( data, index ) => {
 		payModal.handleOver();
 		if ( data.success ) {
-			if ( index !== undefined ) {
-				dataList.splice( index, 1 );
-			}
 			notification[ 'success' ]( {
 				message: config.SUCCESS,
 			} );
@@ -190,7 +184,7 @@ const OrderPage = ( {
 	};
 	/** 基本信息参数 */
 	const baseInfoProps = {
-		reset,
+		path,
 		...currentData,
 		entrustNumber: currentData.entrustNumber ? currentData.entrustNumber : entrustNumber,
 		display: display,
@@ -201,7 +195,6 @@ const OrderPage = ( {
 		handleSubmit: handleSubmit,
 		remainingBalance: remainingBalance,
 	};
-
 	return (
 		<div className={styles.wrap}>
 			<Spin spinning={loading}>
@@ -221,7 +214,7 @@ const OrderPage = ( {
 					</div>
 				}
 				<Form onSubmit={showModal}>
-					<BaseInfo {...baseInfoProps} ref={e => ( baseInfo = e )} onChange={changeReset}/>
+					<BaseInfo {...baseInfoProps} ref={e => ( baseInfo = e )}/>
 					{path === 'signFamily' ? <ResidentSign disabled={disabled} ref={e => ( need = e )} signSite={orgName}/> : ''}
 					{path === 'residentSign' ? <ResidentSign disabled={disabled} ref={e => ( need = e )} signSite={orgName}/> : ''}
 					{path === 'workeryyjmqy' ? <ResidentSign disabled={disabled} {...serviceDetail} /> : ''}
@@ -254,7 +247,8 @@ const OrderPage = ( {
 					{path === 'workertnbsf0' ? <Diabetes disabled={disabled} {...serviceDetail} /> : ''}
 
 					<ResidentInfoTable name={modular[ path ].name} userType={userType} monitor={modular[ path ].monitor}
-					                   data={formatData( dataList )} onSave={( i, r ) => saveRow( i, r )} onSubmit={( i, r ) => submitRow( i, r )}
+					                   data={formatData( dataList )} onSave={( i, r ) => saveRow( i, r )}
+					                   onSubmit={( r, callBack ) => submitRow( r, callBack )}
 					                   disabled={disabled} ref={e => ( residentInfoTable = e )}/>
 					{userType === config.userType.doctor ?
 						<div>
@@ -284,7 +278,7 @@ const OrderPage = ( {
 const mapStateToProps = ( state ) => {
 	return {
 		...state,
-		loading: state.loading.models.orderModel,
+		loading: state.orderModel ? state.loading.models.orderModel : state.loading.models.workerModel,
 		user: state.appModel.user,
 	};
 };

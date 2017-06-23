@@ -116,12 +116,13 @@ class InfoTable extends React.Component {
                 :
                 <span className={this.state.operationStatus ? 'hide' : ''}>
                   <a onClick={() => this.edit( index )}>编辑</a>
-                  &nbsp;|&nbsp;
                 </span>
             }
-            <a className={this.state.operationStatus ? 'hide' : ''}
-              onClick={() => this.submit( index )}
-              style={this.state.operationStatus ? { color: '#b1b8bd' } : { color: '#C00' }}>提交</a>
+            <span className={this.state.operationStatus ? 'hide' : ''}>
+              &nbsp;|&nbsp;
+              <a onClick={() => this.submit( index )}
+                style={this.state.operationStatus ? { color: '#b1b8bd' } : { color: '#C00' }}>提交</a>
+            </span>
             <a className={!this.state.operationStatus ? 'hide' : ''}
               onClick={() => this.revoke( index )}>撤回</a>
           </div>
@@ -215,7 +216,7 @@ class InfoTable extends React.Component {
       if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) saveCallback( index, row );
       if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) {
         row[ 'status' ] = '2';
-        submitCallback( index, row );
+        submitCallback( row, ( id ) => { this.successCallback( id ) } );
       }
     }
   }
@@ -260,12 +261,27 @@ class InfoTable extends React.Component {
     if ( data[ index ][ 'myStatus' ] === config.ritStatus.general ) {
       let row = this.rebuildData( data[ index ] );
       row[ 'status' ] = '2';
-      if ( typeof submitCallback === 'function' ) submitCallback( index, row );
+      if ( typeof submitCallback === 'function' )
+        submitCallback( row, ( id ) => { this.successCallback( id ) } );
     }
     else {
       data[ index ][ 'myStatus' ] = config.ritStatus.general;
       this.setState( { data: data, callBackStatus: CALL_BACK_STATUS.submit } );
     }
+  }
+  /**
+   * 成功后调用
+   */
+  successCallback = ( serviceId ) => {
+    let array = this.state.data;
+    let index = -1;
+    for ( let i = 0; i < array.length; i++ ) {
+      let item = array[ i ];
+      if ( item.serviceId === serviceId ) index = i;
+    }
+    console.log( index );
+    array.splice( index, 1 )
+    if ( index > 0 ) this.setState( { data: array } );
   }
   /**
    * 撤销已处理的数据
@@ -274,7 +290,8 @@ class InfoTable extends React.Component {
     const { data, submitCallback } = this.state;
     let row = this.rebuildData( data[ index ] );
     row[ 'status' ] = '1';
-    if ( typeof submitCallback === 'function' ) submitCallback( index, row );
+    if ( typeof submitCallback === 'function' )
+      submitCallback( row, ( id ) => { this.successCallback( id ) } );
   }
   /**
    * 确认撤销：取消刚刚录入的数据，并回到非编辑状态

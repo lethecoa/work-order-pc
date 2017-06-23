@@ -51,7 +51,7 @@ const OrderList = ( {
 	workerModel,
 	dispatch,
 } ) => {
-	console.log( '===orderList===' );
+	fun.printLoader( 'orderList' );
 	const { resetFields, validateFieldsAndScroll, getFieldDecorator } = form;
 	const { pagination, list: dataSource, total } = workerModel;
 	/** 查询 */
@@ -97,7 +97,7 @@ const OrderList = ( {
 	return (
 		<div>
 			<Form className={styles.form} layout="inline" onSubmit={handlerSubmit}>
-				<FormItem>
+				<FormItem className={styles.fLeft}>
 					{getFieldDecorator( 'status', {
 						initialValue: pagination.status,
 					} )( <RadioGroup className={styles.tab} onChange={handlerRadioChange}>
