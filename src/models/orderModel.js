@@ -1,4 +1,4 @@
-import {action, model} from '../common';
+import {action, model, fun, config} from '../common';
 
 export default {
 	namespace: model.order,
@@ -13,7 +13,7 @@ export default {
 	},
 	reducers: {
 		initState: ( state, { payload: { currentData } } ) => {
-			console.log('===orderModel===initState===');
+			console.log( '===orderModel===initState===' );
 			return {
 				currentStep: 0,
 				display: 'none',
@@ -22,12 +22,11 @@ export default {
 				displayBack: 'block',
 				displayNew: 'none',
 				submitDisabled: false,
-				reset:true,
 				currentData,
 			}
 		},
 		changeConfirmState: ( state ) => {
-			console.log('===orderModel===changeConfirmStatet===');
+			console.log( '===orderModel===changeConfirmStatet===' );
 			return {
 				...state,
 				currentStep: state.currentStep == 1 ? 0 : 1,
@@ -37,7 +36,7 @@ export default {
 			}
 		},
 		changeSubmitSate: ( state ) => {
-			console.log('===orderModel===changeSubmitSatet===');
+			console.log( '===orderModel===changeSubmitSatet===' );
 			return {
 				...state,
 				currentStep: 3,
@@ -54,6 +53,11 @@ export default {
 				type: 'initState',
 				payload: { currentData: currentData },
 			} );
+		},
+		*submitCallBack( { payload }, { put } ){
+			payload.fun();
+			fun.showResult( payload.data, config.SUBMIT_SUCCESS, payload.funName );
+			yield put( { type: 'changeSubmitSate' } );
 		}
 	},
 	subscriptions: {

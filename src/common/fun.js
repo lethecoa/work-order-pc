@@ -76,7 +76,8 @@ module.exports = {
 			Modal.error( {
 				title: data.message,
 			} );
-			console.log( 'request >>> ' + funName + ': ', data.message );
+			console.error( 'request >>> ' + funName + ': ', data.message );
 		}
+
 	},
 };

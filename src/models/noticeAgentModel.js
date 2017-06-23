@@ -15,14 +15,18 @@ export default {
 			delete(values[ "allowDate" ]);
 			fun.print( values, 'saveChronic', model.noticeAgent );
 			const data = yield call( saveChronic, values );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'saveChronic' }
+			} );
 		},
 		*savePolicy( { payload }, { call, put } ) {
 			fun.print( payload, 'savePolicy', model.noticeAgent );
 			const data = yield call( savePolicy, payload.data );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'savePolicy' }
+			} );
 		},
 		*saveActivity( { payload }, { call, put } ) {
 			let values = payload.data;
@@ -32,8 +36,10 @@ export default {
 			delete(values[ "allowDate" ]);
 			fun.print( payload, 'saveActivity', model.noticeAgent );
 			const data = yield call( saveActivity, values );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'saveActivity' }
+			} );
 		},
 		*saveGravida( { payload }, { call, put } ) {
 			let values = payload.data;
@@ -44,8 +50,10 @@ export default {
 			delete(values[ "allowDate" ]);
 			fun.print( payload, 'saveGravida', model.noticeAgent );
 			const data = yield call( saveGravida, values );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'saveGravida' }
+			} );
 		},
 		*saveChildren( { payload }, { call, put } ) {
 			let values = payload.data;
@@ -54,8 +62,10 @@ export default {
 			delete(values[ "allowDate" ]);
 			fun.print( payload, 'saveChildren', model.noticeAgent );
 			const data = yield call( saveChildren, values );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'saveChildren' }
+			} );
 		},
 	},
 	subscriptions: {},

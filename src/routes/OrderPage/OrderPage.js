@@ -101,7 +101,7 @@ const OrderPage = ( {
 					if ( !err ) {
 						let result = {
 							data: Object.assign( values, valuesOut, { expenseAccount, residentQueryDtoList: dataList } ),
-							fun: openNotificationWithIcon,
+							fun: payModal.handleOver,
 						};
 						dispatch( { type: fun.fuse( modular[ path ].model, modular[ path ].action ), payload: result } );
 					}
@@ -111,13 +111,13 @@ const OrderPage = ( {
 	};
 	/** 客服端-切换显示已处理、未处理记录 */
 	const handlerRadioChange = ( e ) => {
-		const values = {};
-		values.status = e.target.value;
-		values.orderId = currentData.orderId;
-		dispatch( {
-			type: fun.fuse( model.worker, action.worker_getOrderDetail ),
-			payload: { status: values.status, url: modular[ path ].url, orderId: values.orderId }
-		} );
+		// 	const values = {};
+		// 	values.status = e.target.value;
+		// 	values.orderId = currentData.orderId;
+		// 	dispatch( {
+		// 		type: fun.fuse( model.worker, action.worker_getOrderDetail ),
+		// 		payload: { status: values.status, url: modular[ path ].url, orderId: values.orderId }
+		// 	} );
 	};
 	/** 客服端-保存单条数据 */
 	const saveRow = ( index, row ) => {
@@ -147,31 +147,32 @@ const OrderPage = ( {
 		dispatch( routerRedux.push( { pathname: modular.index.url + modular.orderList.url, query: pagination, } ) );
 	};
 	/** 初始化数据，将可编辑的字段改为 object 类型 */
+		//TODO
 	const formatData = ( data ) => {
-		if ( typeof data !== 'undefined' && data.length > 0 ) {
-			data.forEach( function ( item, index, arr ) {
-				let obj = arr[ index ];
-				obj.myStatus = config.ritStatus.general;
-				// 监听数量，代表每一列有多少个可编辑单元格，
-				// 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
-				obj.monitor = 0;
+			if ( typeof data !== 'undefined' && data.length > 0 ) {
+				data.forEach( function ( item, index, arr ) {
+					let obj = arr[ index ];
+					obj.myStatus = config.ritStatus.general;
+					// 监听数量，代表每一列有多少个可编辑单元格，
+					// 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
+					obj.monitor = 0;
 
-				if ( !obj.hasOwnProperty( remark.key ) ) {
-					obj[ remark.key ] = '';
-				}
-				if ( !obj.hasOwnProperty( present.key ) ) {
-					obj[ present.key ] = '0';
-				}
-				if ( !obj.hasOwnProperty( visit.key ) ) {
-					obj[ visit.key ] = '0';
-				}
-			} );
-		}
-		return data;
-	};
+					if ( !obj.hasOwnProperty( remark.key ) ) {
+						obj[ remark.key ] = '';
+					}
+					if ( !obj.hasOwnProperty( present.key ) ) {
+						obj[ present.key ] = '0';
+					}
+					if ( !obj.hasOwnProperty( visit.key ) ) {
+						obj[ visit.key ] = '0';
+					}
+				} );
+			}
+			return data;
+		};
 	/** 显示提交结果 */
 	const openNotificationWithIcon = ( data, index ) => {
-		payModal.handleOver();
+
 		if ( data.success ) {
 			notification[ 'success' ]( {
 				message: config.SUCCESS,
@@ -194,6 +195,16 @@ const OrderPage = ( {
 	const payModalProps = {
 		handleSubmit: handleSubmit,
 		remainingBalance: remainingBalance,
+	};
+	/** 居民信息样本参数 */
+	const residentInfoProps = {
+		name: modular[ path ].name,
+		userType: userType,
+		monitor: modular[ path ].monitor,
+		data: dataList,
+		disabled: disabled,
+		onSave: ( i, r ) => saveRow( i, r ),
+		onSubmit: ( r, callBack ) => submitRow( r, callBack ),
 	};
 	return (
 		<div className={styles.wrap}>
@@ -246,10 +257,7 @@ const OrderPage = ( {
 					{path === 'diabetes' ? <Diabetes disabled={disabled} ref={e => ( need = e )}/> : ''}
 					{path === 'workertnbsf0' ? <Diabetes disabled={disabled} {...serviceDetail} /> : ''}
 
-					<ResidentInfoTable name={modular[ path ].name} userType={userType} monitor={modular[ path ].monitor}
-					                   data={formatData( dataList )} onSave={( i, r ) => saveRow( i, r )}
-					                   onSubmit={( r, callBack ) => submitRow( r, callBack )}
-					                   disabled={disabled} ref={e => ( residentInfoTable = e )}/>
+					<ResidentInfoTable {...residentInfoProps} ref={e => ( residentInfoTable = e )}/>
 					{userType === config.userType.doctor ?
 						<div>
 							<div className={styles.submit} style={{ display: displayConfirm }}>

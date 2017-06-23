@@ -9,14 +9,18 @@ export default {
 		*saveDrug( { payload }, { call, put } ) {
 			fun.print( payload, 'saveDrug', model.trackingReminder );
 			const data = yield call( saveDrug, payload.data );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'saveDrug' }
+			} );
 		},
 		*saveDrugeffect( { payload }, { call, put } ) {
 			fun.print( payload, 'saveDrugeffect', model.trackingReminder );
 			const data = yield call( saveDrugeffect, payload.data );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'saveDrugeffect' }
+			} );
 		},
 	},
 	subscriptions: {},

@@ -9,14 +9,18 @@ export default {
 		*saveBlood( { payload }, { call, put } ) {
 			fun.print( payload, 'saveBlood', model.chronicDisease );
 			const data = yield call( saveBlood, payload.data );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'saveBlood' }
+			} );
 		},
 		*saveSugar( { payload }, { call, put } ) {
 			fun.print( payload, 'saveSugar', model.chronicDisease );
 			const data = yield call( saveSugar, payload.data );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'saveSugar' }
+			} );
 		},
 	},
 	subscriptions: {},

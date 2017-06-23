@@ -14,8 +14,10 @@ export default {
 			delete(values[ "allowDate" ]);
 			fun.print( payload, 'saveSign', model.bookingAgent );
 			const data = yield call( saveSign, values );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'saveSign' }
+			} );
 		},
 		*savePhysicalExam( { payload }, { call, put } ) {
 			let values = payload.data;
@@ -26,8 +28,10 @@ export default {
 			delete(values[ "allowDate" ]);
 			fun.print( payload, 'savePhysicalExam', model.bookingAgent );
 			const data = yield call( savePhysicalExam, values );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'savePhysicalExam' }
+			} );
 		},
 		*saveNewBorn( { payload }, { call, put } ) {
 			let values = payload.data;
@@ -39,8 +43,10 @@ export default {
 			delete(values[ "allowDate_pm" ]);
 			fun.print( payload, 'saveNewBorn', model.bookingAgent );
 			const data = yield call( saveNewBorn, values );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'saveNewBorn' }
+			} );
 		},
 		*savePostpartum( { payload }, { call, put } ) {
 			let values = payload.data;
@@ -52,8 +58,10 @@ export default {
 			delete(values[ "allowDate_pm" ]);
 			fun.print( payload, 'savePostpartum', model.bookingAgent );
 			const data = yield call( savePostpartum, values );
-			payload.fun( data );
-			yield put( { type: fun.fuse( model.order, action.order_changeSubmitSate ) } );
+			yield put( {
+				type: fun.fuse( model.order, action.order_submitCallBack ),
+				payload: { fun: payload.fun, data, funName: 'savePostpartum' }
+			} );
 		},
 	},
 	subscriptions: {},
