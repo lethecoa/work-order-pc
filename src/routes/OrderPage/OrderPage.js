@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
-import {Spin, Row, Col, Form, Button, notification, Modal, Radio} from 'antd';
+import {Spin, Row, Col, Form, Button, notification, Modal} from 'antd';
 import {action, model, fun, config, modular} from '../../common';
 import {
 	OrderStep,
@@ -23,9 +23,6 @@ import {
 import styles from './OrderPage.less';
 
 const moduleName = 'orderPage';
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
-const { present, remark, visit } = config.ritField;
 let residentInfoTable;
 let baseInfo;
 let payModal;
@@ -109,16 +106,6 @@ const OrderPage = ( {
 			}
 		} );
 	};
-	/** 客服端-切换显示已处理、未处理记录 */
-	const handlerRadioChange = ( e ) => {
-		// 	const values = {};
-		// 	values.status = e.target.value;
-		// 	values.orderId = currentData.orderId;
-		// 	dispatch( {
-		// 		type: fun.fuse( model.worker, action.worker_getOrderDetail ),
-		// 		payload: { status: values.status, url: modular[ path ].url, orderId: values.orderId }
-		// 	} );
-	};
 	/** 客服端-保存单条数据 */
 	const saveRow = ( index, row ) => {
 		console.log( 'dataList=', dataList );
@@ -146,30 +133,6 @@ const OrderPage = ( {
 	const backToList = () => {
 		dispatch( routerRedux.push( { pathname: modular.index.url + modular.orderList.url, query: pagination, } ) );
 	};
-	/** 初始化数据，将可编辑的字段改为 object 类型 */
-		//TODO
-	const formatData = ( data ) => {
-			if ( typeof data !== 'undefined' && data.length > 0 ) {
-				data.forEach( function ( item, index, arr ) {
-					let obj = arr[ index ];
-					obj.myStatus = config.ritStatus.general;
-					// 监听数量，代表每一列有多少个可编辑单元格，
-					// 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
-					obj.monitor = 0;
-
-					if ( !obj.hasOwnProperty( remark.key ) ) {
-						obj[ remark.key ] = '';
-					}
-					if ( !obj.hasOwnProperty( present.key ) ) {
-						obj[ present.key ] = '0';
-					}
-					if ( !obj.hasOwnProperty( visit.key ) ) {
-						obj[ visit.key ] = '0';
-					}
-				} );
-			}
-			return data;
-		};
 	/** 显示提交结果 */
 	const openNotificationWithIcon = ( data, index ) => {
 
@@ -210,19 +173,11 @@ const OrderPage = ( {
 		<div className={styles.wrap}>
 			<Spin spinning={loading}>
 				<PayModal ref={e => ( payModal = e )} {...payModalProps} />
+				<div className={styles.header}>{modular[ path ].cn + '委托表'}</div>
 				{userType === config.userType.doctor ?
-					<div>
-						<div className={styles.header}>{modular[ path ].cn + '委托表'}</div>
-						<OrderStep currentStep={currentStep}/>
-					</div>
+					<OrderStep currentStep={currentStep}/>
 					:
-					<div className={styles.center}>
-						<RadioGroup className={styles.radioTab} defaultValue="1" onChange={handlerRadioChange}>
-							<RadioButton value="1">待处理</RadioButton>
-							<RadioButton value="2">已处理</RadioButton>
-						</RadioGroup>
-						<Button size="large" type="primary" className={styles.fRight} onClick={backToList}>返回</Button>
-					</div>
+					<Button size="large" type="primary" className={styles.back} onClick={backToList}>返回</Button>
 				}
 				<Form onSubmit={showModal}>
 					<BaseInfo {...baseInfoProps} ref={e => ( baseInfo = e )}/>
