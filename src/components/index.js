@@ -30,22 +30,57 @@ import Medication from './need/TrackingReminder/Medication';
 import Hypertension from './need/ChronicDisease/Hypertension';
 //糖尿病随访
 import Diabetes from './need/ChronicDisease/Diabetes';
+// 高血压方案一
+import HypertensionA from './Hypertension/HypertensionA';
+// 高血压方案二
+import HypertensionB from './Hypertension/HypertensionB';
+// 高血压方案三
+import HypertensionC from './Hypertension/HypertensionC';
+// 高血压症状
+import HypertensionSymptom from './Hypertension/HypertensionSymptom';
+
+// 糖尿病症状
+import DiabetesSymptom from './Diabetes/DiabetesSymptom';
+
+// 糖尿病方案一
+import DiabetesA from './Diabetes/DiabetesA';
+// 糖尿病方案二
+import DiabetesB from './Diabetes/DiabetesB';
+// 糖尿病方案三
+import DiabetesC from './Diabetes/DiabetesC';
+
+import EditableCell  from './Hypertension/EditableCell';
+import MedicationInfo  from './Hypertension/MedicationInfo';
+
+
 export {
-	MainLayout,
-	ResidentInfoTable,
-	OrderStep,
-	BaseInfo,
-	CarryMaterial,
-	PayModal,
-	ResidentSign,
-	ResidentInspect,
-	Newborn,
-	ChronicDisease,
-	NewestPolicy,
-	NewestActivity,
-	AntenatalCare,
-	ChildHealth,
-	Medication,
-	Hypertension,
-	Diabetes,
+  MainLayout,
+  ResidentInfoTable,
+  OrderStep,
+  BaseInfo,
+  CarryMaterial,
+  PayModal,
+  ResidentSign,
+  ResidentInspect,
+  Newborn,
+  ChronicDisease,
+  NewestPolicy,
+  NewestActivity,
+  AntenatalCare,
+  ChildHealth,
+  Medication,
+  Hypertension,
+  Diabetes,
+  HypertensionA,
+  HypertensionB,
+  HypertensionC,
+  EditableCell,
+  DiabetesA,
+  DiabetesB,
+  DiabetesC,
+  MedicationInfo,
+
+  HypertensionSymptom,
+  DiabetesSymptom,
+
 }
