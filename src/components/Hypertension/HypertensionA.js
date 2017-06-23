@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Radio, InputNumber, Row, Col} from 'antd';
+import {Form, Radio, InputNumber, Row, Col,Modal} from 'antd';
 import styles from './HypertensionA.less';
 import {config} from '../../common'
 import {MedicationInfo} from '../../components';
@@ -18,19 +18,24 @@ const formItemLayout = {
 };
 
 class HypertensionA extends React.Component {
-  state = {
-    value: 1,
+
+  constructor(props) {
+    super(props);
+    this.name = props.name;
+    this.state = {
+      visible: false,
+      size: 'small',
+      text: '预览',
+      value:1,
+    }
   }
-  onChange = (e) => {
-    console.log('radio checked', e.target.value);
-    this.setState({
-      value: e.target.value,
-    });
-  }
+
+
   render() {
     const { getFieldDecorator } = this.props.form;
-    const disable=true;
+    const disable=!this.props.disabled;
     return (
+
       <div className={styles.need}>
         <div className={styles.title}>随访项目</div>
         <div className={styles.line}>
@@ -120,7 +125,7 @@ class HypertensionA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="摄盐情况（咸淡）">
                   {getFieldDecorator('saltUptake', { rules: [{required: true, message: '请选择摄盐情况（咸淡）'}],})(
-                    <RadioGroup onChange={this.onChange} style={{width: 200}} disabled={disable}>
+                    <RadioGroup  style={{width: 200}} disabled={disable}>
                       <Radio value={1}>轻</Radio>
                       <Radio value={2}>中</Radio>
                       <Radio value={3}>重</Radio>
@@ -140,7 +145,7 @@ class HypertensionA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="药物依从性">
                   {getFieldDecorator('drugCompliance', { rules: [{required: true, message: '请选择药物依从性'}],})(
-                    <RadioGroup onChange={this.onChange} style={{width: 200}} disabled={disable} >
+                    <RadioGroup  style={{width: 200}} disabled={disable} >
                       <Radio value={1}>规律</Radio>
                       <Radio value={2}>间断</Radio>
                       <Radio value={3}>不服药</Radio>
@@ -151,7 +156,7 @@ class HypertensionA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="药物不良反应">
                   {getFieldDecorator('adr', { rules: [{required: true, message: '请选择药物不良反应'}],})(
-                    <RadioGroup onChange={this.onChange} style={{width: 200}} disabled={disable} >
+                    <RadioGroup  style={{width: 200}} disabled={disable} >
                       <Radio value={1}>无</Radio>
                       <Radio value={2}>有</Radio>
                     </RadioGroup>
@@ -163,7 +168,7 @@ class HypertensionA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="低血糖反应">
                   {getFieldDecorator('hypoglycemia', { rules: [{required: true, message: '请选择低血糖反应'}],})(
-                    <RadioGroup onChange={this.onChange} style={{width: 200}} disabled={disable}>
+                    <RadioGroup  style={{width: 200}} disabled={disable}>
                       <Radio value={1}>无</Radio>
                       <Radio value={2}>偶尔</Radio>
                       <Radio value={3}>频繁</Radio>
@@ -174,7 +179,7 @@ class HypertensionA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="此次随访情况">
                   {getFieldDecorator('followUpType', { rules: [{required: true, message: '请选择此次随访情况'}],})(
-                    <RadioGroup onChange={this.onChange} style={{width: 400}}  disabled={disable} >
+                    <RadioGroup  style={{width: 400}}  disabled={disable} >
                       <Radio value={1}>控制良好</Radio>
                       <Radio value={2}>控制一般</Radio>
                       <Radio value={3}>控制差</Radio>
@@ -190,7 +195,7 @@ class HypertensionA extends React.Component {
             <MedicationInfo/>
           </div>
       </div>
-    );
+    )
   }
 }
 export default Form.create()(HypertensionA);

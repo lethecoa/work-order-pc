@@ -22,7 +22,7 @@ const formItemLayout = {
 class HypertensionB extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
-    const disable=true;
+    const disable=!this.props.disabled;
     return (
       <div className={styles.need}>
         <div className={styles.title}>随访项目</div>

@@ -17,21 +17,9 @@ const formItemLayout = {
 
 class HypertensionC extends React.Component {
 
-  handleSbp=(e) => {
-    this.setState({value: event.target.value});
-    var sbp = event.target.value;
-    this.props.handleSbpData(e);
-}
-  handleDbp=(e) => {
-    this.setState({value: event.target.value});
-    var dbp = event.target.value;
-    this.props.handleDbpData(e);
-  }
-
-
   render() {
     const { getFieldDecorator } = this.props.form;
-    const disable = true;
+    const disable=!this.props.disabled;
     return (
       <div className={styles.need}>
         <div className={styles.title}>随访项目</div>
@@ -42,7 +30,7 @@ class HypertensionC extends React.Component {
                 {getFieldDecorator('sbp', {
                   rules: [{required: true, message: '请输入舒张压（mmHg），范围为0~300'}],
                 })(
-                  <InputNumber min={1} max={300} style={{ width: 200 }} disabled={disable} placeholder="请输入1-300之间的一个数值" />
+                  <InputNumber min={1} max={300} style={{ width: 200 }}disabled={disable} placeholder="请输入1-300之间的一个数值" />
                 )}
               </FormItem>
             </Col>

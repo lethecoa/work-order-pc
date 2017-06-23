@@ -30,7 +30,7 @@ import {EditableCell} from '../../components';
     }, {
       title: '用法(次/每日)',
       dataIndex: 'usage',
-      width: '10%',
+      width: '12%',
       render: (text, record, index) => (
         <EditableCell
           value={text}
