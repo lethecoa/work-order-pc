@@ -38,6 +38,7 @@ module.exports = {
 	residentSign: {
 		url: 'residentSign', name: 'residentSign', cn: '预约居民签约', ritRef: 'yyjmqy',
 		model: model.bookingAgent, action: action.BA_saveSign, monitor: 1,
+		tpl: config.tpl + 'residentSign.xls',
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ],
 	},
@@ -47,6 +48,7 @@ module.exports = {
 	residentInspect: {
 		url: 'residentInspect', name: 'residentInspect', cn: '预约居民体检', ritRef: 'yyjmtj',
 		model: model.bookingAgent, action: action.BA_savePhysicalExam, monitor: 1,
+		tpl: config.tpl + 'residentInspect.xls',
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ],
 	},
@@ -56,6 +58,7 @@ module.exports = {
 	newborn: {
 		url: 'newborn', name: 'newborn', cn: '预约新生儿家庭访视', ritRef: 'yyxsfs',
 		model: model.bookingAgent, action: action.BA_saveNewBorn, monitor: 2,
+		tpl: config.tpl + 'newborn.xls',
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, visit.key, remark.key, operation.key ],
 	},
@@ -65,6 +68,7 @@ module.exports = {
 	postpartum: {
 		url: 'postpartum', name: 'postpartum', cn: '预约产后访视', ritRef: 'yychfs',
 		model: model.bookingAgent, action: action.BA_savePostpartum, monitor: 2,
+		tpl: config.tpl + 'postpartum.xls',
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, visit.key, remark.key, operation.key ],
 	},
@@ -87,6 +91,7 @@ module.exports = {
 	newestPolicy: {
 		url: 'newestPolicy', name: 'newestPolicy', cn: '最新政策通知', ritRef: 'zxzctz',
 		model: model.noticeAgent, action: action.NA_savePolicy, monitor: 2,
+		tpl: config.tpl + 'newestPolicy.xls',
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, present.key, remark.key, operation.key ]
 	},
@@ -96,6 +101,7 @@ module.exports = {
 	newestActivity: {
 		url: 'newestActivity', name: 'newestActivity', cn: '最新活动通知', ritRef: 'zxhdtz',
 		model: model.noticeAgent, action: action.NA_saveActivity, monitor: 2,
+		tpl: config.tpl + 'newestActivity.xls',
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, present.key, remark.key, operation.key ]
 	},
@@ -105,6 +111,7 @@ module.exports = {
 	antenatalCare: {
 		url: 'antenatalCare', name: 'antenatalCare', cn: '孕产妇产检通知', ritRef: 'yfcjtz',
 		model: model.noticeAgent, action: action.NA_saveGravida, monitor: 2,
+		tpl: config.tpl + 'antenatalCare.xls',
 		ritDoctor: [ name.key, birthday.key, tel.key, cardDate.key ],
 		ritWorker: [ name.key, birthday.key, tel.key, cardDate.key, present.key, remark.key, operation.key ]
 	},
@@ -114,6 +121,7 @@ module.exports = {
 	childHealth: {
 		url: 'childHealth', name: 'childHealth', cn: '儿童健康随访通知', ritRef: 'etsftz',
 		model: model.noticeAgent, action: action.NA_saveChildren, monitor: 2,
+		tpl: config.tpl + 'childHealth.xls',
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, present.key, remark.key, operation.key ]
 	},
@@ -123,6 +131,7 @@ module.exports = {
 	medication: {
 		url: 'medication', name: 'medication', cn: '用药提醒', ritRef: 'yytx00',
 		model: model.trackingReminder, action: action.TR_saveDrug, monitor: 1,
+		tpl: config.tpl + 'medication.xls',
 		ritDoctor: [ name.key, tel.key, diseaseCase.key, drugs.key ],
 		ritWorker: [ name.key, tel.key, diseaseCase.key, drugs.key, remark.key, operation.key ]
 	},
@@ -132,6 +141,7 @@ module.exports = {
 	curativeEffect: {
 		url: 'curativeEffect', name: 'curativeEffect', cn: '用药疗效跟踪', ritRef: 'yylxgz',
 		model: model.trackingReminder, action: action.TR_saveDrugeffect, monitor: 1,
+		tpl: config.tpl + 'curativeEffect.xls',
 		ritDoctor: [ name.key, tel.key, diseaseCase.key, drugs.key ],
 		ritWorker: [ name.key, tel.key, diseaseCase.key, drugs.key, remark.key, operation.key ]
 	},
@@ -141,6 +151,7 @@ module.exports = {
 	hypertension: {
 		url: 'hypertension', name: 'hypertension', cn: '高血压随访', ritRef: 'gxysf0',
 		model: model.chronicDisease, action: action.CD_saveBlood, monitor: 1,
+		tpl: config.tpl + 'hypertension.xls',
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ]
 	},
@@ -150,6 +161,7 @@ module.exports = {
 	diabetes: {
 		url: 'diabetes', name: 'diabetes', cn: '糖尿病随访', ritRef: 'tnbsf0',
 		model: model.chronicDisease, action: action.CD_saveSugar, monitor: 1,
+		tpl: config.tpl + 'diabetes.xls',
 		ritDoctor: [ name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ]
 	},
