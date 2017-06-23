@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
-import {Spin, Row, Col, Form, Button, notification, Modal} from 'antd';
+import {Spin, Row, Col, Form, Button, Modal} from 'antd';
 import {action, model, fun, config, modular} from '../../common';
 import {
 	OrderStep,
@@ -22,7 +22,6 @@ import {
 } from '../../components';
 import styles from './OrderPage.less';
 
-const moduleName = 'orderPage';
 let residentInfoTable;
 let baseInfo;
 let payModal;
@@ -30,6 +29,7 @@ let need;
 
 let entrustNumber;
 let dataList;
+
 const OrderPage = ( {
 	loading,
 	orderModel,
@@ -56,12 +56,7 @@ const OrderPage = ( {
 			dataList = [];
 		}
 	}
-	const orderData = {
-		orderHandlerId,
-		orderHandlerName,
-		orderId: currentData.orderId,
-		residentList: [],
-	};
+
 	/** 医生端-校验表单输入数据*/
 	const validAndConfirm = () => {
 		baseInfo.validateFieldsAndScroll( ( errOut ) => {
@@ -106,45 +101,36 @@ const OrderPage = ( {
 			}
 		} );
 	};
+	/** 客服端-居民信息数据 */
+	const orderData = {
+		orderHandlerId,
+		orderHandlerName,
+		orderId: currentData.orderId,
+		residentList: [],
+	};
 	/** 客服端-保存单条数据 */
 	const saveRow = ( index, row ) => {
-		console.log( 'dataList=', dataList );
-		console.log( '================= save: ', index, row );
 		orderData.residentList[ 0 ] = row;
 		let result = {
 			data: orderData,
-			fun: openNotificationWithIcon,
+			type: 'save',
 		};
 		dispatch( { type: fun.fuse( model.worker, action.worker_saveOrderDetail ), payload: result } );
 
 	};
 	/** 客服端-提交单条数据 */
 	const submitRow = ( row, callBack ) => {
-		console.log( '================= submit: ', row );
 		orderData.residentList[ 0 ] = row;
 		let result = {
 			data: orderData,
-			fun: openNotificationWithIcon,
 			callBack: callBack,
+			type: 'submit',
 		};
 		dispatch( { type: fun.fuse( model.worker, action.worker_saveOrderDetail ), payload: result } );
 	};
 	/** 客服端-返回列表页 */
 	const backToList = () => {
 		dispatch( routerRedux.push( { pathname: modular.index.url + modular.orderList.url, query: pagination, } ) );
-	};
-	/** 显示提交结果 */
-	const openNotificationWithIcon = ( data, index ) => {
-
-		if ( data.success ) {
-			notification[ 'success' ]( {
-				message: config.SUCCESS,
-			} );
-		} else {
-			Modal.error( {
-				title: data.message,
-			} );
-		}
 	};
 	/** 基本信息参数 */
 	const baseInfoProps = {

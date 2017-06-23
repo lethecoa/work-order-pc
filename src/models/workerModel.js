@@ -1,5 +1,5 @@
 import {routerRedux} from 'dva/router';
-import {fun, model, action} from '../common';
+import {fun, model, action, config} from '../common';
 import {getOrders, getOrderDetail, saveService} from '../services/workerService';
 
 export default {
@@ -65,9 +65,15 @@ export default {
 		*saveOrderDetail( { payload }, { call } ){
 			fun.print( payload, 'saveOrderDetail', model.worker );
 			const data = yield call( saveService, payload.data );
-			payload.fun( data );
+			if ( payload.type === 'submit' ) {
+				fun.showResult( data, config.SUBMIT_INFO_SUCCESS, 'saveOrderDetail' );
+			} else {
+				fun.showResult( data, '', 'saveOrderDetail' );
+			}
 			if ( data.success ) {
-				payload.callBack( payload.data.residentList[ 0 ].serviceId );
+				if ( payload.callBack ) {
+					payload.callBack( payload.data.residentList[ 0 ].serviceId );
+				}
 			}
 		}
 	},
