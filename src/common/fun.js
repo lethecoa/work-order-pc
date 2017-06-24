@@ -69,20 +69,24 @@ module.exports = {
 	/** 显示提交结果 */
 	showResult: ( data, msg, funName ) => {
 		if ( data.success ) {
-			showNotification( msg ? msg : config.SUCCESS );
+			notification.open( {
+				message: msg ? msg : config.SUCCESS,
+			} );
 		} else {
-			showError( data.message );
-			console.error( 'request >>> ' + funName + ': ', data.message );
+			console.log( 'request >>> ' + funName + ': ', data.message );
+			Modal.error( {
+				title: data.message,
+			} );
 		}
 	},
-	showNotification: ( msg, description = '' ) => {
+	showNotification: ( msg, description ) => {
 		notification.open( {
 			message: msg,
 			description: description,
 		} );
 	},
 	/** 错误信息打印 */
-	showError: ( title, msg = '' ) => {
+	showError: ( title, msg ) => {
 		Modal.error( {
 			title: title,
 			content: msg

@@ -93,7 +93,7 @@ export default {
 			}
 			if ( data.success ) {
 				if ( payload.callBack ) {
-					payload.callBack( payload.data.residentList[ 0 ].rownum );
+					payload.callBack( payload.data.residentList[ 0 ].serviceId );
 				}
 			}
 		}

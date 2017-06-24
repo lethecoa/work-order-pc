@@ -19,6 +19,7 @@ module.exports = {
 	/** 根据委托单名称定义“居民信息控件”表头的显示项  */
 	ritField: {
 		rownum: { key: 'rownum', cn: '序号', need: false },
+		serviceId: { key: 'serviceId', cn: '服务ID', need: true },
 		name: { key: 'name', cn: '姓名', need: false },
 		sex: { key: 'sex', cn: '性别', need: false },
 		birthday: { key: 'birthday', cn: '出生日期', need: false },
@@ -32,7 +33,7 @@ module.exports = {
 		remark: { key: 'remark', cn: '通知情况', need: true },
 		followUp: { key: 'followUp', cn: '随访情况', need: true },
 		operation: { key: 'operation', cn: '操作栏', need: false },
-		status: { key: 'status', cn: '处理状态', need: false },
+		status: { key: 'status', cn: '处理状态', need: true },
 		// notice: 'notice', booking: 'booking'
 	},
 	/** 订单提交成功提示信息  */
@@ -43,4 +44,5 @@ module.exports = {
 	SUCCESS: '操作成功',
 	/** 未上传居民信息样本提示信息  */
 	NODATA: '请上传居民信息样本！',
+	ORDER_STATUS: { untreated: '1', treated: '2' },
 };
