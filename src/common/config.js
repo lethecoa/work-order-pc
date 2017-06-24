@@ -18,8 +18,7 @@ module.exports = {
 	ritStatus: { general: '显示状态', editing: '编辑中', cancel: '取消编辑' },
 	/** 根据委托单名称定义“居民信息控件”表头的显示项  */
 	ritField: {
-		serviceId: { key: 'serviceId', cn: '服务id', need: true },
-		status: { key: 'status', cn: '状态', need: true },
+		rownum: { key: 'rownum', cn: '序号', need: false },
 		name: { key: 'name', cn: '姓名', need: false },
 		sex: { key: 'sex', cn: '性别', need: false },
 		birthday: { key: 'birthday', cn: '出生日期', need: false },
@@ -33,6 +32,7 @@ module.exports = {
 		remark: { key: 'remark', cn: '通知情况', need: true },
 		followUp: { key: 'followUp', cn: '随访情况', need: true },
 		operation: { key: 'operation', cn: '操作栏', need: false },
+		status: { key: 'status', cn: '处理状态', need: false },
 		// notice: 'notice', booking: 'booking'
 	},
 	/** 订单提交成功提示信息  */

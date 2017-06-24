@@ -1,6 +1,6 @@
-import {routerRedux} from 'dva/router';
-import {fun, model, action, config} from '../common';
-import {getOrders, getOrderDetail, saveService} from '../services/workerService';
+import { routerRedux } from 'dva/router';
+import { fun, model, action, config } from '../common';
+import { getOrders, getOrderDetail, saveService } from '../services/workerService';
 
 export default {
 	namespace: model.worker,
@@ -25,7 +25,7 @@ export default {
 		},
 	},
 	effects: {
-		*initOrderList( {}, { put, select, call } ){
+		*initOrderList( { }, { put, select, call } ) {
 			const pagination = yield select( state => state.workerModel.pagination );
 			const data = yield call( getOrders, {
 				dateStart: pagination.dateStart,
@@ -68,7 +68,7 @@ export default {
 				},
 			} );
 		},
-		*getOrderDetail( { payload: { order, url } }, { put, call } ){
+		*getOrderDetail( { payload: { order, url } }, { put, call } ) {
 			const data = yield call( getOrderDetail, {
 				orderId: order.orderId,
 			} );
@@ -83,7 +83,7 @@ export default {
 			yield put( routerRedux.push( url ) );
 
 		},
-		*saveOrderDetail( { payload }, { call } ){
+		*saveOrderDetail( { payload }, { call } ) {
 			fun.print( payload, 'saveOrderDetail', model.worker );
 			const data = yield call( saveService, payload.data );
 			if ( payload.type === 'submit' ) {
@@ -93,14 +93,14 @@ export default {
 			}
 			if ( data.success ) {
 				if ( payload.callBack ) {
-					payload.callBack( payload.data.residentList[ 0 ].serviceId );
+					payload.callBack( payload.data.residentList[ 0 ].rownum );
 				}
 			}
 		}
 	},
 	subscriptions: {
-		setup ( { dispatch, history } ) {
-			history.listen( ( { pathname } ) => {
+		setup( { dispatch, history } ) {
+			history.listen(( { pathname } ) => {
 				if ( pathname === '/orderList' ) {
 					dispatch( { type: action.worker_initOrderList } )
 				}
