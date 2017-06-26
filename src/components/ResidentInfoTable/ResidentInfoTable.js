@@ -43,7 +43,7 @@ class ResidentInfoTable extends React.Component {
    * 获取用户信息表数据
    */
   getData = () => {
-    let data = this.state.data.toJS();
+    let data = this.refs.infoTable.getData();
     fun.print( data, 'data', moduleName );
     return data;
   }
@@ -128,7 +128,7 @@ class ResidentInfoTable extends React.Component {
             : ''}
           居民信息表样本
         </div>
-        <InfoTable name={this.props.name} data={this.state.data}
+        <InfoTable name={this.props.name} data={this.state.data} ref="infoTable"
           monitor={this.props.monitor} orderStatus={this.state.orderStatus}
           onSave={this.props.onSave} onSubmit={this.props.onSubmit} userType={this.props.userType}
           setTreated={( untreated, treated ) => this.setTreated( untreated, treated )} />

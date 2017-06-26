@@ -7,7 +7,7 @@ class BaseEditableCell extends React.Component {
     this.cacheValue = '';
     this.name = props.name;
     this.state = {
-      value: props.value,
+      value: props.value || '',
       myStatus: props.myStatus || config.ritStatus.general
     }
   }
@@ -18,7 +18,7 @@ class BaseEditableCell extends React.Component {
       // 传入的状态为显示，说明之前是编辑状态
       if ( nextProps.myStatus === config.ritStatus.general ) {
         this.setState( { myStatus: nextProps.myStatus } );
-        this.cacheValue = this.state.value.trim();
+        this.cacheValue = typeof this.state.value !== 'undefined' ? this.state.value.trim() : '';
         this.props.onChange( this.name, this.cacheValue );
       }
       // 传入的状态是编辑中，说明之前的状态是显示

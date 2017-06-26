@@ -20,7 +20,7 @@ class EditableRadioCell extends BaseCell {
         {
           myStatus === config.ritStatus.editing ?
             <div>
-              <RadioGroup value={value} onChange={e => this.handleChange( e )}>
+              <RadioGroup value={value == '0' ? '0' : '1'} onChange={e => this.handleChange( e )}>
                 <Radio value="1">是</Radio>
                 <Radio value="0">否</Radio>
               </RadioGroup>

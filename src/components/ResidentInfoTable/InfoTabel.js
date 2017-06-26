@@ -169,6 +169,15 @@ class InfoTable extends React.Component {
       orderStatus: props.orderStatus,
     }
   }
+  // public function
+  /**
+   * 获取用户信息表数据
+   */
+  getData = () => {
+    let data = this.state.formatData.toJS();
+    return data;
+  }
+  // private function
   /** 
    * 初始化数据，将可编辑的字段改为 object 类型，并将数据转换为 immutable 类型
    */
