@@ -31,7 +31,8 @@ class ResidentInfoTable extends React.Component {
       data: props.data,
       disabled: props.disabled,
       operation: false,
-      show: props.userType === config.userType.doctor ? '' : 'hide',
+      showDoctor: props.userType === config.userType.doctor ? true : false,
+      showWorker: props.userType === config.userType.worker ? true : false,
       untreated: 0,
       treated: 0,
       orderStatus: ORDER_STATUS.untreated,
@@ -105,21 +106,26 @@ class ResidentInfoTable extends React.Component {
       <div className={styles.normal}>
         <div className={styles.title}>
           <iframe ref="ifile" style={{ display: 'none' }}></iframe>
-          <div className={styles.button}>
-            {/*<Button size="small" onClick={this.getData}>打印测试数据</Button>&nbsp;*/}
-            <Button size="small" disabled={this.props.disabled} onClick={this.download}
-              icon="download" className={this.state.show}>下载该表格</Button>&nbsp;
-            <Upload action={api.uploadExcel} onChange={this.upload}
-              data={{ itemId: this.state.ritRef }} showUploadList={false}>
-              <Button size="small" disabled={this.props.disabled} onClick={this.upload}
-                icon="upload" className={this.state.show}>导入居民信息</Button>
-            </Upload>
-            <RadioGroup onChange={this.handlerRadioChange} value={this.state.orderStatus}
-              className={this.state.show}>
-              <RadioButton value="1">待处理({this.state.untreated})</RadioButton>
-              <RadioButton value="2">已处理({this.state.treated})</RadioButton>
-            </RadioGroup>
-          </div>
+          {/*<Button size="small" onClick={this.getData}>打印测试数据</Button>&nbsp;*/}
+          {this.state.showDoctor ?
+            <div className={styles.button}>
+              <Button size="small" disabled={this.props.disabled} onClick={this.download}
+                icon="download">下载该表格</Button>&nbsp;
+              <Upload action={api.uploadExcel} onChange={this.upload}
+                data={{ itemId: this.state.ritRef }} showUploadList={false}>
+                <Button size="small" disabled={this.props.disabled} onClick={this.upload}
+                  icon="upload">导入居民信息</Button>
+              </Upload>
+            </div>
+            : ''}
+          {this.state.showWorker ?
+            <div className={styles.button}>
+              <RadioGroup onChange={this.handlerRadioChange} value={this.state.orderStatus}>
+                <RadioButton value="1">待处理({this.state.untreated})</RadioButton>
+                <RadioButton value="2">已处理({this.state.treated})</RadioButton>
+              </RadioGroup>
+            </div>
+            : ''}
           居民信息表样本
         </div>
         <InfoTable name={this.props.name} data={this.state.data}

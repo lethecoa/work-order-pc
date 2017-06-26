@@ -394,13 +394,19 @@ class InfoTable extends React.Component {
   componentWillReceiveProps( nextProps ) {
     let operationStatus = nextProps.orderStatus === ORDER_STATUS.treated ? true : false;
     let columns = [];
+    let filterData = [];
     if ( nextProps.name != this.state.parentName ) {
       columns = this.getColums()
     }
     // 有新数据进来
     if ( !is( nextProps.data, this.state.data ) ) {
       let formatData = this.getFormatData( nextProps.data );
-      let filterData = this.getFilterData( formatData, nextProps.orderStatus );
+      if ( nextProps.userType === config.userType.worker ) {
+        filterData = this.getFilterData( formatData, nextProps.orderStatus );
+      } else {
+        filterData = formatData;
+      }
+
       if ( columns.length > 0 ) {
         this.setState( {
           data: nextProps.data,
