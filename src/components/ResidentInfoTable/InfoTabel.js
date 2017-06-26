@@ -1,16 +1,18 @@
 import React from 'react';
-import { Table, Pagination, Radio, Popconfirm } from 'antd';
+import { Table, Pagination, Popconfirm } from 'antd';
+import immutable from 'immutable';
 import { config, fun, modular } from '../../common';
 import styles from './InfoTable.less';
 import EditableInputCell from './EditableInputCell';
 import EditableRadioCell from './EditableRadioCell';
 import FollowUpCell from './FollowUpCell';
 
+const { is, Map } = immutable;
 const moduleName = '信息表控件(infoTable)';
-const RadioGroup = Radio.Group;
-const { name, sex, birthday, tel, cardDate, disease, diseaseCase, drugs, present,
+const { serviceId, status, rownum, name, sex, birthday, tel, cardDate, disease, diseaseCase, drugs, present,
   remark, operation, visit, followUp } = config.ritField;
 const CALL_BACK_STATUS = { save: 'save', submit: 'submit' };
+const ORDER_STATUS = config.ORDER_STATUS;
 /**
  * 用户信息表控件
  * 
@@ -18,7 +20,15 @@ const CALL_BACK_STATUS = { save: 'save', submit: 'submit' };
  * @extends {React.Component}
  */
 class InfoTable extends React.Component {
+  untreated = 0;
+  treated = 0;
   allColumns = {
+    [ rownum.key ]: {
+      title: rownum.cn,
+      width: 50,
+      dataIndex: rownum.key,
+      key: rownum.key,
+    },
     [ name.key ]: {
       title: name.cn,
       width: 60,
@@ -135,8 +145,13 @@ class InfoTable extends React.Component {
     fun.printLoader( moduleName );
     this.monitor = props.monitor;
 
+    let formatData = this.getFormatData( props.data );
+    let filterData = this.getFilterData( formatData, props.orderStatus );
+
     this.state = {
-      data: props.dataSource,
+      data: props.data, // 未处理过的数据
+      formatData: formatData, // 用 getFormatData 函数处理过的 immutable 类型的数据
+      filterData: filterData, // 用 getFilterData 函数处理过的 immutable 类型的数据
       pagination: {
         showQuickJumper: true,
         showTotal: total => `共 ${total} 条`,
@@ -151,7 +166,39 @@ class InfoTable extends React.Component {
       operationStatus: false,
       columns: this.getColums(),
       parentName: props.name,
+      orderStatus: props.orderStatus,
     }
+  }
+  /** 
+   * 初始化数据，将可编辑的字段改为 object 类型，并将数据转换为 immutable 类型
+   */
+  getFormatData = ( data ) => {
+    if ( typeof data !== 'undefined' && data.length > 0 ) {
+      data = immutable.fromJS( data );
+      data = data.map(( v, i ) => {
+        v = v.set( 'myStatus', config.ritStatus.general );
+        // 监听数量，代表每一列有多少个可编辑单元格，
+        // 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
+        v = v.set( 'monitor', 0 );
+        return v;
+      } );
+    }
+    else {
+      data = immutable.fromJS( [] );
+    }
+    return data;
+  };
+  /**
+   * 筛选出等于当前的订单状态值的数据
+   */
+  getFilterData = ( data, orderStatus ) => {
+    let filterData = immutable.fromJS( [] );
+    if ( data.size > 0 )
+      filterData = data.filter( item => is( item.get( 'status' ), orderStatus ) );
+    this.treated = orderStatus === ORDER_STATUS.treated ? filterData.size : data.size - filterData.size;
+    this.untreated = data.size - this.treated;
+
+    return filterData;
   }
   /**
    * 获取表头数据
@@ -168,7 +215,7 @@ class InfoTable extends React.Component {
    * 创建可编辑的 Input 单元格
    */
   renderInputCell = ( value, index, key ) => {
-    const { myStatus } = this.state.data[ index ];
+    const myStatus = this.state.filterData.getIn( [ index, 'myStatus' ] );
 
     return ( <EditableInputCell
       name={key + '_input_' + index}
@@ -189,7 +236,7 @@ class InfoTable extends React.Component {
    * 创建可编辑的 Radio 单元格
    */
   renderRadioCell = ( value, index, key ) => {
-    const { myStatus } = this.state.data[ index ];
+    const myStatus = this.state.filterData.getIn( [ index, 'myStatus' ] );
 
     return ( <EditableRadioCell
       name={key + '_radio_' + index}
@@ -199,24 +246,27 @@ class InfoTable extends React.Component {
     /> );
   }
   /**
-   * input组件的数据发生更改时
+   * 可编辑的子组件的数据发生更改时
    */
   handleChange = ( name, key, index, value ) => {
-    const { data, callBackStatus, saveCallback, submitCallback } = this.state;
-    let item = data[ index ];
-    item.monitor--;
-    if ( item[ key ] !== value ) {
-      item[ key ] = value;
-      this.setState( { data } );
+    const { filterData, callBackStatus, saveCallback, submitCallback } = this.state;
+    let monitor = filterData.getIn( [ index, 'monitor' ] );
+    monitor--;
+    let data = filterData.setIn( [ index, 'monitor' ], monitor ).setIn( [ index, key ], value );
+    if ( !is( filterData.getIn( [ index, key ] ), value ) ) {
+      this.setState( { filterData: data } );
     }
     fun.print( value, 'handleChange', name );
 
-    if ( item.monitor <= 0 ) {
-      let row = this.rebuildData( item );
-      if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) saveCallback( index, row );
+    if ( monitor <= 0 ) {
+      if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) {
+        let row = this.rebuildData( data.get( index ) );
+        saveCallback( index, row.toJS() );
+      }
       if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) {
-        row[ 'status' ] = '2';
-        submitCallback( row, ( id ) => { this.successCallback( id ) } );
+        let row = this.rebuildData(
+          data.setIn( [ index, status.key ], ORDER_STATUS.treated ).get( index ) );
+        submitCallback( row.toJS(), ( id ) => { this.successCallback( id ) } );
       }
     }
   }
@@ -224,102 +274,165 @@ class InfoTable extends React.Component {
    * 重构数据，剔除掉提交时不需要的字段
    */
   rebuildData = ( item ) => {
-    let row = {};
+    let row = Map( {} );
     let ritField = config.ritField;
-    for ( let key in item ) {
+    item.map(( v, k ) => {
       for ( let field in ritField ) {
-        if ( ritField[ field ].key === key && ritField[ field ].need ) {
-          row[ key ] = item[ key ];
+        if ( ritField[ field ].key === k && ritField[ field ].need ) {
+          row = row.set( k, v );
+          break;
         }
       }
-    }
+    } );
     return row;
   }
   /**
    * 点击编辑按钮
    */
   edit = ( index ) => {
-    const { data } = this.state;
-    data[ index ][ 'myStatus' ] = config.ritStatus.editing;
-    data[ index ][ 'monitor' ] = this.monitor;
-    this.setState( { data } );
+    this.setState( {
+      filterData: this.state.filterData
+        .setIn( [ index, 'myStatus' ], config.ritStatus.editing )
+        .setIn( [ index, 'monitor' ], this.monitor )
+    } );
   }
   /**
    * 确定保存：更新数据，并回到非编辑状态
    */
   save = ( index ) => {
-    const { data } = this.state;
-    data[ index ][ 'myStatus' ] = config.ritStatus.general;
-    this.setState( { data: data, callBackStatus: CALL_BACK_STATUS.save } );
+    this.setState( {
+      filterData: this.state.filterData.setIn( [ index, 'myStatus' ], config.ritStatus.general ),
+      callBackStatus: CALL_BACK_STATUS.save
+    } );
   }
   /**
-   * 提交数据：再次刷新数据，这些提交的数据会进入到 “已处理” 的页面中，
-   * 不刷新时依然保留在 “未处理” 也就是当前编辑页面内
+   * 提交数据
    */
   submit = ( index ) => {
-    const { data, submitCallback } = this.state;
-    if ( data[ index ][ 'myStatus' ] === config.ritStatus.general ) {
-      let row = this.rebuildData( data[ index ] );
-      row[ 'status' ] = '2';
+    const { filterData, submitCallback } = this.state;
+    // 当前状态是显示，既未在编辑状态下，而是直接点击提交按钮
+    if ( filterData.getIn( [ index, 'myStatus' ] ) === config.ritStatus.general ) {
+      let row = this.rebuildData(
+        filterData.setIn( [ index, status.key ], ORDER_STATUS.treated ).get( index ) );
       if ( typeof submitCallback === 'function' )
-        submitCallback( row, ( id ) => { this.successCallback( id ) } );
+        submitCallback( row.toJS(), ( id ) => { this.successCallback( id ) } );
     }
     else {
-      data[ index ][ 'myStatus' ] = config.ritStatus.general;
-      this.setState( { data: data, callBackStatus: CALL_BACK_STATUS.submit } );
+      this.setState( {
+        filterData: filterData.setIn( [ index, 'myStatus' ], config.ritStatus.general ),
+        callBackStatus: CALL_BACK_STATUS.submit
+      } );
     }
   }
   /**
    * 成功后调用
    */
-  successCallback = ( serviceId ) => {
-    let array = this.state.data;
-    let index = -1;
-    for ( let i = 0; i < array.length; i++ ) {
-      let item = array[ i ];
-      if ( item.serviceId === serviceId ) index = i;
+  successCallback = ( id ) => {
+    let index = this.getDataByServiceId( id );
+    if ( index >= 0 ) {
+      let formatData = this.state.formatData.updateIn( [ index, status.key ],
+        v => v === ORDER_STATUS.treated ? ORDER_STATUS.untreated : ORDER_STATUS.treated );
+      this.setState( {
+        formatData: formatData,
+        filterData: this.getFilterData( formatData, this.state.orderStatus )
+      } );
+      this.updateTreated();
     }
-    console.log( index );
-    array.splice( index, 1 )
-    if ( index > 0 ) this.setState( { data: array } );
+  }
+  /**
+   * 更新父组件的 已处理 和 未处理 的数值
+   */
+  updateTreated = () => {
+    this.props.setTreated( this.untreated, this.treated );
   }
   /**
    * 撤销已处理的数据
    */
   revoke = ( index ) => {
-    const { data, submitCallback } = this.state;
-    let row = this.rebuildData( data[ index ] );
-    row[ 'status' ] = '1';
+    const { filterData, submitCallback } = this.state;
+    // let i = this.getDataByServiceId( filterData.getIn( [ index, serviceId.key ] ) );
+    // let ftd = formatData.setIn( [ i, status.key ], ORDER_STATUS.untreated );
+    let row = this.rebuildData( filterData.setIn( [ index, status.key ], ORDER_STATUS.untreated )
+      .get( index ) );
+    // this.setState( { formatData: ftd } );
+
     if ( typeof submitCallback === 'function' )
-      submitCallback( row, ( id ) => { this.successCallback( id ) } );
+      submitCallback( row.toJS(), ( id ) => { this.successCallback( id ) } );
   }
   /**
    * 确认撤销：取消刚刚录入的数据，并回到非编辑状态
    */
   cancel = ( index ) => {
-    const { data } = this.state;
-    data[ index ][ 'myStatus' ] = config.ritStatus.cancel;
-    this.setState( { data } );
+    this.setState( {
+      formatData: this.state.formatData.setIn( [ index, 'myStatus' ], config.ritStatus.cancel )
+    } );
+  }
+  /**
+   * 根据 serviceId 查找改数据在 formatData 中的下标
+   */
+  getDataByServiceId = ( id ) => {
+    let index = -1;
+    this.state.formatData.forEach(
+      ( v, i ) => {
+        if ( v.get( serviceId.key ) === id ) {
+          index = i;
+          return false;
+        }
+      }
+    )
+    return index;
   }
 
   render() {
     return (
       <Table className={styles.table} bordered columns={this.state.columns} rowKey="rownum"
-        dataSource={this.state.data} size="middle" pagination={this.state.pagination} />
+        dataSource={this.state.filterData.size > 0 ? this.state.filterData.toJS() : []}
+        size="middle" pagination={this.state.pagination} />
     )
   }
 
   componentWillReceiveProps( nextProps ) {
-    let data = nextProps.dataSource;
-    let operationStatus = true;
-    if ( data !== this.state.data ) {
-      if ( typeof data !== 'undefined' && data.length > 0 ) {
-        operationStatus = data[ 0 ].status === '2' ? true : false;
-      }
-      this.setState( { data: data, operationStatus: operationStatus } );
+    let operationStatus = nextProps.orderStatus === ORDER_STATUS.treated ? true : false;
+    let columns = [];
+    if ( nextProps.name != this.state.parentName ) {
+      columns = this.getColums()
     }
-    if ( nextProps.name != this.state.parentName )
-      this.setState( { columns: this.getColums() } );
+    // 有新数据进来
+    if ( !is( nextProps.data, this.state.data ) ) {
+      let formatData = this.getFormatData( nextProps.data );
+      let filterData = this.getFilterData( data, nextProps.orderStatus );
+      if ( columns.length > 0 ) {
+        this.setState( {
+          data: nextProps.data,
+          formatData: formatData,
+          filterData: filterData,
+          operationStatus: operationStatus,
+          columns: this.getColums()
+        } );
+      }
+      else {
+        this.setState( {
+          data: nextProps.data,
+          formatData: formatData,
+          filterData: filterData,
+          operationStatus: operationStatus,
+        } );
+      }
+    }
+    else {
+      // 切换了订单状态
+      if ( nextProps.orderStatus !== this.state.orderStatus ) {
+        this.setState( {
+          filterData: this.getFilterData( this.state.formatData, nextProps.orderStatus ),
+          orderStatus: nextProps.orderStatus,
+          operationStatus: operationStatus,
+        } );
+      }
+    }
+  }
+
+  componentWillMount() {
+    this.updateTreated();
   }
 }
 

@@ -12,16 +12,11 @@ class FollowUpCell extends React.Component {
     super( props );
     this.name = props.name;
     this.state = {
-      visible: false
+      visible: false,
     }
   }
 
-  showPlan = ( e ) => {
-
-  }
-
   handlerClick = ( e ) => {
-    console.log( 'handlerClick' );
     this.setState( { visible: true } );
   }
 
@@ -29,6 +24,7 @@ class FollowUpCell extends React.Component {
     console.log( e );
     this.setState( { visible: false } );
   }
+
   handleCancel = ( e ) => {
     console.log( e );
     this.setState( { visible: false } );
@@ -37,11 +33,13 @@ class FollowUpCell extends React.Component {
   render() {
     return (
       <div>
-        <a onClick={this.handlerClick} disabled>方案一</a>&nbsp;
+        {/*<a onClick={this.handlerClick} disabled>方案一</a>&nbsp;
         <a onClick={this.handlerClick} disabled>方案二</a>&nbsp;
-        <Popover content={<HypertensionC />} title="方案三" overlayClassName={styles.popup} trigger="hover">
+        <Popover content={<HypertensionC disabled />} title="方案三" overlayClassName={styles.popup} trigger="hover"
+          ref="popover">
           <a onClick={this.handlerClick} onMouseOver={this.showPlan}>方案三</a>
-        </Popover>
+        </Popover>*/}
+        <a onClick={this.handlerClick}>录入随访情况</a>
         <Modal title="高血压患者血压填写表" visible={this.state.visible}
           onOk={this.handleOk} onCancel={this.handleCancel}>
           <HypertensionC />

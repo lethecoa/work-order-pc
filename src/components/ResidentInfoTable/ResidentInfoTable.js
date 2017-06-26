@@ -1,11 +1,17 @@
 import React from 'react';
 import { routerRedux } from 'dva/router';
+import immutable from 'immutable';
 import styles from './ResidentInfoTable.less';
-import { Table, Button, Icon, Upload, message, Modal, notification } from 'antd';
+import { Table, Button, Icon, Upload, message, Radio } from 'antd';
 import InfoTable from './InfoTabel';
 import { fun, modular, api, config } from '../../common';
 
 const moduleName = '居民信息表控件(ResidentInfoTable)';
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
+const { name, sex, birthday, tel, cardDate, disease, diseaseCase, drugs, present,
+  remark, operation, visit, followUp, status } = config.ritField;
+const ORDER_STATUS = config.ORDER_STATUS;
 
 /**
  * 用户信息表控件，必须提供以下几个参数
@@ -19,12 +25,16 @@ const moduleName = '居民信息表控件(ResidentInfoTable)';
 class ResidentInfoTable extends React.Component {
   constructor( props ) {
     super( props );
+
     this.state = {
       ritRef: modular[ props.name ][ 'ritRef' ],
-      dataSource: props.data || [],
+      data: props.data,
       disabled: props.disabled,
       operation: false,
       show: props.userType === config.userType.doctor ? '' : 'hide',
+      untreated: 0,
+      treated: 0,
+      orderStatus: ORDER_STATUS.untreated,
     }
   }
   // public function
@@ -32,22 +42,27 @@ class ResidentInfoTable extends React.Component {
    * 获取用户信息表数据
    */
   getData = () => {
-    let data = this.state.dataSource;
-    fun.print( data, 'dataSource', moduleName );
+    let data = this.state.data.toJS();
+    fun.print( data, 'data', moduleName );
     return data;
   }
-  // private function
-  uploadError = () => {
-    Modal.error( {
-      title: '导入Excel文件出错',
-      content: '请确认您导入的是Excel文件，或者检您的Excel文件是否有异常数据导致无法导入！',
-    } );
+  setTreated = ( untreated, treated ) => {
+    this.setState( { untreated, treated } );
   }
+  // private function
+  /**
+   * 上传失败
+   */
+  uploadError = () => {
+    fun.showError( '导入Excel文件出错',
+      '请确认您导入的是Excel文件，或者检您的Excel文件是否有异常数据导致无法导入！' );
+  }
+  /**
+   * 上传成功
+   */
   uploadSuccess = () => {
-    notification.open( {
-      message: '导入居民信息成功',
-      description: '居民信息已全部导入，提交前请检查核对一下您导入的信息！',
-    } );
+    fun.showNotification( '导入居民信息成功',
+      '居民信息已全部导入，提交前请检查核对一下您导入的信息！' );
   }
   /**
    * 下载excel模版
@@ -65,16 +80,25 @@ class ResidentInfoTable extends React.Component {
       let res = info.file.response;
       fun.print( res.entity, '读取Excel完成', moduleName );
       if ( res.success ) {
-        this.setState( { dataSource: res.entity.rows } );
+        this.setState( { data: res.entity.rows } );
         this.uploadSuccess();
       } else {
         this.uploadError();
       }
     }
     if ( info.file.status === 'error' ) {
+      fun.showError( '上传数据错误', info );
       fun.print( info, 'failed' );
     }
   }
+  /**
+   * 切换已处理、未处理
+   */
+  handlerRadioChange = ( e ) => {
+    this.setState( {
+      orderStatus: e.target.value
+    } );
+  };
 
   render() {
     return (
@@ -88,30 +112,37 @@ class ResidentInfoTable extends React.Component {
             <Upload action={api.uploadExcel} onChange={this.upload}
               data={{ itemId: this.state.ritRef }} showUploadList={false}>
               <Button size="small" disabled={this.props.disabled} onClick={this.upload}
-                icon="upload" className={this.state.show}>导入居民信息</Button></Upload>
+                icon="upload" className={this.state.show}>导入居民信息</Button>
+            </Upload>
+            <RadioGroup onChange={this.handlerRadioChange} value={this.state.orderStatus}>
+              <RadioButton value="1">待处理({this.state.untreated})</RadioButton>
+              <RadioButton value="2">已处理({this.state.treated})</RadioButton>
+            </RadioGroup>
           </div>
           居民信息表样本
         </div>
-        <InfoTable name={this.props.name} dataSource={this.state.dataSource} monitor={this.props.monitor}
-          onSave={this.props.onSave} onSubmit={this.props.onSubmit} userType={this.props.userType} />
+        <InfoTable name={this.props.name} data={this.state.data}
+          monitor={this.props.monitor} orderStatus={this.state.orderStatus}
+          onSave={this.props.onSave} onSubmit={this.props.onSubmit} userType={this.props.userType}
+          setTreated={( untreated, treated ) => this.setTreated( untreated, treated )} />
       </div>
     );
   }
-
-  componentWillReceiveProps( nextProps ) {
-    let data = nextProps.data;
-    if ( data !== this.state.dataSource ) {
-      this.setState( { dataSource: data } );
+  /*
+    componentWillReceiveProps( nextProps ) {
+      let data = nextProps.data;
+      if ( data !== this.state.data ) {
+        this.setState( { data: data } );
+      }
+      if ( nextProps.disabled !== this.state.disabled ) {
+        this.setState( { disabled: nextProps.disabled } );
+      }
     }
-    if ( nextProps.disabled !== this.state.disabled ) {
-      this.setState( { disabled: nextProps.disabled } );
-    }
-  }
-
-  shouldComponentUpdate( nextProps, nextState ) {
-    return nextProps.data !== this.state.dataSource || nextState.dataSource !== this.state.dataSource
-      || nextProps.disabled !== this.state.disabled;
-  }
+  
+    shouldComponentUpdate( nextProps, nextState ) {
+      return nextProps.data !== this.state.data || nextState.data !== this.state.data
+        || nextProps.disabled !== this.state.disabled;
+    }*/
 }
 
 export default ResidentInfoTable;
