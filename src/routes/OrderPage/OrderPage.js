@@ -46,12 +46,10 @@ const OrderPage = ( {
 	const { orgName, remainingBalance } = currentData;
 
 	/** 获取页面path,初始化dataList */
-	let path;
+	let path = route.path.replace( '/', '' );
 	if ( userType === config.userType.worker ) {
-		path = route.path.substr( route.path.indexOf( '/' ) + 1 );
 		dataList = residentList;
 	} else {
-		path = route.path;
 		if ( !disabled ) {
 			dataList = [];
 		}
