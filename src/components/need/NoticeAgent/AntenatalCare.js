@@ -73,7 +73,13 @@ function AntenatalCare( props ) {
 								message: '请选择一个产检时间段，精确到小时！'
 							},
 						],
-					} )( <RangePicker size="small" showTime format="YYYY-MM-DD HH:00" disabled={props.disabled}/> )}
+					} )( <RangePicker
+									size="small"
+									showTime
+									format="YYYY-MM-DD HH:00"
+									disabled={props.disabled}
+									disabledDate={(current)=> current && current.valueOf() < Date.now()}
+								/> )}
 				</FormItem>
 				<FormItem {...config.formItemLayout} label="产检注意事项">
 					{getFieldDecorator( 'antenatalCareMatter', {

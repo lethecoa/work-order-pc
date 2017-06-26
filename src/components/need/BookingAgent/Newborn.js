@@ -38,7 +38,13 @@ function Newborn( props ) {
 								message: '请选择一个时间段，精确到小时！'
 							},
 						],
-					} )( <RangePicker size="small" showTime format="YYYY-MM-DD HH:00" disabled={props.disabled}/> )}
+					} )( <RangePicker
+									size="small"
+									showTime
+									format="YYYY-MM-DD HH:00"
+									disabled={props.disabled}
+									disabledDate={(current)=> current && current.valueOf() < Date.now()}
+								/> )}
 				</FormItem>
 				<FormItem label="下午访视时间" {...config.formItemLayout}
 				          help="时间需精确到小时（日期选择里可以切换时间显示，默认使用当前的时间）">
@@ -53,7 +59,13 @@ function Newborn( props ) {
 								message: '请选择一个时间段，精确到小时！'
 							},
 						],
-					} )( <RangePicker size="small" showTime format="YYYY-MM-DD HH:00" disabled={props.disabled}/> )}
+					} )( <RangePicker
+									size="small"
+									showTime
+									format="YYYY-MM-DD HH:00"
+									disabled={props.disabled}
+									disabledDate={(current)=> current && current.valueOf() < Date.now()}
+								/> )}
 				</FormItem>
 				<FormItem {...config.formItemLayout} label="是否收费">
 					{getFieldDecorator( 'isCharge', {
