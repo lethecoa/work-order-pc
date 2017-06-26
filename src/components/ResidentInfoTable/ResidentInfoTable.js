@@ -114,7 +114,8 @@ class ResidentInfoTable extends React.Component {
               <Button size="small" disabled={this.props.disabled} onClick={this.upload}
                 icon="upload" className={this.state.show}>导入居民信息</Button>
             </Upload>
-            <RadioGroup onChange={this.handlerRadioChange} value={this.state.orderStatus}>
+            <RadioGroup onChange={this.handlerRadioChange} value={this.state.orderStatus}
+              className={this.state.show}>
               <RadioButton value="1">待处理({this.state.untreated})</RadioButton>
               <RadioButton value="2">已处理({this.state.treated})</RadioButton>
             </RadioGroup>

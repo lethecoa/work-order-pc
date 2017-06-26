@@ -400,7 +400,7 @@ class InfoTable extends React.Component {
     // 有新数据进来
     if ( !is( nextProps.data, this.state.data ) ) {
       let formatData = this.getFormatData( nextProps.data );
-      let filterData = this.getFilterData( data, nextProps.orderStatus );
+      let filterData = this.getFilterData( formatData, nextProps.orderStatus );
       if ( columns.length > 0 ) {
         this.setState( {
           data: nextProps.data,
