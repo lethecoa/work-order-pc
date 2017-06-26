@@ -122,9 +122,10 @@ class ResidentInfoTable extends React.Component {
             : ''}
           {this.state.showWorker ?
             <div className={styles.button}>
-              <RadioGroup onChange={this.handlerRadioChange} value={this.state.orderStatus}>
-                <RadioButton value="1">待处理({this.state.untreated})</RadioButton>
-                <RadioButton value="2">已处理({this.state.treated})</RadioButton>
+              <RadioGroup onChange={this.handlerRadioChange} value={this.state.orderStatus}
+                className={styles.treated}>
+                <RadioButton value="1">待处理 ({this.state.untreated})</RadioButton>
+                <RadioButton value="2">已处理 ({this.state.treated})</RadioButton>
               </RadioGroup>
             </div>
             : ''}

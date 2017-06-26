@@ -143,6 +143,7 @@ class InfoTable extends React.Component {
   constructor( props ) {
     super( props );
     fun.printLoader( moduleName );
+    // 这个数值其实可以改进自动计算出来
     this.monitor = props.monitor;
 
     let formatData = this.getFormatData( props.data );
@@ -161,12 +162,11 @@ class InfoTable extends React.Component {
       },
       saveCallback: this.props.onSave,
       submitCallback: this.props.onSubmit,
-      /** 用户操作的类型：保存或者提交 */
-      callBackStatus: '',
-      operationStatus: false,
+      callBackStatus: '', // 用户操作的类型：保存或者提交
+      operationStatus: false, // 操作栏显示状态，doctor隐藏
       columns: this.getColums(),
       parentName: props.name,
-      orderStatus: props.orderStatus,
+      orderStatus: props.orderStatus, // 订单状态：已处理、未处理
     }
   }
   // public function
@@ -189,8 +189,8 @@ class InfoTable extends React.Component {
         // 监听数量，代表每一列有多少个可编辑单元格，
         // 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
         v = v.set( 'monitor', 0 );
-        v = v.set( visit.key, '1' );
-        v = v.set( present.key, '1' );
+        if ( !v.has( visit.key ) ) v = v.set( visit.key, '1' );
+        if ( !v.has( present.key ) ) v = v.set( present.key, '1' );
         return v;
       } );
     }
