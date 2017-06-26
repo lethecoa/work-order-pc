@@ -1,4 +1,4 @@
-import {fun, model, action} from '../common';
+import {fun, model, action, api} from '../common';
 import {saveSign, savePhysicalExam, saveNewBorn, savePostpartum} from '../services/bookingAgentService';
 
 export default {
@@ -16,7 +16,7 @@ export default {
 			const data = yield call( saveSign, values );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'saveSign' }
+				payload: { fun: payload.fun, responsData: data, requestData: values, apiName: api.saveSign }
 			} );
 		},
 		*savePhysicalExam( { payload }, { call, put } ) {
@@ -30,7 +30,7 @@ export default {
 			const data = yield call( savePhysicalExam, values );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'savePhysicalExam' }
+				payload: { fun: payload.fun, responsData: data, requestData: values, apiName: api.savePhysicalExam }
 			} );
 		},
 		*saveNewBorn( { payload }, { call, put } ) {
@@ -45,7 +45,7 @@ export default {
 			const data = yield call( saveNewBorn, values );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'saveNewBorn' }
+				payload: { fun: payload.fun, responsData: data, requestData: values, apiName: api.saveNewBorn }
 			} );
 		},
 		*savePostpartum( { payload }, { call, put } ) {
@@ -60,7 +60,7 @@ export default {
 			const data = yield call( savePostpartum, values );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'savePostpartum' }
+				payload: { fun: payload.fun, responsData: data, requestData: values, apiName: api.savePostpartum }
 			} );
 		},
 	},

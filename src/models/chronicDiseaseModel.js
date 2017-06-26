@@ -1,4 +1,4 @@
-import {fun, model, action} from '../common';
+import {fun, model, action, api} from '../common';
 import {saveBlood, saveSugar} from '../services/chronicDiseaseService';
 
 export default {
@@ -11,7 +11,7 @@ export default {
 			const data = yield call( saveBlood, payload.data );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'saveBlood' }
+				payload: { fun: payload.fun, responsData: data, requestData: payload.data, apiName: api.saveBlood }
 			} );
 		},
 		*saveSugar( { payload }, { call, put } ) {
@@ -19,7 +19,7 @@ export default {
 			const data = yield call( saveSugar, payload.data );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'saveSugar' }
+				payload: { fun: payload.fun, responsData: data, requestData: payload.data, apiName: api.saveSugar }
 			} );
 		},
 	},

@@ -1,4 +1,4 @@
-import {fun, model, action} from '../common';
+import {fun, model, action, api} from '../common';
 import {saveDrug, saveDrugeffect} from '../services/trackingReminderService';
 
 export default {
@@ -11,7 +11,7 @@ export default {
 			const data = yield call( saveDrug, payload.data );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'saveDrug' }
+				payload: { fun: payload.fun, responsData: data, requestData: payload.data, apiName: api.saveDrug }
 			} );
 		},
 		*saveDrugeffect( { payload }, { call, put } ) {
@@ -19,7 +19,7 @@ export default {
 			const data = yield call( saveDrugeffect, payload.data );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'saveDrugeffect' }
+				payload: { fun: payload.fun, responsData: data, requestData: payload.data, apiName: api.saveDrugeffect }
 			} );
 		},
 	},

@@ -1,4 +1,4 @@
-import {fun, model, action} from '../common';
+import {fun, model, action, api} from '../common';
 import {saveChronic, savePolicy, saveActivity, saveGravida, saveChildren} from '../services/noticAgentService';
 
 export default {
@@ -17,7 +17,7 @@ export default {
 			const data = yield call( saveChronic, values );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'saveChronic' }
+				payload: { fun: payload.fun, responsData: data, requestData: values, apiName: api.saveChronic }
 			} );
 		},
 		*savePolicy( { payload }, { call, put } ) {
@@ -25,7 +25,7 @@ export default {
 			const data = yield call( savePolicy, payload.data );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'savePolicy' }
+				payload: { fun: payload.fun, responsData: data, requestData: payload.data, apiName: api.savePolicy }
 			} );
 		},
 		*saveActivity( { payload }, { call, put } ) {
@@ -38,7 +38,7 @@ export default {
 			const data = yield call( saveActivity, values );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'saveActivity' }
+				payload: { fun: payload.fun, responsData: data, requestData: values, apiName: api.saveActivity }
 			} );
 		},
 		*saveGravida( { payload }, { call, put } ) {
@@ -52,7 +52,7 @@ export default {
 			const data = yield call( saveGravida, values );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'saveGravida' }
+				payload: { fun: payload.fun, responsData: data, requestData: values, apiName: api.saveGravida }
 			} );
 		},
 		*saveChildren( { payload }, { call, put } ) {
@@ -64,7 +64,7 @@ export default {
 			const data = yield call( saveChildren, values );
 			yield put( {
 				type: fun.fuse( model.order, action.order_submitCallBack ),
-				payload: { fun: payload.fun, data, funName: 'saveChildren' }
+				payload: { fun: payload.fun, responsData: data, requestData: values, apiName: api.saveChildren }
 			} );
 		},
 	},

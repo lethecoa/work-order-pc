@@ -56,7 +56,7 @@ export default {
 		},
 		*submitCallBack( { payload }, { put } ){
 			payload.fun();
-			fun.showResult( payload.data, config.SUBMIT_SUCCESS, payload.funName );
+			fun.showResult( payload, config.SUBMIT_SUCCESS );
 			yield put( { type: 'changeSubmitSate' } );
 		}
 	},
