@@ -60,7 +60,13 @@ function ChildHealth( props ) {
 								message: '请选择一个随访时间段，精确到小时！'
 							},
 						],
-					} )( <RangePicker size="small" showTime format="YYYY-MM-DD HH:00" disabled={props.disabled}/> )}
+					} )( <RangePicker
+									size="small"
+									showTime
+									format="YYYY-MM-DD HH:00"
+									disabled={props.disabled}
+									disabledDate={(current)=> current && current.valueOf() < Date.now()}
+								/> )}
 				</FormItem>
 				<FormItem {...config.formItemLayout} label="其他要求">
 					{getFieldDecorator( 'otherRequirements', {
