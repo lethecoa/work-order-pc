@@ -189,6 +189,8 @@ class InfoTable extends React.Component {
         // 监听数量，代表每一列有多少个可编辑单元格，
         // 只有当所有单元格都触发了回调函数才会执行最终的保存或提交动作
         v = v.set( 'monitor', 0 );
+        v = v.set( visit.key, '1' );
+        v = v.set( present.key, '1' );
         return v;
       } );
     }
@@ -262,11 +264,10 @@ class InfoTable extends React.Component {
     let monitor = filterData.getIn( [ index, 'monitor' ] );
     monitor--;
     let data = filterData.setIn( [ index, 'monitor' ], monitor ).setIn( [ index, key ], value );
-    // 其实应该在服务器端成功后再更新 filterData
-    if ( !is( filterData.getIn( [ index, key ] ), value ) ) {
-      this.setState( { filterData: data } );
-    }
-    fun.print( value, 'handleChange', name );
+
+    // 更新 filterData 里的 monitor，value值其实应该在服务器端成功后再更新
+    // 目前 save 方法是直接更新，submit 是等服务器端成功后才更新
+    this.state.filterData = data;
 
     if ( monitor <= 0 ) {
       // 保存

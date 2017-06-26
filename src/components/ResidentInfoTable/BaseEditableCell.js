@@ -4,7 +4,7 @@ import { config, fun } from '../../common';
 class BaseEditableCell extends React.Component {
   constructor( props ) {
     super( props );
-    this.cacheValue = '';
+    this.cacheValue = props.value || '';
     this.name = props.name;
     this.state = {
       value: props.value || '',
@@ -27,8 +27,8 @@ class BaseEditableCell extends React.Component {
       }
       //  传入取消的状态，则不保存刚刚的用户输入
       else {
-        this.setState( { myStatus: nextProps.myStatus, value: this.cacheValue } );
-        this.props.onChange( this.name, this.cacheValue );
+        this.setState( { myStatus: config.ritStatus.general, value: this.cacheValue } );
+        // this.props.onChange( this.name, this.cacheValue );
       }
     }
   }

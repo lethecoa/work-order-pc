@@ -6,6 +6,8 @@ import { Table, Button, Icon, Upload, message, Radio } from 'antd';
 import InfoTable from './InfoTabel';
 import { fun, modular, api, config } from '../../common';
 
+const { is } = immutable;
+
 const moduleName = '居民信息表控件(ResidentInfoTable)';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -135,17 +137,16 @@ class ResidentInfoTable extends React.Component {
       </div>
     );
   }
-  /*
-    componentWillReceiveProps( nextProps ) {
-      let data = nextProps.data;
-      if ( data !== this.state.data ) {
-        this.setState( { data: data } );
-      }
-      if ( nextProps.disabled !== this.state.disabled ) {
-        this.setState( { disabled: nextProps.disabled } );
-      }
+
+  componentWillReceiveProps( nextProps ) {
+    if ( !is( nextProps.data, this.state.data ) ) {
+      this.setState( { data: nextProps.data } );
     }
-  
+    /*if ( nextProps.disabled !== this.state.disabled ) {
+      this.setState( { disabled: nextProps.disabled } );
+    }*/
+  }
+  /*
     shouldComponentUpdate( nextProps, nextState ) {
       return nextProps.data !== this.state.data || nextState.data !== this.state.data
         || nextProps.disabled !== this.state.disabled;
