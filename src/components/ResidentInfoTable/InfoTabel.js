@@ -262,20 +262,32 @@ class InfoTable extends React.Component {
     let monitor = filterData.getIn( [ index, 'monitor' ] );
     monitor--;
     let data = filterData.setIn( [ index, 'monitor' ], monitor ).setIn( [ index, key ], value );
+    // 其实应该在服务器端成功后再更新 filterData
     if ( !is( filterData.getIn( [ index, key ] ), value ) ) {
       this.setState( { filterData: data } );
     }
     fun.print( value, 'handleChange', name );
 
     if ( monitor <= 0 ) {
+      // 保存
       if ( callBackStatus === CALL_BACK_STATUS.save && typeof saveCallback === 'function' ) {
         let row = this.rebuildData( data.get( index ) );
         saveCallback( index, row.toJS() );
       }
+      // 提交
       if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) {
         let row = this.rebuildData(
           data.setIn( [ index, status.key ], ORDER_STATUS.treated ).get( index ) );
         submitCallback( row.toJS(), ( id ) => { this.successCallback( id ) } );
+      }
+      // 更新 formatData
+      let i = this.getDataByServiceId( data.getIn( [ index, serviceId.key ] ) );
+      if ( i >= 0 ) {
+        let formatData = this.state.formatData.set( i, data.get( index ) );
+        this.setState( {
+          formatData: formatData,
+          // filterData: this.getFilterData( formatData, this.state.orderStatus )
+        } )
       }
     }
   }
@@ -373,7 +385,7 @@ class InfoTable extends React.Component {
    */
   cancel = ( index ) => {
     this.setState( {
-      formatData: this.state.formatData.setIn( [ index, 'myStatus' ], config.ritStatus.cancel )
+      filterData: this.state.filterData.setIn( [ index, 'myStatus' ], config.ritStatus.cancel )
     } );
   }
   /**
