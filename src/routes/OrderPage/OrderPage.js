@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
-import {Spin, Row, Col, Form, Button, Modal} from 'antd';
+import {Spin, Row, Col, Form, Button, Modal, Popconfirm} from 'antd';
 import {action, model, fun, config, modular} from '../../common';
 import {
 	OrderStep,
@@ -38,10 +38,10 @@ const OrderPage = ( {
 	route,
 	user,
 } ) => {
-	fun.printLoader( 'orderPage' );
+	/*fun.printLoader( 'orderPage' );*/
 	const { userType, orderHandlerId, orderHandlerName } = user;
 	const { currentStep, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel ? orderModel : {};
-	const { serviceDetail, residentList } = workerModel ? workerModel : {};
+	const { serviceDetail, residentList, disabledConfirmOrder, pagination } = workerModel ? workerModel : {};
 	const { currentData, display, disabled } = workerModel ? workerModel : orderModel;
 	const { orgName, remainingBalance } = currentData;
 
@@ -99,18 +99,10 @@ const OrderPage = ( {
 			}
 		} );
 	};
-	/** 客服端-居民信息数据 */
-	const orderData = {
-		orderHandlerId,
-		orderHandlerName,
-		orderId: currentData.orderId,
-		residentList: [],
-	};
 	/** 客服端-保存单条数据 */
 	const saveRow = ( index, row ) => {
-		orderData.residentList[ 0 ] = row;
 		let result = {
-			data: orderData,
+			data: { residentList: [ row ] },
 			type: 'save',
 		};
 		dispatch( { type: fun.fuse( model.worker, action.worker_saveOrderDetail ), payload: result } );
@@ -118,13 +110,21 @@ const OrderPage = ( {
 	};
 	/** 客服端-提交单条数据 */
 	const submitRow = ( row, callBack ) => {
-		orderData.residentList[ 0 ] = row;
 		let result = {
-			data: orderData,
+			data: { residentList: [ row ] },
 			callBack: callBack,
 			type: 'submit',
 		};
 		dispatch( { type: fun.fuse( model.worker, action.worker_saveOrderDetail ), payload: result } );
+	};
+	/** 客服端-确认完成订单所有委托 */
+	const confirmOrder = () => {
+		let orderData = {
+			orderHandlerId,
+			orderHandlerName,
+			orderId: currentData.orderId,
+		};
+		dispatch( { type: fun.fuse( model.worker, action.worker_confirmOrder ), payload: orderData } );
 	};
 	/** 客服端-返回列表页 */
 	const backToList = () => {
@@ -216,6 +216,14 @@ const OrderPage = ( {
 								</Row>
 							</div>
 						</div> : ''}
+					{userType === config.userType.worker && pagination.status === '1' ?
+						<div className={styles.confirmOrderBtn}>
+							<span>温馨提示：提交单条居民信息可在已处理中查看或撤回修改；确认完成所有委托任务后，医生将在手机APP中查看到您的服务信息，不能撤回修改！</span>
+							<Popconfirm title="提交以后将不能撤回修改，确认已完成该委托单全部内容？" onConfirm={confirmOrder}>
+								<Button size="large" type="primary" style={{ width: 200 }} disabled={disabledConfirmOrder}>确认完成</Button>
+							</Popconfirm>
+						</div> : ''
+					}
 				</Form>
 			</Spin>
 		</div>

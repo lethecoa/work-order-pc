@@ -51,7 +51,7 @@ const OrderList = ( {
 	workerModel,
 	dispatch,
 } ) => {
-	fun.printLoader( 'orderList' );
+	/*fun.printLoader( 'orderList' );*/
 	const { resetFields, validateFieldsAndScroll, getFieldDecorator } = form;
 	const { pagination, list: dataSource, total } = workerModel;
 	/** 查询 */

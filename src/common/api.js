@@ -37,4 +37,6 @@ module.exports = {
 	getOrderDetail: config.api + '/callCenter/getOrderDetail',
 	/** 保存委托单明细 */
 	saveService: config.api + '/callCenter/saveService',
+	/** 确认完成所有委托内容 */
+	confirmOrder: config.api + '/callCenter/confirmOrder',
 };

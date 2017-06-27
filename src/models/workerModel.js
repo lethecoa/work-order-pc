@@ -1,6 +1,6 @@
 import {routerRedux} from 'dva/router';
 import {fun, model, action, config, api} from '../common';
-import {getOrders, getOrderDetail, saveService} from '../services/workerService';
+import {getOrders, getOrderDetail, saveService, confirmOrder} from '../services/workerService';
 
 export default {
 	namespace: model.worker,
@@ -13,16 +13,20 @@ export default {
 		},
 		display: 'block',
 		disabled: true,
+		disabledConfirmOrder: false,
 	},
 	reducers: {
 		save( state, { payload: { list, total, pagination } } ) {
-			console.log( '===workerModel===save===' );
+			/*console.log( '===workerModel===save===' );*/
 			return { ...state, list, total, pagination };
 		},
-		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList } } ) {
-			console.log( '===workerModel===saveCurrentOrder===' );
-			return { ...state, currentData, serviceDetail, residentList };
+		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList, disabledConfirmOrder } } ) {
+			/*console.log( '===workerModel===saveCurrentOrder===' );*/
+			return { ...state, currentData, serviceDetail, residentList, disabledConfirmOrder };
 		},
+		changeBtnDisabled( state ){
+			return { ...state, disabledConfirmOrder: !state.disabledConfirmOrder, }
+		}
 	},
 	effects: {
 		*initOrderList( {}, { put, select, call } ) {
@@ -78,6 +82,7 @@ export default {
 					currentData: order,
 					serviceDetail: data.entity.serviceDetail,
 					residentList: data.entity.residentList,
+					disabledConfirmOrder: false,
 				},
 			} );
 			yield put( routerRedux.push( url ) );
@@ -108,6 +113,18 @@ export default {
 				if ( payload.callBack ) {
 					payload.callBack( payload.data.residentList[ 0 ].serviceId );
 				}
+			}
+		},
+		*confirmOrder( { payload }, { call, put } ){
+			fun.print( JSON.stringify( payload ), 'confirmOrder', model.worker );
+			const data = yield call( confirmOrder, payload );
+			fun.showResult( {
+				responsData: data,
+				requestData: payload,
+				apiName: api.confirmOrder,
+			}, config.CONFIRM_ORDER_SUCCESS );
+			if ( data.success ) {
+				yield put( { type: 'changeBtnDisabled' } );
 			}
 		}
 	},

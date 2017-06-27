@@ -20,3 +20,10 @@ export async function saveService( data ) {
 		data
 	} )
 }
+
+export async function confirmOrder( data ) {
+	return request( {
+		url: api.confirmOrder,
+		data
+	} )
+}

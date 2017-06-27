@@ -29,4 +29,5 @@ module.exports = {
 	worker_getOrders: 'getOrders',
 	worker_getOrderDetail: 'getOrderDetail',
 	worker_saveOrderDetail: 'saveOrderDetail',
+	worker_confirmOrder:'confirmOrder',
 };

@@ -42,6 +42,8 @@ module.exports = {
 	SUBMIT_INFO_SUCCESS: '提交成功，您可以切换到已处理标签查看此记录',
 	/** 撤销居民信息成功提示信息  */
 	REVOKE_INFO_SUCCESS: '撤销成功，您可以切换到待处理标签重新处理此记录',
+	/** 确认完成成功提示信息  */
+	CONFIRM_ORDER_SUCCESS:'确认完成成功，医生将在手机APP中查看到您的服务信息',
 	/** 默认成功提示信息  */
 	SUCCESS: '操作成功',
 	/** 未上传居民信息样本提示信息  */
