@@ -14,21 +14,25 @@ export default {
 		display: 'block',
 		disabled: true,
 		disabledConfirmOrder: false,
+		isOver: false,
 	},
 	reducers: {
 		save( state, { payload: { list, total, pagination } } ) {
 			/*console.log( '===workerModel===save===' );*/
 			return { ...state, list, total, pagination };
 		},
-		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList, disabledConfirmOrder, count } } ) {
+		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList, disabledConfirmOrder, count, isOver } } ) {
 			/*console.log( '===workerModel===saveCurrentOrder===' );*/
-			return { ...state, currentData, serviceDetail, residentList, disabledConfirmOrder, count };
+			return { ...state, currentData, serviceDetail, residentList, disabledConfirmOrder, count, isOver };
 		},
 		changeBtnDisabled( state, { payload } ){
 			return { ...state, disabledConfirmOrder: payload }
 		},
 		changeCount( state, { payload } ){
 			return { ...state, count: payload }
+		},
+		changeIsOver( state, { payload } ){
+			return { ...state, isOver: payload }
 		}
 	},
 	effects: {
@@ -88,6 +92,7 @@ export default {
 					residentList: data.entity.residentList,
 					disabledConfirmOrder: !!count,
 					count: count,
+					isOver: !count,
 				},
 			} );
 			yield put( routerRedux.push( url ) );
@@ -141,6 +146,7 @@ export default {
 			}, config.CONFIRM_ORDER_SUCCESS );
 			if ( data.success ) {
 				yield put( { type: 'changeBtnDisabled', payload: true } );
+				yield put( { type: 'changeIsOver', payload: true } );
 			}
 		}
 	},

@@ -41,7 +41,7 @@ const OrderPage = ( {
 	/*fun.printLoader( 'orderPage' );*/
 	const { userType, orderHandlerId, orderHandlerName } = user;
 	const { currentStep, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel ? orderModel : {};
-	const { serviceDetail, residentList, disabledConfirmOrder, pagination } = workerModel ? workerModel : {};
+	const { serviceDetail, residentList, disabledConfirmOrder, pagination, isOver } = workerModel ? workerModel : {};
 	const { currentData, display, disabled } = workerModel ? workerModel : orderModel;
 	const { orgName, remainingBalance } = currentData;
 
@@ -150,6 +150,7 @@ const OrderPage = ( {
 		monitor: modular[ path ].monitor,
 		data: dataList,
 		disabled: disabled,
+		isOver: isOver,
 		onSave: ( i, r ) => saveRow( i, r ),
 		onSubmit: ( r, callBack ) => submitRow( r, callBack ),
 	};
