@@ -30,21 +30,23 @@ class HypertensionB extends React.Component {
           <Col span={12}>
         <FormItem label="症状"  className={styles.item}>
           {getFieldDecorator( 'symptom', {
-            rules: [
-              {
-                required: true,
-                message: '请至少选择其中一项！'
-              },
-            ],
+            rules: [],
           } )(  <HypertensionSymptom disabled={disable}/>   )}
         </FormItem>
         </Col>
           </Row>
         <Row>
           <Col span={24}>
-          <FormItem label="其他症状" className={styles.item}>
+        {/*  <FormItem label="其他症状" className={styles.item}>
             <Input type="textarea" size="large" rows={4} disabled={disable}  placeholder="可在此处输入其他症状"/>
-          </FormItem>
+          </FormItem>*/}
+            <FormItem label="其他症状" className={styles.item}>
+              {getFieldDecorator('otherSymptom', {
+              })(
+                <Input  type="textarea" size="large" rows={4}  disabled={disable}  placeholder="可在此处输入其他症状" />
+              )}
+            </FormItem>
+
         </Col>
         </Row>
       </div>

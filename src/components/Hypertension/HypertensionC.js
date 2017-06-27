@@ -17,9 +17,23 @@ const formItemLayout = {
 
 class HypertensionC extends React.Component {
 
+/*
+  handleSbpChange=(event)=> {
+    this.props.callBack({
+      sbp:event,
+    });
+  }
+  handleDbpChange=(event)=> {
+    this.props.callBack({
+      dbp:event,
+    })
+  }
+*/
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const disable=!this.props.disabled;
+
     return (
       <div className={styles.need}>
         <div className={styles.title}>随访项目</div>
@@ -28,9 +42,9 @@ class HypertensionC extends React.Component {
             <Col span={12}>
               <FormItem {...formItemLayout} label="舒张压（mmHg）">
                 {getFieldDecorator('sbp', {
-                  rules: [{required: true, message: '请输入舒张压（mmHg），范围为0~300'}],
+                  rules: [],
                 })(
-                  <InputNumber min={1} max={300} style={{ width: 200 }}disabled={disable} placeholder="请输入1-300之间的一个数值" />
+                  <InputNumber min={1} max={300} style={{ width: 200 }}   disabled={disable}  placeholder="请输入1-300之间的一个数值" />
                 )}
               </FormItem>
             </Col>
@@ -38,9 +52,10 @@ class HypertensionC extends React.Component {
             <Col span={12}>
               <FormItem {...formItemLayout} label="收缩压（mmHg）">
                 {getFieldDecorator('dbp', {
-                  rules: [{required: true, message: '请输入舒张压（mmHg），范围为0~300'}],
+                  rules: [],
                 })(
-                  <InputNumber min={1} max={300} style={{ width: 200} } disabled={disable} placeholder="请输入1-300之间的一个数值"  />
+                  <InputNumber min={1} max={300} style={{ width: 200}}
+                                disabled={disable} placeholder="请输入1-300之间的一个数值"  />
                 )}
               </FormItem>
             </Col>

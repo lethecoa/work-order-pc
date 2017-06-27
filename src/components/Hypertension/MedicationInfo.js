@@ -6,6 +6,7 @@ import {EditableCell} from '../../components';
   class MedicationInfo extends React.Component {
   constructor(props) {
     super(props);
+    const value = this.props.value || {};
     this.columns = [
       {
         title: '序号',
@@ -104,14 +105,25 @@ import {EditableCell} from '../../components';
       count: count + 1,
     });
   }
+
+    //测试
+  /*  callback=()=>{
+    this.props.callBack({
+      medicationInfo: {
+        dataSource: this.state.dataSource,
+        count:this.state.count
+      }
+    });
+  }*/
+
   render() {
     const { dataSource } = this.state;
     const columns = this.columns;
-    const disable=true;
+    const disable=!this.props.disabled;
     return (
       <div>
         <Button className={styles.editableAddBtn} onClick={this.handleAdd} disabled={disable}>添加药品</Button>
-        <Table bordered dataSource={dataSource} columns={columns}  pagination={false} />
+        <Table bordered dataSource={dataSource} columns={columns}  pagination={false}/>
       </div>
     );
   }
