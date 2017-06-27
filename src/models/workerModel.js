@@ -20,12 +20,15 @@ export default {
 			/*console.log( '===workerModel===save===' );*/
 			return { ...state, list, total, pagination };
 		},
-		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList, disabledConfirmOrder } } ) {
+		saveCurrentOrder( state, { payload: { currentData, serviceDetail, residentList, disabledConfirmOrder, count } } ) {
 			/*console.log( '===workerModel===saveCurrentOrder===' );*/
-			return { ...state, currentData, serviceDetail, residentList, disabledConfirmOrder };
+			return { ...state, currentData, serviceDetail, residentList, disabledConfirmOrder, count };
 		},
-		changeBtnDisabled( state ){
-			return { ...state, disabledConfirmOrder: !state.disabledConfirmOrder, }
+		changeBtnDisabled( state, { payload } ){
+			return { ...state, disabledConfirmOrder: payload }
+		},
+		changeCount( state, { payload } ){
+			return { ...state, count: payload }
 		}
 	},
 	effects: {
@@ -76,19 +79,21 @@ export default {
 			const data = yield call( getOrderDetail, {
 				orderId: order.orderId,
 			} );
+			let count = data.entity.residentList.filter( item => item.status === '1' ).length;
 			yield put( {
 				type: 'saveCurrentOrder',
 				payload: {
 					currentData: order,
 					serviceDetail: data.entity.serviceDetail,
 					residentList: data.entity.residentList,
-					disabledConfirmOrder: false,
+					disabledConfirmOrder: !!count,
+					count: count,
 				},
 			} );
 			yield put( routerRedux.push( url ) );
 
 		},
-		*saveOrderDetail( { payload }, { call } ) {
+		*saveOrderDetail( { payload }, { call, put, select } ) {
 			fun.print( JSON.stringify( payload.data ), 'saveOrderDetail', model.worker );
 			const data = yield call( saveService, payload.data );
 			if ( payload.type === 'submit' ) {
@@ -112,6 +117,17 @@ export default {
 			if ( data.success ) {
 				if ( payload.callBack ) {
 					payload.callBack( payload.data.residentList[ 0 ].serviceId );
+					let count = yield select( state => state.workerModel.count );
+					if ( payload.data.residentList[ 0 ].status === '1' ) {
+						yield put( { type: 'changeCount', payload: ++count } )
+					} else {
+						yield put( { type: 'changeCount', payload: --count } )
+					}
+					if ( count ) {
+						yield put( { type: 'changeBtnDisabled', payload: true } )
+					} else {
+						yield put( { type: 'changeBtnDisabled', payload: false } )
+					}
 				}
 			}
 		},
@@ -124,7 +140,7 @@ export default {
 				apiName: api.confirmOrder,
 			}, config.CONFIRM_ORDER_SUCCESS );
 			if ( data.success ) {
-				yield put( { type: 'changeBtnDisabled' } );
+				yield put( { type: 'changeBtnDisabled', payload: true } );
 			}
 		}
 	},
