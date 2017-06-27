@@ -17,12 +17,13 @@ const formItemLayout = {
     sm: {span: 16},
   },
 };
+let medicationInfo;
 class DiabetesA extends React.Component {
   state = {
     value: 1,
   }
   onChange = (e) => {
-    console.log('radio checked', e.target.value);
+    //console.log('radio checked', e.target.value);
     this.setState({
       value: e.target.value,
     });
@@ -40,7 +41,7 @@ class DiabetesA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="舒张压（mmHg）" >
                   {getFieldDecorator('sbp', {
-                    rules: [{required: true, message: '请输入舒张压（mmHg），范围为0~300'}],
+                    rules: [],
                   })(
                     <InputNumber  style={{width: 200}} disabled={disable} min={1} max={300} placeholder="请输入1-300之间的一个数值"/>
                   )}
@@ -49,7 +50,7 @@ class DiabetesA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="收缩压（mmHg）">
                   {getFieldDecorator('dbp', {
-                    rules: [{required: true, message: '请输入舒张压（mmHg），范围为0~300'}],
+                    rules: [],
                   })(
                     <InputNumber  style={{width: 200}} disabled={disable} min={1} max={300} placeholder="请输入1-300之间的一个数值"/>
                   )}
@@ -60,7 +61,7 @@ class DiabetesA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="体重（Kg）" >
                   {getFieldDecorator('weight', {
-                    rules: [{required: true, message: '请输入体重（Kg）'}],
+                    rules: [],
                   })(
                     <InputNumber  style={{width: 200}} disabled={disable} min={1} max={300} />
                   )}
@@ -77,7 +78,7 @@ class DiabetesA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="日吸烟量（支）">
                   {getFieldDecorator('smokingPerDay', {
-                    rules: [{required: true, message: '请输入日吸烟量（支）'}],
+                    rules: [],
                   })(
                     <InputNumber style={{width: 200}} disabled={disable}/>
                   )}
@@ -86,7 +87,7 @@ class DiabetesA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="日饮酒量（两）">
                   {getFieldDecorator('drinkingPerDay', {
-                    rules: [{required: true, message: '请输入日饮酒量（两）'}],
+                    rules: [],
                   })(
                     <InputNumber min={1} max={300} style={{width: 200}} disabled={disable}/>
                   )}
@@ -98,7 +99,7 @@ class DiabetesA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="运动频次（次/周）">
                   {getFieldDecorator('exerciseFrequency', {
-                    rules: [{required: true, message: '请输入运动频次（次/周）'}],
+                    rules: [],
                   })(
                     <InputNumber min={1} max={300} style={{width: 200}} disabled={disable}/>
                   )}
@@ -107,7 +108,7 @@ class DiabetesA extends React.Component {
               <Col span={12}>
                 <FormItem {...formItemLayout} label="运动时长（分钟/次）">
                   {getFieldDecorator('exerciseDuration', {
-                    rules: [{required: true, message: '请输入运动时长（分钟/次）'}],
+                    rules: [],
                   })(
                     <InputNumber min={1} max={300} style={{width: 200}} disabled={disable}/>
                   )}
@@ -119,7 +120,7 @@ class DiabetesA extends React.Component {
             <Row>
               <Col span={12}>
                 <FormItem {...formItemLayout} label="摄盐情况（咸淡）">
-                  {getFieldDecorator('saltUptake', { rules: [{required: true, message: '请选择摄盐情况（咸淡）'}],})(
+                  {getFieldDecorator('saltUptake', { rules: [],})(
                     <RadioGroup onChange={this.onChange} style={{width: 200}} disabled={disable} >
                       <Radio value={1}>轻</Radio>
                       <Radio value={2}>中</Radio>
@@ -139,14 +140,14 @@ class DiabetesA extends React.Component {
           <Row>
             <Col span={12}>
               <FormItem {...formItemLayout} label="空腹血糖（mmol/L）">
-                {getFieldDecorator('fbg', { rules: [{required: true, message: '请输入空腹血糖'}],})(
+                {getFieldDecorator('fbg', { rules: [],})(
                   <InputNumber  style={{width: 200}} disabled={disable}/>
                 )}
               </FormItem>
             </Col>
             <Col span={12}>
               <FormItem {...formItemLayout} label="餐后血糖（mmol/L）">
-                {getFieldDecorator('pbg', { rules: [{required: true, message: '请输入餐后血糖'}],})(
+                {getFieldDecorator('pbg', { rules: [],})(
                   <InputNumber  style={{width: 200}} disabled={disable}/>
                 )}
               </FormItem>
@@ -155,7 +156,7 @@ class DiabetesA extends React.Component {
           <Row>
             <Col span={12}>
               <FormItem {...formItemLayout} label="药物依从性">
-                {getFieldDecorator('drugCompliance', { rules: [{required: true, message: '请选择药物依从性'}],})(
+                {getFieldDecorator('drugCompliance', { rules: [],})(
                   <RadioGroup onChange={this.onChange} style={{width: 200}} disabled={disable}>
                     <Radio value={1}>规律</Radio>
                     <Radio value={2}>间断</Radio>
@@ -166,7 +167,7 @@ class DiabetesA extends React.Component {
             </Col>
             <Col span={12}>
               <FormItem {...formItemLayout} label="药物不良反应">
-                {getFieldDecorator('adr', { rules: [{required: true, message: '请选择药物不良反应'}],})(
+                {getFieldDecorator('adr', { rules: [],})(
                   <RadioGroup onChange={this.onChange} style={{width: 200}} disabled={disable}>
                     <Radio value={1}>无</Radio>
                     <Radio value={2}>有</Radio>
@@ -178,7 +179,7 @@ class DiabetesA extends React.Component {
           <Row>
             <Col span={12}>
               <FormItem {...formItemLayout} label="低血糖反应">
-                {getFieldDecorator('hypoglycemia', { rules: [{required: true, message: '请选择低血糖反应'}],})(
+                {getFieldDecorator('hypoglycemia', { rules: [],})(
                   <RadioGroup onChange={this.onChange} style={{width: 200}} disabled={disable}>
                     <Radio value={1}>无</Radio>
                     <Radio value={2}>偶尔</Radio>
@@ -189,7 +190,7 @@ class DiabetesA extends React.Component {
             </Col>
             <Col span={12}>
               <FormItem {...formItemLayout} label="此次随访情况">
-                {getFieldDecorator('followUpType', { rules: [{required: true, message: '请选择此次随访情况'}],})(
+                {getFieldDecorator('followUpType', { rules: [],})(
                   <RadioGroup onChange={this.onChange} style={{width: 400}}  disabled={disable}>
                     <Radio value={1}>控制良好</Radio>
                     <Radio value={2}>控制一般</Radio>
@@ -203,7 +204,12 @@ class DiabetesA extends React.Component {
           </div>
         <div className={styles.item}>4.用药情况</div>
         <div className={styles.form}>
-          <MedicationInfo/>
+          <FormItem {...formItemLayout}>
+            {getFieldDecorator('medicationInfo',{})(
+              <MedicationInfo  disabled={true}   ref={e => ( medicationInfo = e )} />
+            )}
+          </FormItem>
+
         </div>
       </div>
     );
