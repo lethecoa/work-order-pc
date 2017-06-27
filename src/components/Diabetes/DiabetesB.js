@@ -31,10 +31,7 @@ class DiabetesB extends React.Component {
         <FormItem label="症状" className={styles.item}>
           {getFieldDecorator( 'symptom', {
             rules: [
-              {
-                required: true,
-                message: '请至少选择其中一项！'
-              },
+
             ],
           } )( <DiabetesSymptom disabled={disable}/> )}
         </FormItem>
