@@ -117,24 +117,24 @@ class InfoTable extends React.Component {
             {
               myStatus === config.ritStatus.editing ?
                 <span>
-                  <a onClick={() => this.save( index )}>保存</a>
+                  <a onClick={ () => this.save( index ) }>保存</a>
                   &nbsp;|&nbsp;
-                  <Popconfirm title="取销将不保存" onConfirm={() => this.cancel( index )}>
+                  <Popconfirm title="取销将不保存" onConfirm={ () => this.cancel( index ) }>
                     <a>取销</a>
                   </Popconfirm>
                 </span>
                 :
-                <span className={this.state.operationStatus ? 'hide' : ''}>
-                  <a onClick={() => this.edit( index )}>编辑</a>
+                <span className={ this.state.operationStatus ? 'hide' : '' }>
+                  <a onClick={ () => this.edit( index ) }>编辑</a>
                 </span>
             }
-            <span className={this.state.operationStatus ? 'hide' : ''}>
+            <span className={ this.state.operationStatus ? 'hide' : '' }>
               &nbsp;|&nbsp;
-              <a onClick={() => this.submit( index )}
-                style={this.state.operationStatus ? { color: '#b1b8bd' } : { color: '#C00' }}>提交</a>
+              <a onClick={ () => this.submit( index ) }
+                style={ this.state.operationStatus ? { color: '#b1b8bd' } : { color: '#C00' } }>提交</a>
             </span>
-            <a className={!this.state.operationStatus ? 'hide' : ''}
-              onClick={() => this.revoke( index )}>撤回</a>
+            <a className={ !this.state.operationStatus ? 'hide' : '' }
+              onClick={ () => this.revoke( index ) }>撤回</a>
           </div>
         );
       }
@@ -147,7 +147,8 @@ class InfoTable extends React.Component {
     this.monitor = props.monitor;
 
     let formatData = this.getFormatData( props.data );
-    let filterData = this.getFilterData( formatData, props.orderStatus );
+    let filterData = props.isOver ? formatData :
+      this.getFilterData( formatData, props.orderStatus );
 
     this.state = {
       data: props.data, // 未处理过的数据
@@ -167,6 +168,7 @@ class InfoTable extends React.Component {
       columns: this.getColums(),
       parentName: props.name,
       orderStatus: props.orderStatus, // 订单状态：已处理、未处理
+      isOver: props.isOver || false,
     }
   }
   // public function
@@ -217,6 +219,10 @@ class InfoTable extends React.Component {
   getColums = () => {
     let columnConfig = this.props.userType === config.userType.doctor ?
       modular[ this.props.name ][ 'ritDoctor' ] : modular[ this.props.name ][ 'ritWorker' ];
+    if ( this.props.isOver ) {
+      columnConfig = immutable.fromJS( columnConfig ).toJS();
+      columnConfig.pop();
+    }
     return columnConfig.map(( item, index, arr ) => {
       if ( this.allColumns.hasOwnProperty( item ) )
         return this.allColumns[ item ];
@@ -229,10 +235,10 @@ class InfoTable extends React.Component {
     const myStatus = this.state.filterData.getIn( [ index, 'myStatus' ] );
 
     return ( <EditableInputCell
-      name={key + '_input_' + index}
-      value={value}
-      onChange={( name, value ) => this.handleChange( name, key, index, value )}
-      myStatus={myStatus}
+      name={ key + '_input_' + index }
+      value={ value }
+      onChange={ ( name, value ) => this.handleChange( name, key, index, value ) }
+      myStatus={ myStatus }
     /> );
   }
   /**
@@ -240,7 +246,7 @@ class InfoTable extends React.Component {
    */
   renderFollowUpCellCell = ( value, index, key ) => {
     return ( <FollowUpCell
-      name={key + '_appointment_' + index}
+      name={ key + '_appointment_' + index }
     /> );
   }
   /**
@@ -250,10 +256,10 @@ class InfoTable extends React.Component {
     const myStatus = this.state.filterData.getIn( [ index, 'myStatus' ] );
 
     return ( <EditableRadioCell
-      name={key + '_radio_' + index}
-      value={value}
-      onChange={( name, value ) => this.handleChange( name, key, index, value )}
-      myStatus={myStatus}
+      name={ key + '_radio_' + index }
+      value={ value }
+      onChange={ ( name, value ) => this.handleChange( name, key, index, value ) }
+      myStatus={ myStatus }
     /> );
   }
   /**
@@ -407,9 +413,9 @@ class InfoTable extends React.Component {
 
   render() {
     return (
-      <Table className={styles.table} bordered columns={this.state.columns} rowKey="rownum"
-        dataSource={this.state.filterData.size > 0 ? this.state.filterData.toJS() : []}
-        size="middle" pagination={this.state.pagination} />
+      <Table className={ styles.table } bordered columns={ this.state.columns } rowKey="rownum"
+        dataSource={ this.state.filterData.size > 0 ? this.state.filterData.toJS() : [] }
+        size="middle" pagination={ this.state.pagination } />
     )
   }
 
