@@ -1,6 +1,7 @@
 import {routerRedux} from 'dva/router';
 import {fun, model, action, config, api} from '../common';
 import {getOrders, getOrderDetail, saveService, confirmOrder} from '../services/workerService';
+import Promise from 'bluebird';
 
 export default {
 	namespace: model.worker,
@@ -147,6 +148,8 @@ export default {
 			if ( data.success ) {
 				yield put( { type: 'changeBtnDisabled', payload: true } );
 				yield put( { type: 'changeIsOver', payload: true } );
+				yield Promise.delay(2000);
+				yield put( routerRedux.push( '/orderList' ) );
 			}
 		}
 	},
