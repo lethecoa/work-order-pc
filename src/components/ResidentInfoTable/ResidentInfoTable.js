@@ -133,7 +133,7 @@ class ResidentInfoTable extends React.Component {
           居民信息表样本
         </div>
         <InfoTable name={ this.props.name } data={ this.state.data } ref="infoTable"
-          monitor={ this.props.monitor } orderStatus={ this.state.orderStatus } isOver={ this.state.isOver }
+          monitor={ this.props.monitor } orderStatus={ this.state.orderStatus } isOver={ this.props.isOver }
           onSave={ this.props.onSave } onSubmit={ this.props.onSubmit } userType={ this.props.userType }
           setTreated={ ( untreated, treated ) => this.setTreated( untreated, treated ) } />
       </div>
