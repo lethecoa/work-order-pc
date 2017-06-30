@@ -38,49 +38,47 @@ import HypertensionB from './Hypertension/HypertensionB';
 import HypertensionC from './Hypertension/HypertensionC';
 // 高血压症状
 import HypertensionSymptom from './Hypertension/HypertensionSymptom';
-
 // 糖尿病症状
 import DiabetesSymptom from './Diabetes/DiabetesSymptom';
-
 // 糖尿病方案一
 import DiabetesA from './Diabetes/DiabetesA';
 // 糖尿病方案二
 import DiabetesB from './Diabetes/DiabetesB';
 // 糖尿病方案三
 import DiabetesC from './Diabetes/DiabetesC';
-
 import EditableCell  from './Hypertension/EditableCell';
 import MedicationInfo  from './Hypertension/MedicationInfo';
-
+import Scheme from './Scheme/Scheme';
 
 export {
-  MainLayout,
-  ResidentInfoTable,
-  OrderStep,
-  BaseInfo,
-  CarryMaterial,
-  PayModal,
-  ResidentSign,
-  ResidentInspect,
-  Newborn,
-  ChronicDisease,
-  NewestPolicy,
-  NewestActivity,
-  AntenatalCare,
-  ChildHealth,
-  Medication,
-  Hypertension,
-  Diabetes,
-  HypertensionA,
-  HypertensionB,
-  HypertensionC,
-  EditableCell,
-  DiabetesA,
-  DiabetesB,
-  DiabetesC,
-  MedicationInfo,
+	MainLayout,
+	ResidentInfoTable,
+	OrderStep,
+	BaseInfo,
+	CarryMaterial,
+	PayModal,
+	ResidentSign,
+	ResidentInspect,
+	Newborn,
+	ChronicDisease,
+	NewestPolicy,
+	NewestActivity,
+	AntenatalCare,
+	ChildHealth,
+	Medication,
+	Hypertension,
+	Diabetes,
+	HypertensionA,
+	HypertensionB,
+	HypertensionC,
+	EditableCell,
+	DiabetesA,
+	DiabetesB,
+	DiabetesC,
+	MedicationInfo,
 
-  HypertensionSymptom,
-  DiabetesSymptom,
+	HypertensionSymptom,
+	DiabetesSymptom,
+	Scheme,
 
 }

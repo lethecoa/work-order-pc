@@ -44,7 +44,7 @@ const OrderPage = ( {
 	const { serviceDetail, residentList, disabledConfirmOrder, pagination, isOver } = workerModel ? workerModel : {};
 	const { currentData, display, disabled } = workerModel ? workerModel : orderModel;
 	const { orgName, remainingBalance } = currentData;
-
+	const { interviewScheme } = serviceDetail ? serviceDetail : {};
 	/** 获取页面path,初始化dataList */
 	let path = route.path.replace( '/', '' );
 	if ( userType === config.userType.worker ) {
@@ -151,6 +151,7 @@ const OrderPage = ( {
 		data: dataList,
 		disabled: disabled,
 		isOver: isOver,
+		interviewScheme,
 		onSave: ( i, r ) => saveRow( i, r ),
 		onSubmit: ( r, callBack ) => submitRow( r, callBack ),
 	};

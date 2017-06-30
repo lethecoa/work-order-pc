@@ -2,9 +2,9 @@ import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 import {Form, Select, DatePicker, Button, Table, Pagination, Radio} from 'antd';
-import {HypertensionA,HypertensionB,HypertensionC,DiabetesA,DiabetesB,DiabetesC} from '../../components';
+import {Scheme} from '../../components';
 import moment from 'moment';
-import {action, model, fun, config, modular} from '../../common';
+import {action, model, fun, modular} from '../../common';
 import styles from './OrderList.less';
 
 const moduleName = modular.getModuleName( modular.orderList );
@@ -14,14 +14,7 @@ const RangePicker = DatePicker.RangePicker;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
-let  hypertensionA;
-let  hypertensionB;
-let  hypertensionC;
-
-let  diabetesA;
-let  diabetesB;
-let  diabetesC;
-
+let scheme;
 const columns = [ {
 	title: '序号',
 	dataIndex: 'rownum',
@@ -103,69 +96,6 @@ const OrderList = ( {
 		} );
 	};
 
-  /** 获取HypertensionA组件的数据 */
-  const GetHypertensionA = ( e ) => {
-    e.preventDefault();
-    hypertensionA.validateFieldsAndScroll( ( err, values ) => {
-      if ( !err ) {
-        values.medicationInfo=hypertensionA.instances.medicationInfo.state.dataSource;
-        console.log(values);
-      }
-    } );
-  };
-
-  /** 获取HypertensionB组件的数据 */
-  const GetHypertensionB = ( e ) => {
-    e.preventDefault();
-    hypertensionB.validateFieldsAndScroll( ( err, values ) => {
-      if ( !err ) {
-        console.log(values);
-      }
-    } );
-  };
-
-  /** 获取HypertensionC组件的数据 */
-  const GetHypertensionC = ( e ) => {
-    e.preventDefault();
-    hypertensionC.validateFieldsAndScroll( ( err, values ) => {
-      if ( !err ) {
-        console.log(values);
-      }
-    } );
-  };
-
-
-  /** 获取DiabetesA组件的数据 */
-  const GetDiabetesA = ( e ) => {
-    e.preventDefault();
-    diabetesA.validateFieldsAndScroll( ( err, values ) => {
-      if ( !err ) {
-        values.medicationInfo=diabetesA.instances.medicationInfo.state.dataSource;
-        console.log(values);
-      }
-    } );
-  };
-
-  /** 获取DiabetesB组件的数据 */
-  const GetDiabetesB = ( e ) => {
-    e.preventDefault();
-    diabetesB.validateFieldsAndScroll( ( err, values ) => {
-      if ( !err ) {
-        console.log(values);
-      }
-    } );
-  };
-
-  /** 获取DiabetesC组件的数据 */
-  const GetDiabetesC = ( e ) => {
-    e.preventDefault();
-    diabetesC.validateFieldsAndScroll( ( err, values ) => {
-      if ( !err ) {
-        console.log(values);
-      }
-    } );
-  };
-
 	return (
 		<div>
 			<Form className={styles.form} layout="inline" onSubmit={handlerSubmit}>
@@ -216,27 +146,11 @@ const OrderList = ( {
 				pageSize={pagination.pageSize}
 				onChange={handlerPageChange}
 			/>
+			<Scheme name={'hypertension'} interviewScheme={'1'} ref={e => ( scheme = e )} disabled={true} scheme={{drugList:[{key:'1',drugName:'1',drugFrequency:'2',dosage:'3'}]}}/>
 
-   {/*   <HypertensionA disabled={true}   ref={e => ( hypertensionA = e )} />
-      <Button onClick={GetHypertensionA}>点击获取HypertensionA的组件值</Button>
+			<Button onClick={() => {console.log( scheme.getData() );}}>getData</Button>
 
-      <HypertensionB disabled={true}   ref={e => ( hypertensionB = e )}/>
-      <Button onClick={GetHypertensionB}>点击获取HypertensionB的组件值</Button>
-
-      <HypertensionC disabled={true}   ref={e => ( hypertensionC = e )}/>
-      <Button onClick={GetHypertensionC}>点击获取HypertensionC的组件值</Button>
-
-      <DiabetesA disabled={true}   ref={e => (diabetesA = e )} />
-      <Button onClick={GetDiabetesA}>点击获取DiabetesA的组件值</Button>
-
-      <DiabetesB disabled={true}   ref={e => ( diabetesB = e )}/>
-      <Button onClick={GetDiabetesB}>点击获取DiabetesB的组件值</Button>
-
-      <DiabetesC disabled={true}   ref={e => ( diabetesC = e )}/>
-      <Button onClick={GetDiabetesC}>点击获取DiabetesC的组件值</Button>*/}
-
-
-    </div>
+		</div>
 	);
 };
 
