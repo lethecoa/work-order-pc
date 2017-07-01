@@ -115,21 +115,25 @@ class InfoTable extends React.Component {
         return (
           <div className="editable-row-operations">
             {
-              myStatus === config.ritStatus.editing ?
-                <span>
-                  <a onClick={ () => this.save( index ) }>保存</a>
-                  &nbsp;|&nbsp;
-                  <Popconfirm title="取销将不保存" onConfirm={ () => this.cancel( index ) }>
-                    <a>取销</a>
-                  </Popconfirm>
-                </span>
-                :
-                <span className={ this.state.operationStatus ? 'hide' : '' }>
-                  <a onClick={ () => this.edit( index ) }>编辑</a>
-                </span>
+              // 是否具有可编辑单元格
+              this.monitor <= 0 ? '' :
+                // 编辑状态
+                myStatus === config.ritStatus.editing ?
+                  <span>
+                    <a onClick={ () => this.save( index ) }>保存</a>
+                    &nbsp;|&nbsp;
+                    <Popconfirm title="取消将不保存" onConfirm={ () => this.cancel( index ) }>
+                      <a>取消</a>
+                    </Popconfirm>
+                    &nbsp;|&nbsp;
+                  </span>
+                  :
+                  <span className={ this.state.operationStatus ? 'hide' : '' }>
+                    <a onClick={ () => this.edit( index ) }>编辑</a>
+                    &nbsp;|&nbsp;
+                  </span>
             }
             <span className={ this.state.operationStatus ? 'hide' : '' }>
-              &nbsp;|&nbsp;
               <a onClick={ () => this.submit( index ) }
                 style={ this.state.operationStatus ? { color: '#b1b8bd' } : { color: '#C00' } }>提交</a>
             </span>
@@ -145,6 +149,7 @@ class InfoTable extends React.Component {
     fun.printLoader( moduleName );
     // 这个数值其实可以改进自动计算出来
     this.monitor = props.monitor;
+    this.hasChildFrom = false;
 
     let formatData = this.getFormatData( props.data );
     let filterData = props.isOver ? formatData :
@@ -193,6 +198,7 @@ class InfoTable extends React.Component {
         v = v.set( 'monitor', 0 );
         if ( !v.has( visit.key ) ) v = v.set( visit.key, '1' );
         if ( !v.has( present.key ) ) v = v.set( present.key, '1' );
+        if ( !v.has( rownum.key ) ) v = v.set( rownum.key, i + 1 );
         return v;
       } );
     }
@@ -219,10 +225,12 @@ class InfoTable extends React.Component {
   getColums = () => {
     let columnConfig = this.props.userType === config.userType.doctor ?
       modular[ this.props.name ][ 'ritDoctor' ] : modular[ this.props.name ][ 'ritWorker' ];
+    // 查看已完成订单时删除操作栏列
     if ( this.props.isOver ) {
       columnConfig = immutable.fromJS( columnConfig ).toJS();
       columnConfig.pop();
     }
+    this.hasChildFrom = columnConfig.hasOwnProperty( followUp.key ) ? true : false;
     return columnConfig.map(( item, index, arr ) => {
       if ( this.allColumns.hasOwnProperty( item ) )
         return this.allColumns[ item ];
@@ -246,7 +254,12 @@ class InfoTable extends React.Component {
    */
   renderFollowUpCellCell = ( value, index, key ) => {
     return ( <FollowUpCell
-      name={ key + '_appointment_' + index }
+      name={ this.props.name }
+      interviewScheme={ this.props.interviewScheme }
+      scheme={ this.props.scheme }
+      callback={ ( index, data ) => this.updeteChildFormData( index, data ) }
+      index={ index }
+      rownum={ this.state.filterData.getIn( [ index, rownum.key ] ) }
     /> );
   }
   /**
@@ -341,9 +354,10 @@ class InfoTable extends React.Component {
     // 当前状态是显示，既未在编辑状态下，而是直接点击提交按钮
     if ( filterData.getIn( [ index, 'myStatus' ] ) === config.ritStatus.general ) {
       let row = this.rebuildData(
-        filterData.setIn( [ index, status.key ], ORDER_STATUS.treated ).get( index ) );
+        filterData.setIn( [ index, status.key ], ORDER_STATUS.treated ).get( index ) ).toJS();
+      // if ( this.hasChildFrom ) row.scheme =
       if ( typeof submitCallback === 'function' )
-        submitCallback( row.toJS(), ( id ) => { this.successCallback( id ) } );
+        submitCallback( row, ( id ) => { this.successCallback( id ) } );
     }
     else {
       this.setState( {
@@ -409,6 +423,13 @@ class InfoTable extends React.Component {
       }
     )
     return index;
+  }
+  /**
+   * 
+   */
+  updeteChildFormData = ( index, data ) => {
+    let filterData = this.state.filterData.setIn( [ index, followUp.key ], data );
+    this.setState( { filterData: filterData } );
   }
 
   render() {
