@@ -31,23 +31,18 @@ import Hypertension from './need/ChronicDisease/Hypertension';
 //糖尿病随访
 import Diabetes from './need/ChronicDisease/Diabetes';
 // 高血压方案一
-import HypertensionA from './Hypertension/HypertensionA';
+import HypertensionA from './Scheme/HypertensionA';
 // 高血压方案二
-import HypertensionB from './Hypertension/HypertensionB';
+import HypertensionB from './Scheme/HypertensionB';
 // 高血压方案三
-import HypertensionC from './Hypertension/HypertensionC';
-// 高血压症状
-import HypertensionSymptom from './Hypertension/HypertensionSymptom';
-// 糖尿病症状
-import DiabetesSymptom from './Diabetes/DiabetesSymptom';
+import HypertensionC from './Scheme/HypertensionC';
 // 糖尿病方案一
-import DiabetesA from './Diabetes/DiabetesA';
+import DiabetesA from './Scheme/DiabetesA';
 // 糖尿病方案二
-import DiabetesB from './Diabetes/DiabetesB';
+import DiabetesB from './Scheme/DiabetesB';
 // 糖尿病方案三
-import DiabetesC from './Diabetes/DiabetesC';
-import EditableCell  from './Hypertension/EditableCell';
-import MedicationInfo  from './Hypertension/MedicationInfo';
+import DiabetesC from './Scheme/DiabetesC';
+//方案合集
 import Scheme from './Scheme/Scheme';
 
 export {
@@ -68,17 +63,12 @@ export {
 	Medication,
 	Hypertension,
 	Diabetes,
+
 	HypertensionA,
 	HypertensionB,
 	HypertensionC,
-	EditableCell,
 	DiabetesA,
 	DiabetesB,
 	DiabetesC,
-	MedicationInfo,
-
-	HypertensionSymptom,
-	DiabetesSymptom,
 	Scheme,
-
 }
