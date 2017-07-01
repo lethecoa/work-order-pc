@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Modal} from 'antd';
+import {Button, Modal, Popconfirm} from 'antd';
 import HypertensionA from './HypertensionA';
 import HypertensionB from './HypertensionB';
 import HypertensionC from './HypertensionC';
@@ -93,7 +93,9 @@ export default class Scheme extends Component {
 					title={title}
 					onCancel={this.handleCancel}
 					footer={[
-						<Button key="back" size="large" onClick={this.handleCancel}>取消</Button>,
+						<Popconfirm key="back" title="确定放弃本次编辑?" onConfirm={() => this.handleCancel()}>
+							<Button size="large">取消</Button>
+						</Popconfirm>,
 						<Button key="submit" type="primary" size="large" onClick={this.handleOk}>确定</Button>,
 					]}
 				>
