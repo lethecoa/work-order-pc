@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Button, Modal, Popconfirm} from 'antd';
+import React, { Component } from 'react';
+import { Button, Modal, Popconfirm } from 'antd';
 import HypertensionA from './HypertensionA';
 import HypertensionB from './HypertensionB';
 import HypertensionC from './HypertensionC';
@@ -38,22 +38,22 @@ export default class Scheme extends Component {
 		let title = '';
 		if ( name === 'hypertension' && id === '1' ) {
 			title = '方案一：协助医生随访高血压患者的体征、生活方式、辅助检查、用药情况';
-			content = <HypertensionA ref={e => ( this.state.inst = e )} disabled={disabled} scheme={this.state.scheme}/>;
+			content = <HypertensionA ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		} else if ( name === 'hypertension' && id === '2' ) {
 			title = '方案二：协助医生随访高血压患者的症状';
-			content = <HypertensionB ref={e => ( this.state.inst = e )} disabled={disabled} scheme={this.state.scheme}/>;
+			content = <HypertensionB ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		} else if ( name === 'hypertension' && id === '3' ) {
 			title = '方案三：协助医生随访高血压患者的血压数值';
-			content = <HypertensionC ref={e => ( this.state.inst = e )} disabled={disabled} scheme={this.state.scheme}/>;
+			content = <HypertensionC ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		} else if ( name === 'diabetes' && id === '1' ) {
 			title = '方案一：协助医生随访糖尿病患者的体征、生活方式、辅助检查、用药情况';
-			content = <DiabetesA ref={e => ( this.state.inst = e )} disabled={disabled} scheme={this.state.scheme}/>;
+			content = <DiabetesA ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		} else if ( name === 'diabetes' && id === '2' ) {
 			title = '方案二：协助医生随访糖尿病患者的症状';
-			content = <DiabetesB ref={e => ( this.state.inst = e )} disabled={disabled} scheme={this.state.scheme}/>;
+			content = <DiabetesB ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		} else if ( name === 'diabetes' && id === '3' ) {
 			title = '方案三：协助医生随访糖尿病患者的血糖数值';
-			content = <DiabetesC ref={e => ( this.state.inst = e )} disabled={disabled} scheme={this.state.scheme}/>;
+			content = <DiabetesC ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		}
 
 		this.setState( {
@@ -68,12 +68,12 @@ export default class Scheme extends Component {
 	};
 
 	handleOk = () => {
-		this.state.inst.validateFields( ( err, values ) => {
+		this.state.inst.validateFields(( err, values ) => {
 			if ( values.symptom ) {
 				values.symptom = values.symptom.join( ',' );
 			}
-
-			this.setState( { scheme: values } );
+			this.props.callback( this.props.index, values );
+			// this.setState( { scheme: values } );
 		} );
 		this.setState( { visible: false } );
 	};
@@ -88,23 +88,23 @@ export default class Scheme extends Component {
 		return (
 			<div>
 				<Modal
-					width={'90%'}
-					visible={visible}
-					title={title}
-					onCancel={this.handleCancel}
-					footer={[
-						<Popconfirm key="back" title="确定放弃本次编辑?" onConfirm={() => this.handleCancel()}>
+					width={ '90%' }
+					visible={ visible }
+					title={ title }
+					onCancel={ this.handleCancel }
+					footer={ [
+						<Popconfirm key="back" title="确定放弃本次编辑?" onConfirm={ () => this.handleCancel() }>
 							<Button size="large">取消</Button>
 						</Popconfirm>,
-						<Button key="submit" type="primary" size="large" onClick={this.handleOk}>确定</Button>,
-					]}
+						<Button key="submit" type="primary" size="large" onClick={ this.handleOk }>确定</Button>,
+					] }
 				>
-					{content}
+					{ content }
 				</Modal>
-				<div className={styles.btn}>
-					<a id='1' onClick={this.showModal} disabled={disabled1}>方案一</a>
-					<a id='2' onClick={this.showModal} disabled={disabled2}>方案二</a>
-					<a id='3' onClick={this.showModal} disabled={disabled3}>方案三</a>
+				<div className={ styles.btn }>
+					<a id='1' onClick={ this.showModal } disabled={ disabled1 }>方案一</a>
+					<a id='2' onClick={ this.showModal } disabled={ disabled2 }>方案二</a>
+					<a id='3' onClick={ this.showModal } disabled={ disabled3 }>方案三</a>
 				</div>
 			</div>
 		);
