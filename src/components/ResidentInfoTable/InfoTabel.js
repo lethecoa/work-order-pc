@@ -2,10 +2,8 @@ import React from 'react';
 import { Table, Pagination, Popconfirm } from 'antd';
 import immutable from 'immutable';
 import { config, fun, modular } from '../../common';
+import { EditableInputCell, EditableRadioCell, FollowUpCell } from '../formItme';
 import styles from './InfoTable.less';
-import EditableInputCell from './EditableInputCell';
-import EditableRadioCell from './EditableRadioCell';
-import FollowUpCell from './FollowUpCell';
 
 const { is, Map } = immutable;
 const moduleName = '信息表控件(infoTable)';

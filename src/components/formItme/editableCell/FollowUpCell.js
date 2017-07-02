@@ -1,9 +1,7 @@
 import React from 'react';
 import { Modal, Button, Popover } from 'antd';
-import { config, fun } from '../../common';
-import { Scheme } from '../../components';
-import HypertensionC from '../Hypertension/HypertensionC.js';
-import styles from './FollowUpCell.less';
+import { config, fun } from '../../../common';
+import Scheme from '../../Scheme/Scheme';
 
 /**
  * 录入随访情况 组件

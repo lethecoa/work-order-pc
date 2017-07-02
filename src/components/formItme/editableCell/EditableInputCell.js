@@ -1,11 +1,11 @@
-import BaseCell from './BaseEditableCell';
 import { Input } from 'antd';
-import { config, fun } from '../../common';
+import { EditableCell } from '../../base';
+import { config, fun } from '../../../common';
 
 /**
  * 可编辑的 Input 组件
  */
-class EditableInputCell extends BaseCell {
+export default class EditableInputCell extends EditableCell {
   constructor( props ) {
     super( props );
   }
@@ -19,8 +19,8 @@ class EditableInputCell extends BaseCell {
           myStatus === config.ritStatus.editing ?
             <div>
               <Input
-                value={value} size="small"
-                onChange={e => this.handleChange( e )}
+                value={ value } size="small"
+                onChange={ e => this.handleChange( e ) }
               />
             </div>
             : value || ''
@@ -29,5 +29,3 @@ class EditableInputCell extends BaseCell {
     );
   }
 }
-
-export default EditableInputCell;

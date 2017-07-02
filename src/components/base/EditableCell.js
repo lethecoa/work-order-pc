@@ -1,7 +1,7 @@
 import React from 'react';
 import { config, fun } from '../../common';
 
-class BaseEditableCell extends React.Component {
+export default class EditableCell extends React.Component {
   constructor( props ) {
     super( props );
     this.cacheValue = props.value || '';
@@ -42,5 +42,3 @@ class BaseEditableCell extends React.Component {
     this.setState( { value } );
   }
 }
-
-export default BaseEditableCell;
