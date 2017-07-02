@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Button, Modal, Popconfirm} from 'antd';
+import React, { Component } from 'react';
+import { Button, Modal, Popconfirm } from 'antd';
 import HypertensionA from './HypertensionA';
 import HypertensionB from './HypertensionB';
 import HypertensionC from './HypertensionC';
@@ -38,22 +38,22 @@ export default class Scheme extends Component {
 		let title = '';
 		if ( name === 'hypertension' && id === '1' ) {
 			title = '方案一：协助医生随访高血压患者的体征、生活方式、辅助检查、用药情况';
-			content = <HypertensionA ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme }/>;
+			content = <HypertensionA ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		} else if ( name === 'hypertension' && id === '2' ) {
 			title = '方案二：协助医生随访高血压患者的症状';
-			content = <HypertensionB ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme }/>;
+			content = <HypertensionB ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		} else if ( name === 'hypertension' && id === '3' ) {
 			title = '方案三：协助医生随访高血压患者的血压数值';
-			content = <HypertensionC ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme }/>;
+			content = <HypertensionC ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		} else if ( name === 'diabetes' && id === '1' ) {
 			title = '方案一：协助医生随访糖尿病患者的体征、生活方式、辅助检查、用药情况';
-			content = <DiabetesA ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme }/>;
+			content = <DiabetesA ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		} else if ( name === 'diabetes' && id === '2' ) {
 			title = '方案二：协助医生随访糖尿病患者的症状';
-			content = <DiabetesB ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme }/>;
+			content = <DiabetesB ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		} else if ( name === 'diabetes' && id === '3' ) {
 			title = '方案三：协助医生随访糖尿病患者的血糖数值';
-			content = <DiabetesC ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme }/>;
+			content = <DiabetesC ref={ e => ( this.state.inst = e ) } disabled={ disabled } scheme={ this.state.scheme } />;
 		}
 
 		this.setState( {
@@ -68,11 +68,12 @@ export default class Scheme extends Component {
 	};
 
 	handleOk = () => {
-		this.state.inst.validateFields( ( err, values ) => {
+		this.state.inst.validateFields(( err, values ) => {
 			if ( values.symptom ) {
 				values.symptom = values.symptom.join( ',' );
 			}
-			this.props.callback( this.props.index, values );
+			if ( !this.props.disabled )
+				this.props.callback( this.props.index, values );
 			// this.setState( { scheme: values } );
 		} );
 		this.setState( { visible: false } );

@@ -150,23 +150,23 @@ module.exports = {
 	},
 	hypertension: {
 		url: 'hypertension', name: 'hypertension', cn: '高血压随访', ritRef: 'gxysf0',
-		model: model.chronicDisease, action: action.CD_saveBlood, monitor: 0,
+		model: model.chronicDisease, action: action.CD_saveBlood, monitor: 1,
 		tpl: config.tpl + 'hypertension.xls',
 		ritDoctor: [ rownum.key, name.key, sex.key, birthday.key, tel.key ],
-		ritWorker: [ rownum.key, name.key, sex.key, birthday.key, tel.key, followUp.key, operation.key ]
+		ritWorker: [ rownum.key, name.key, sex.key, birthday.key, tel.key, followUp.key, remark.key, operation.key ]
 	},
 	workergxysf0: {
-		url: worker + 'gxysf0', name: 'hypertension', monitor: 0, cn: '高血压随访',
+		url: worker + 'gxysf0', name: 'hypertension', monitor: 1, cn: '高血压随访',
 	},
 	diabetes: {
 		url: 'diabetes', name: 'diabetes', cn: '糖尿病随访', ritRef: 'tnbsf0',
-		model: model.chronicDisease, action: action.CD_saveSugar, monitor: 0,
+		model: model.chronicDisease, action: action.CD_saveSugar, monitor: 1,
 		tpl: config.tpl + 'diabetes.xls',
 		ritDoctor: [ rownum.key, name.key, sex.key, birthday.key, tel.key ],
-		ritWorker: [ rownum.key, name.key, sex.key, birthday.key, tel.key, followUp.key, operation.key ]
+		ritWorker: [ rownum.key, name.key, sex.key, birthday.key, tel.key, followUp.key, remark.key, operation.key ]
 	},
 	workertnbsf0: {
-		url: worker + 'tnbsf0', name: 'diabetes', monitor: 0, cn: '糖尿病随访',
+		url: worker + 'tnbsf0', name: 'diabetes', monitor: 1, cn: '糖尿病随访',
 	},
 	/**
 	 * 订单列表页
