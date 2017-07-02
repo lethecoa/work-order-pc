@@ -152,7 +152,6 @@ const OrderPage = ( {
 		disabled: disabled,
 		isOver: isOver,
 		interviewScheme,
-		scheme: { drugList: [ { key: '1', drugName: '1', drugFrequency: '2', dosage: '3' }] },
 		onSave: ( i, r ) => saveRow( i, r ),
 		onSubmit: ( r, callBack ) => submitRow( r, callBack ),
 	};
