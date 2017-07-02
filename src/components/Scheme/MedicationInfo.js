@@ -209,12 +209,15 @@ class MedicationInfo extends React.Component {
 		const { value } = this.state;
 		const disable = this.props.disabled;
 		const columns = this.columns;
+		if ( disable ) {
+			columns.pop();
+		}
 		return (
 			<div>
 				<div className={styles.addBtnBox}>
 					<Button type="primary" onClick={this.handleAdd} disabled={disable}>添加药品</Button>
 				</div>
-				<Table bordered dataSource={value} columns={columns} pagination={false}/>
+				<Table rowKey={record => record.rownum} bordered dataSource={value} columns={columns} pagination={false}/>
 			</div>
 		)
 	}
