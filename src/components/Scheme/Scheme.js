@@ -87,6 +87,7 @@ export default class Scheme extends Component {
 
 	render() {
 		const { title, visible, content, disabled1, disabled2, disabled3 } = this.state;
+		const { disabled } = this.props;
 		return (
 			<div>
 				<Modal
@@ -94,7 +95,7 @@ export default class Scheme extends Component {
 					visible={ visible }
 					title={ title }
 					onCancel={ this.handleCancel }
-					footer={ [
+					footer={ disabled ? null : [
 						<Popconfirm key="back" title="确定放弃本次编辑?" onConfirm={ () => this.handleCancel() }>
 							<Button size="large">取消</Button>
 						</Popconfirm>,

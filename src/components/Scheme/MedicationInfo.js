@@ -69,7 +69,7 @@ class MedicationInfo extends React.Component {
 		const data = this.state.value.map( ( item ) => {
 			const obj = {};
 			Object.keys( item ).forEach( ( key ) => {
-				obj[ key ] = key === 'key' ? item[ key ] : { editable: false, value: item[ key ] };
+				obj[ key ] = key === 'rownum' ? item[ key ] : { editable: false, value: item[ key ] };
 			} );
 			return obj;
 		} );
@@ -180,13 +180,13 @@ class MedicationInfo extends React.Component {
 	handleAdd = () => {
 		const { data, value } = this.state;
 		const newData = {
-			key: new Date().getTime(),
+			rownum: new Date().getTime(),
 			drugName: { editable: false, value: '' },
 			drugFrequency: { editable: false, value: '' },
 			dosage: { editable: false, value: '' },
 		};
 		const newValue = {
-			key: new Date().getTime(),
+			rownum: new Date().getTime(),
 			drugName: '',
 			drugFrequency: '',
 			dosage: '',
@@ -229,7 +229,7 @@ class MedicationInfo extends React.Component {
 				const data = value.map( ( item ) => {
 					const obj = {};
 					Object.keys( item ).forEach( ( key ) => {
-						obj[ key ] = key === 'key' ? item[ key ] : { editable: false, value: item[ key ] };
+						obj[ key ] = key === 'rownum' ? item[ key ] : { editable: false, value: item[ key ] };
 					} );
 					return obj;
 				} );

@@ -154,8 +154,8 @@ class HypertensionA extends React.Component {
 									initialValue: scheme.adr ? parseInt( scheme.adr ) : undefined
 								} )(
 									<RadioGroup style={{ width: 200 }} disabled={disabled}>
-										<Radio value={0}>无</Radio>
-										<Radio value={1}>有</Radio>
+										<Radio value={1}>无</Radio>
+										<Radio value={2}>有</Radio>
 									</RadioGroup>
 								)}
 							</FormItem>
