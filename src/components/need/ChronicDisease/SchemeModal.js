@@ -9,12 +9,12 @@ export default class SchemeModal extends React.Component {
 		'方案一：协助医生随访糖尿病患者的体征、生活方式、辅助检查、用药情况 (价格：暂未定价)',
 		'方案二：协助医生随访糖尿病患者的症状 (价格：暂未定价)',
 		'方案三：协助医生随访糖尿病患者的血糖数值 (价格：暂未定价)' ];
-	content = [ <HypertensionA disabled={false} scheme={{}}/>,
-		<HypertensionB disabled={false} scheme={{}}/>,
-		<HypertensionC disabled={false} scheme={{}}/>,
-		<DiabetesA disabled={false} scheme={{}}/>,
-		<DiabetesB disabled={false} scheme={{}}/>,
-		<DiabetesC disabled={false} scheme={{}}/>, ];
+	content = [ <HypertensionA disabled={true} scheme={{}}/>,
+		<HypertensionB disabled={true} scheme={{}}/>,
+		<HypertensionC disabled={true} scheme={{}}/>,
+		<DiabetesA disabled={true} scheme={{}}/>,
+		<DiabetesB disabled={true} scheme={{}}/>,
+		<DiabetesC disabled={true} scheme={{}}/>, ];
 	showModal = ( id ) => {
 		this.setState( {
 			visible: true,

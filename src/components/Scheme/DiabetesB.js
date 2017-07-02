@@ -32,7 +32,7 @@ class HypertensionB extends React.Component {
 
 	render() {
 		const { getFieldDecorator } = this.props.form;
-		const disabled = !this.props.disabled;
+		const disabled = this.props.disabled;
 		const { scheme } = this.state;
 		return (
 			<div className={styles.need}>
