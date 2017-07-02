@@ -82,28 +82,28 @@ class InfoTable extends React.Component {
       width: 150,
       dataIndex: present.key,
       key: present.key,
-      render: ( text, record, index ) => this.renderRadioCell( text, index, present.key )
+      render: ( text, record, index ) => this.renderRadioCell( text, record[ rownum.key ], present.key )
     },
     [ visit.key ]: {
       title: visit.cn,
       width: 150,
       dataIndex: visit.key,
       key: visit.key,
-      render: ( text, record, index ) => this.renderRadioCell( text, index, visit.key )
+      render: ( text, record, index ) => this.renderRadioCell( text, record[ rownum.key ], visit.key )
     },
     [ remark.key ]: {
       title: remark.cn,
       width: 280,
       dataIndex: remark.key,
       key: remark.key,
-      render: ( text, record, index ) => this.renderInputCell( text, index, remark.key )
+      render: ( text, record, index ) => this.renderInputCell( text, record[ rownum.key ], remark.key )
     },
     [ followUp.key ]: {
       title: followUp.cn,
       width: 120,
       dataIndex: followUp.key,
       key: followUp.key,
-      render: ( text, record, index ) => this.renderFollowUpCellCell( text, index, followUp.key )
+      render: ( text, record, index ) => this.renderFollowUpCellCell( record, record[ rownum.key ], followUp.key )
     },
     [ operation.key ]: {
       title: operation.cn,
@@ -112,6 +112,7 @@ class InfoTable extends React.Component {
       key: operation.key,
       render: ( text, record, index ) => {
         const myStatus = record.myStatus;
+        index = this.getFilterDataIndex( record[ rownum.key ] );
         return (
           <div className="editable-row-operations">
             {
@@ -144,6 +145,7 @@ class InfoTable extends React.Component {
       }
     }
   };
+
   constructor( props ) {
     super( props );
     fun.printLoader( moduleName );
@@ -172,7 +174,7 @@ class InfoTable extends React.Component {
       operationStatus: false, // 操作栏显示状态，doctor隐藏
       columns: this.getColums(),
       parentName: props.name,
-      orderStatus: props.orderStatus, // 订单状态：已处理、未处理
+      orderStatus: props.orderStatus,
       isOver: props.isOver || false,
     }
   }
@@ -239,7 +241,8 @@ class InfoTable extends React.Component {
   /**
    * 创建可编辑的 Input 单元格
    */
-  renderInputCell = ( value, index, key ) => {
+  renderInputCell = ( value, num, key ) => {
+    let index = this.getFilterDataIndex( num );
     const myStatus = this.state.filterData.getIn( [ index, 'myStatus' ] );
 
     return ( <EditableInputCell
@@ -250,22 +253,27 @@ class InfoTable extends React.Component {
     /> );
   }
   /**
-   * 创建随访情况单元格（未完成）
+   * 创建随访情况单元格
    */
-  renderFollowUpCellCell = ( value, index, key ) => {
+  renderFollowUpCellCell = ( record, num, key ) => {
+    let index = this.getFilterDataIndex( num );
+    let disabled = this.props.isOver;
+    if ( !disabled ) disabled = this.props.orderStatus === ORDER_STATUS.treated ? true : false;
+
     return ( <FollowUpCell
       name={ this.props.name }
       interviewScheme={ this.props.interviewScheme }
-      scheme={ this.props.scheme }
-      callback={ ( index, data ) => this.updeteChildFormData( index, data ) }
-      index={ index }
-      rownum={ this.state.filterData.getIn( [ index, rownum.key ] ) }
+      scheme={ record[ followUp.key ] }
+      callback={ ( rownum, data ) => this.updeteChildFormData( rownum, data ) }
+      rownum={ record[ rownum.key ] }
+      disabled={ disabled }
     /> );
   }
   /**
    * 创建可编辑的 Radio 单元格
    */
-  renderRadioCell = ( value, index, key ) => {
+  renderRadioCell = ( value, num, key ) => {
+    let index = this.getFilterDataIndex( num );
     const myStatus = this.state.filterData.getIn( [ index, 'myStatus' ] );
 
     return ( <EditableRadioCell
@@ -422,14 +430,32 @@ class InfoTable extends React.Component {
         }
       }
     )
+    if ( index < 0 ) console.error( "getDataByServiceId: 未找到数据！" )
     return index;
   }
   /**
-   * 
+   * 更新子表格的数据
    */
-  updeteChildFormData = ( index, data ) => {
-    let filterData = this.state.filterData.setIn( [ index, followUp.key ], data );
-    this.setState( { filterData: filterData } );
+  updeteChildFormData = ( num, data ) => {
+    // let num = parseInt( this.state.filterData.getIn( [ index, rownum.key ] ) ) - 1;
+    let filterIndex = this.getFilterDataIndex( num );
+    let formatIndex = parseInt( num ) - 1;
+    let formatData = this.state.formatData.setIn( [ formatIndex, followUp.key ], data );
+    let filterData = this.state.filterData.setIn( [ filterIndex, followUp.key ], data );
+    this.setState( { formatData, filterData } );
+  }
+  getFilterDataIndex = ( num ) => {
+    let index = -1;
+    this.state.filterData.forEach(
+      ( v, i ) => {
+        if ( v.get( rownum.key ) === num ) {
+          index = i;
+          return false;
+        }
+      }
+    )
+    if ( index < 0 ) console.error( "getFilterDataIndex: 未找到数据！" )
+    return index;
   }
 
   render() {

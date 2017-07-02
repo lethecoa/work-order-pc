@@ -73,7 +73,7 @@ export default class Scheme extends Component {
 				values.symptom = values.symptom.join( ',' );
 			}
 			if ( !this.props.disabled )
-				this.props.callback( this.props.index, values );
+				this.props.callback( this.props.rownum, values );
 			// this.setState( { scheme: values } );
 		} );
 		this.setState( { visible: false } );

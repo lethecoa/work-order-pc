@@ -16,7 +16,7 @@ class FollowUpCell extends React.Component {
 
   render() {
     return (
-      <Scheme { ...this.props } disabled={ true } />
+      <Scheme { ...this.props } />
     );
   }
 }

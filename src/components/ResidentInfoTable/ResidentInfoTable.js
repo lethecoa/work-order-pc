@@ -29,16 +29,15 @@ class ResidentInfoTable extends React.Component {
     super( props );
 
     this.state = {
-      ritRef: modular[ props.name ][ 'ritRef' ],
-      data: props.data,
-      disabled: props.disabled,
-      operation: false,
+      ritRef: modular[ props.name ][ 'ritRef' ], // 上传excel后返回的服务器对应数据字段
+      data: props.data, // 外层传进来的原始数据
+      disabled: props.disabled, // 当前页面元件是否可用
       showDoctor: props.userType === config.userType.doctor ? true : false,
       showWorker: props.userType === config.userType.worker ? true : false,
       isOver: props.isOver || false, // 订单处理状态：true 已完结
-      untreated: 0,
+      untreated: 0, // 显示在切换按钮上的数字
       treated: 0,
-      orderStatus: ORDER_STATUS.untreated,
+      orderStatus: ORDER_STATUS.untreated, // 订单状态：已处理(1)、未处理(2)
     }
   }
   // public function
@@ -109,7 +108,7 @@ class ResidentInfoTable extends React.Component {
       <div className={ styles.normal }>
         <div className={ styles.title }>
           <iframe ref="ifile" style={ { display: 'none' } }></iframe>
-          {/*<Button size="small" onClick={this.getData}>打印测试数据</Button>&nbsp;*/ }
+          {/*<Button size="small" onClick={ this.getData }>打印测试数据</Button>&nbsp;*/ }
           { this.state.showDoctor ?
             <div className={ styles.button }>
               <Button size="small" disabled={ this.props.disabled } onClick={ this.download }
@@ -142,9 +141,6 @@ class ResidentInfoTable extends React.Component {
     if ( !is( nextProps.data, this.state.data ) ) {
       this.setState( { data: nextProps.data } );
     }
-    /*if ( nextProps.disabled !== this.state.disabled ) {
-      this.setState( { disabled: nextProps.disabled } );
-    }*/
   }
   /*
     shouldComponentUpdate( nextProps, nextState ) {
