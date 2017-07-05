@@ -9,7 +9,7 @@ export default {
   },
   reducers: {
     setInfo: ( state, { payload: loginInfo } ) => {
-	    console.log('===loginModel===setInfo===');
+      console.log( '===loginModel===setInfo===' );
       return {
         ...state, loginInfo
       }
@@ -42,6 +42,8 @@ export default {
           storeage.set( config.local.user, user );
           yield put( { type: fun.fuse( model.app, action.app_init ), payload: user } );
           yield put( routerRedux.push( urlMap.index ) );
+        } else {
+          fun.showNotification( data.message, "登录失败！" );
         }
       }
     }
