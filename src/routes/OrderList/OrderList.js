@@ -1,16 +1,16 @@
 import React from 'react';
-import { connect } from 'dva';
-import { routerRedux } from 'dva/router';
-import { Form, Select, DatePicker, Button, Table, Pagination, Radio } from 'antd';
-import { Scheme } from '../../components';
+import {connect} from 'dva';
+import {routerRedux} from 'dva/router';
+import {Form, Select, DatePicker, Button, Table, Pagination, Radio} from 'antd';
+import {Scheme} from '../../components';
+import {CustomRangePicker} from '../../components/formItme'
 import moment from 'moment';
-import { action, model, fun, modular } from '../../common';
+import {action, model, fun, modular} from '../../common';
 import styles from './OrderList.less';
 
 const moduleName = modular.getModuleName( modular.orderList );
 const FormItem = Form.Item;
 const Option = Select.Option;
-const RangePicker = DatePicker.RangePicker;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -45,7 +45,7 @@ const columns = [ {
 	title: '人数',
 	dataIndex: 'entrustNumber',
 	key: 'entrustNumber',
-}];
+} ];
 
 const OrderList = ( {
 	form,
@@ -58,9 +58,11 @@ const OrderList = ( {
 	const { pagination, list: dataSource, total } = workerModel;
 	/** 查询 */
 	const search = ( values ) => {
-		if ( values.allowDate[ 0 ] && values.allowDate[ 1 ] ) {
-			values.dateStart = values.allowDate[ 0 ].format( 'YYYY-MM-DD' );
-			values.dateEnd = values.allowDate[ 1 ].format( 'YYYY-MM-DD' );
+		if ( values.allowDate.dateStart ) {
+			values.dateStart = values.allowDate.dateStart.format( 'YYYY-MM-DD' );
+		}
+		if ( values.allowDate.dateEnd ) {
+			values.dateEnd = values.allowDate.dateEnd.format( 'YYYY-MM-DD' );
 		}
 		delete ( values[ "allowDate" ] );
 		dispatch( { type: fun.fuse( model.worker, action.worker_getOrders ), payload: values } );
@@ -75,7 +77,7 @@ const OrderList = ( {
 	/** 点击查询按钮 */
 	const handlerSubmit = ( e ) => {
 		e.preventDefault();
-		validateFieldsAndScroll(( err, values ) => {
+		validateFieldsAndScroll( ( err, values ) => {
 			if ( !err ) {
 				search( values );
 			}
@@ -88,7 +90,7 @@ const OrderList = ( {
 	};
 	/** 翻页 */
 	const handlerPageChange = ( page ) => {
-		validateFieldsAndScroll(( err, values ) => {
+		validateFieldsAndScroll( ( err, values ) => {
 			if ( !err ) {
 				values.page = page;
 				search( values );
@@ -122,10 +124,11 @@ const OrderList = ( {
 				</FormItem>
 				<FormItem>
 					{ getFieldDecorator( 'allowDate', {
-						initialValue: [
-							pagination.dateStart ? moment( pagination.dateStart, 'YYYY-MM-DD' ) : undefined,
-							pagination.dateEnd ? moment( pagination.dateEnd, 'YYYY-MM-DD' ) : undefined ],
-					} )( <RangePicker showTime format="YYYY-MM-DD" /> ) }
+						initialValue: {
+							dateStart: pagination.dateStart ? moment( pagination.dateStart, 'YYYY-MM-DD' ) : undefined,
+							dateEnd: pagination.dateEnd ? moment( pagination.dateEnd, 'YYYY-MM-DD' ) : undefined,
+						}
+					} )( <CustomRangePicker/> ) }
 				</FormItem>
 				<Button size="large" type="primary" htmlType="submit">查询</Button>
 			</Form>
@@ -147,9 +150,9 @@ const OrderList = ( {
 				onChange={ handlerPageChange }
 			/>
 			{/*<Scheme name={'hypertension'} interviewScheme={'1'} ref={e => ( scheme = e )} disabled={true} 
-				scheme={{drugList:[{key:'1',drugName:'1',drugFrequency:'2',dosage:'3'}]}}/>
+			 scheme={{drugList:[{key:'1',drugName:'1',drugFrequency:'2',dosage:'3'}]}}/>
 
-			<Button onClick={ () => { console.log( scheme.getData() ); } }>getData</Button>*/}
+			 <Button onClick={ () => { console.log( scheme.getData() ); } }>getData</Button>*/}
 
 		</div>
 	);
