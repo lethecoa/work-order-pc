@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, Pagination, Popconfirm } from 'antd';
 import immutable from 'immutable';
 import { config, fun, modular } from '../../common';
-import { EditableInputCell, EditableRadioCell, FollowUpCell } from '../formItme';
+import { EditableInputCell, EditableRadioCell, EditableSelectCell, FollowUpCell } from '../formItme';
 import styles from './InfoTable.less';
 
 const { is, Map } = immutable;
@@ -59,19 +59,19 @@ class InfoTable extends React.Component {
     },
     [ disease.key ]: {
       title: disease.cn,
-      width: 280,
+      width: 250,
       dataIndex: disease.key,
       key: disease.key,
     },
     [ diseaseCase.key ]: {
       title: diseaseCase.cn,
-      width: 280,
+      width: 250,
       dataIndex: diseaseCase.key,
       key: diseaseCase.key,
     },
     [ drugs.key ]: {
       title: drugs.cn,
-      width: 280,
+      width: 250,
       dataIndex: drugs.key,
       key: drugs.key,
     },
@@ -91,10 +91,10 @@ class InfoTable extends React.Component {
     },
     [ remark.key ]: {
       title: remark.cn,
-      width: 280,
+      width: 250,
       dataIndex: remark.key,
       key: remark.key,
-      render: ( text, record, index ) => this.renderInputCell( text, record[ rownum.key ], remark.key )
+      render: ( text, record, index ) => this.renderSelectCell( text, record[ rownum.key ], remark.key )
     },
     [ followUp.key ]: {
       title: followUp.cn,
@@ -245,6 +245,20 @@ class InfoTable extends React.Component {
 
     return ( <EditableInputCell
       name={ key + '_input_' + index }
+      value={ value }
+      onChange={ ( name, value ) => this.handleChange( name, key, index, value ) }
+      myStatus={ myStatus }
+    /> );
+  }
+  /**
+   * 创建可编辑的 Select 单元格
+   */
+  renderSelectCell = ( value, num, key ) => {
+    let index = this.getFilterDataIndex( num );
+    const myStatus = this.state.filterData.getIn( [ index, 'myStatus' ] );
+
+    return ( <EditableSelectCell
+      name={ key + '_select_' + index }
       value={ value }
       onChange={ ( name, value ) => this.handleChange( name, key, index, value ) }
       myStatus={ myStatus }
