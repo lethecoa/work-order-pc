@@ -7,13 +7,16 @@ const TreeNode = Tree.TreeNode;
 
 function Sidebar() {
 	const onSelect = ( selectedKeys, info ) => {
-		browserHistory.push( selectedKeys[ 0 ] );
-	}
+		if ( selectedKeys[ 0 ] ) {
+			browserHistory.push( selectedKeys[ 0 ] );
+		}
+	};
+
 	return (
 		<Tree showLine defaultExpandAll onSelect={onSelect} className={styles.menu}>
 			<TreeNode key="0" title="云医助">
 
-				<TreeNode key={modular.signFamily.url} title={modular.signFamily.cn}/>
+				{/*<TreeNode key={modular.signFamily.url} title={modular.signFamily.cn}/>*/}
 				<TreeNode key="bookingAgentMenu" title="预约代理">
 					<TreeNode key={modular.residentSign.url} title={modular.residentSign.cn}/>
 					<TreeNode key={modular.residentInspect.url} title={modular.residentInspect.cn}/>

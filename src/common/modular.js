@@ -36,14 +36,14 @@ module.exports = {
 	 * 预约代理
 	 */
 	residentSign: {
-		url: 'residentSign', name: 'residentSign', cn: '预约居民签约', ritRef: 'yyjmqy',
+		url: 'residentSign', name: 'residentSign', cn: '预约居民家庭医生签约', ritRef: 'yyjmqy',
 		model: model.bookingAgent, action: action.BA_saveSign, monitor: 1,
 		tpl: config.tpl + 'residentSign.xls',
 		ritDoctor: [ rownum.key, name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ rownum.key, name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ],
 	},
 	workeryyjmqy: {
-		url: worker + 'yyjmqy', name: 'residentSign', monitor: 1, cn: '预约居民签约',
+		url: worker + 'yyjmqy', name: 'residentSign', monitor: 1, cn: '预约居民家庭医生签约',
 	},
 	residentInspect: {
 		url: 'residentInspect', name: 'residentInspect', cn: '预约居民体检', ritRef: 'yyjmtj',
