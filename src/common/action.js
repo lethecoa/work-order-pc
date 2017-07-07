@@ -7,6 +7,7 @@ module.exports = {
 	APP_getItemPrice: 'getItemPrice',
 	order_init: 'initDoctor',
 	order_initWorker: 'initWorker',
+	order_saveResidentList: 'saveResidentList',
 	order_changeConfirmState: 'changeConfirmState',
 	order_submitCallBack: 'submitCallBack',
 	BA_init: 'intiState',

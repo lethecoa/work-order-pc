@@ -28,7 +28,6 @@ let payModal;
 let need;
 
 let entrustNumber;
-let dataList;
 
 const OrderPage = ( {
 	loading,
@@ -41,20 +40,13 @@ const OrderPage = ( {
 	/*fun.printLoader( 'orderPage' );*/
 	const { userType, orderHandlerId, orderHandlerName } = user;
 	const { currentStep, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel ? orderModel : {};
-	const { serviceDetail, residentList, disabledConfirmOrder, pagination, isOver } = workerModel ? workerModel : {};
-	const { currentData, display, disabled } = workerModel ? workerModel : orderModel;
+	const { serviceDetail, disabledConfirmOrder, pagination, isOver } = workerModel ? workerModel : {};
+	const { currentData, display, disabled, residentList } = workerModel ? workerModel : orderModel;
 	const { orgName, remainingBalance } = currentData;
 	const { interviewScheme } = serviceDetail ? serviceDetail : {};
 	/** 获取页面path,初始化dataList */
 	let path = route.path.replace( '/', '' );
-	if ( userType === config.userType.worker ) {
-		dataList = residentList;
-	} else {
-		if ( !disabled ) {
-			dataList = [];
-		}
-	}
-
+	let dataList = residentList;
 	/** 医生端-校验表单输入数据*/
 	const validAndConfirm = () => {
 		baseInfo.validateFieldsAndScroll( ( errOut ) => {
@@ -69,11 +61,16 @@ const OrderPage = ( {
 							return;
 						}
 						entrustNumber = dataList.length;
+						dispatch( { type: fun.fuse( model.order, action.order_saveResidentList ), payload: { residentList: dataList } } );
 						dispatch( { type: fun.fuse( model.order, action.order_changeConfirmState ) } );
 					}
 				} );
 			}
 		} );
+	};
+	/** 医生端-返回修改*/
+	const backToEdit = () => {
+		dispatch( { type: fun.fuse( model.order, action.order_changeConfirmState ) } );
 	};
 	/** 医生端-显示确认支付窗口 */
 	const showModal = ( e ) => {
@@ -218,7 +215,7 @@ const OrderPage = ( {
 									</Col>
 									<Col span={ 12 }>
 										<Button size="large" type="primary" style={ { width: 200, display: displayBack } }
-										        onClick={ validAndConfirm }>返回修改</Button>
+										        onClick={ backToEdit }>返回修改</Button>
 										<Button size="large" type="primary" style={ { width: 200, display: displayNew } }
 										        onClick={ function () { location.reload() } }>新建委托单</Button>
 									</Col>
