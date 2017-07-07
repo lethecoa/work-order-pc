@@ -168,7 +168,7 @@ const OrderPage = ( {
 					:
 					<Button size="large" type="primary" className={ styles.back } onClick={ backToList }>返回</Button>
 				}
-				<Form onSubmit={ showModal }>
+				<Form>
 					<BaseInfo {...baseInfoProps} ref={ e => ( baseInfo = e ) }/>
 					{ path === 'signFamily' ? <ResidentSign disabled={ disabled } ref={ e => ( need = e ) } signSite={ orgName }/> : '' }
 					{ path === 'residentSign' ? <ResidentSign disabled={ disabled } ref={ e => ( need = e ) } signSite={ orgName }/> : '' }
@@ -210,8 +210,8 @@ const OrderPage = ( {
 							<div className={ styles.submit } style={ { display: display } }>
 								<Row>
 									<Col span={ 12 }>
-										<Button size="large" type="primary" htmlType="submit" style={ { width: 200 } } disabled={ submitDisabled }
-										        loading={ loading }>确认委托并支付</Button>
+										<Button size="large" type="primary"  style={ { width: 200 } } disabled={ submitDisabled }
+										        loading={ loading } onClick={ showModal }>确认委托并支付</Button>
 									</Col>
 									<Col span={ 12 }>
 										<Button size="large" type="primary" style={ { width: 200, display: displayBack } }
