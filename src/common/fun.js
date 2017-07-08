@@ -1,6 +1,6 @@
 import moment from 'moment';
 import config from './config';
-import {notification, Modal} from 'antd';
+import { notification, Modal } from 'antd';
 module.exports = {
 	/**
 	 * 包装系统的console，指定force=true可以强制在非Debug模式下打印信息
@@ -76,15 +76,16 @@ module.exports = {
 			console.log( '接口调用失败 >>> ', {
 				api: payload.apiName,
 				msg: payload.responsData.message,
-				data: JSON.stringify(payload.requestData)
+				data: JSON.stringify( payload.requestData )
 			} );
 			Modal.error( {
 				title: payload.responsData.message,
 			} );
 		}
 	},
-	showNotification: ( msg, description ) => {
-		notification.open( {
+	/** 显示通知，默认图标为成功 */
+	showNotification: ( msg, description, type = 'success' ) => {
+		notification[ type ]( {
 			message: msg,
 			description: description,
 		} );
