@@ -23,6 +23,14 @@ export default {
 				displayNew: 'none',
 				submitDisabled: false,
 				currentData,
+				residentList: [],
+			}
+		},
+		saveResidentList: ( state, { payload: { residentList } } ) => {
+			console.log( '===orderModel===saveResidentList===' );
+			return {
+				...state,
+				residentList,
 			}
 		},
 		changeConfirmState: ( state ) => {
