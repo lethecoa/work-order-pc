@@ -28,7 +28,7 @@ export default class EditableCell extends React.Component {
       //  传入取消的状态，则不保存刚刚的用户输入
       else {
         this.setState( { myStatus: config.ritStatus.general, value: this.cacheValue } );
-        // this.props.onChange( this.name, this.cacheValue );
+        this.props.onCancel();
       }
     }
   }

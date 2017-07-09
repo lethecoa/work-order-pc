@@ -13,6 +13,9 @@ const CALL_BACK_STATUS = { save: 'save', submit: 'submit' };
 const ORDER_STATUS = config.ORDER_STATUS;
 /**
  * 用户信息表控件
+ * 这个组件目前已经过于复杂了，设计之初并没有想到会如此，目前的优化方式是使用继承来分解组件的功能
+ * BaseInfoTabel -> InfoTabelForWorker | InfoTableForDoctor
+ * 但是改造至少需要一天时间，而且可能产生新的bug，所以懒得折腾
  * 
  * @class InfoTable
  * @extends {React.Component}
@@ -112,7 +115,7 @@ class InfoTable extends React.Component {
         const myStatus = record.myStatus;
         index = this.getFilterDataIndex( record[ rownum.key ] );
         return (
-          <div className="editable-row-operations">
+          <div className={ this.everyOneInEdit && myStatus !== config.ritStatus.editing ? 'hide' : '' }>
             {
               // 是否具有可编辑单元格
               this.monitor <= 0 ? '' :
@@ -149,11 +152,12 @@ class InfoTable extends React.Component {
     fun.printLoader( moduleName );
     // 这个数值其实可以改进自动计算出来
     this.monitor = props.monitor;
-    this.hasChildFrom = false;
+    this.columnConfig = [];
+    this.everyOneInEdit = false;
+    this.parentName = props.name; // 父容器名称
 
     let formatData = this.getFormatData( props.data );
-    let filterData = props.isOver ? formatData :
-      this.getFilterData( formatData, props.orderStatus );
+    let filterData = props.isOver ? formatData : this.getFilterData( formatData, props.orderStatus );
 
     this.state = {
       data: props.data, // 未处理过的数据
@@ -170,10 +174,8 @@ class InfoTable extends React.Component {
       submitCallback: this.props.onSubmit,
       callBackStatus: '', // 用户操作的类型：保存或者提交
       operationStatus: false, // 操作栏显示状态，doctor隐藏
-      columns: this.getColums(),
-      parentName: props.name,
+      columns: this.getColums( props ),
       orderStatus: props.orderStatus,
-      isOver: props.isOver || false,
     }
   }
   // public function
@@ -216,22 +218,22 @@ class InfoTable extends React.Component {
       filterData = data.filter( item => is( item.get( 'status' ), orderStatus ) );
     this.treated = orderStatus === ORDER_STATUS.treated ? filterData.size : data.size - filterData.size;
     this.untreated = data.size - this.treated;
+    this.everyOneInEdit = false;
 
     return filterData;
   }
   /**
    * 获取表头数据
    */
-  getColums = () => {
-    let columnConfig = this.props.userType === config.userType.doctor ?
-      modular[ this.props.name ][ 'ritDoctor' ] : modular[ this.props.name ][ 'ritWorker' ];
+  getColums = ( props ) => {
+    this.columnConfig = props.userType === config.userType.doctor ?
+      modular[ props.name ][ 'ritDoctor' ] : modular[ props.name ][ 'ritWorker' ];
     // 查看已完成订单时删除操作栏列
-    if ( this.props.isOver ) {
-      columnConfig = immutable.fromJS( columnConfig ).toJS();
-      columnConfig.pop();
+    if ( props.isOver ) {
+      this.columnConfig = immutable.fromJS( this.columnConfig ).toJS();
+      this.columnConfig.pop();
     }
-    this.hasChildFrom = columnConfig.hasOwnProperty( followUp.key ) ? true : false;
-    return columnConfig.map(( item, index, arr ) => {
+    return this.columnConfig.map(( item, index, arr ) => {
       if ( this.allColumns.hasOwnProperty( item ) )
         return this.allColumns[ item ];
     } );
@@ -247,6 +249,7 @@ class InfoTable extends React.Component {
       name={ key + '_input_' + index }
       value={ value }
       onChange={ ( name, value ) => this.handleChange( name, key, index, value ) }
+      onCancel={ () => this.handleCancel( index ) }
       myStatus={ myStatus }
     /> );
   }
@@ -261,6 +264,7 @@ class InfoTable extends React.Component {
       name={ key + '_select_' + index }
       value={ value }
       onChange={ ( name, value ) => this.handleChange( name, key, index, value ) }
+      onCancel={ () => this.handleCancel( index ) }
       myStatus={ myStatus }
     /> );
   }
@@ -273,7 +277,7 @@ class InfoTable extends React.Component {
     if ( !disabled ) disabled = this.props.orderStatus === ORDER_STATUS.treated ? true : false;
 
     return ( <FollowUpCell
-      name={ this.props.name }
+      name={ this.parentName }
       interviewScheme={ this.props.interviewScheme }
       scheme={ record[ followUp.key ] }
       callback={ ( rownum, data ) => this.updeteChildFormData( rownum, data ) }
@@ -292,11 +296,18 @@ class InfoTable extends React.Component {
       name={ key + '_radio_' + index }
       value={ value }
       onChange={ ( name, value ) => this.handleChange( name, key, index, value ) }
+      onCancel={ () => this.handleCancel( index ) }
       myStatus={ myStatus }
     /> );
   }
   /**
-   * 可编辑的子组件的数据发生更改时
+   * 取消编辑的回调函数，将该条数据的编辑状态修改成 显示状态
+   */
+  handleCancel = ( index ) => {
+    this.state.filterData = this.state.filterData.setIn( [ index, 'myStatus' ], config.ritStatus.general );
+  }
+  /**
+   * 操作栏按钮的点击的回调函数
    */
   handleChange = ( name, key, index, value ) => {
     const { filterData, callBackStatus, saveCallback, submitCallback } = this.state;
@@ -316,20 +327,39 @@ class InfoTable extends React.Component {
       }
       // 提交
       if ( callBackStatus === CALL_BACK_STATUS.submit && typeof submitCallback === 'function' ) {
+        if ( !this.checkRemark( index, data.getIn( [ index, remark.key ] ) ) ) return;
         let row = this.rebuildData(
           data.setIn( [ index, status.key ], ORDER_STATUS.treated ).get( index ) );
         submitCallback( row.toJS(), ( id ) => { this.successCallback( id ) } );
       }
-      // 更新 formatData
-      let i = this.getDataByServiceId( data.getIn( [ index, serviceId.key ] ) );
-      if ( i >= 0 ) {
-        let formatData = this.state.formatData.set( i, data.get( index ) );
-        this.setState( {
-          formatData: formatData,
-          // filterData: this.getFilterData( formatData, this.state.orderStatus )
-        } )
+    }
+    //更新 formatData，
+    // 这个部分存在问题：
+    // 1、在保存和提交前就更新了数据源，如果保存和提交服务器时候失败了，显示的数据已变化，服务器上的数据却未变
+    // 是否应该有合理的方式来告知这些数据实际上并未更新成功？
+    // 2、操作栏其实应该根据服务器成功与否来改变状态，比如点保存若服务器未正常相应，报错并停留在编辑状态下，
+    // 但是如果一开始不改变数据，整个组件就不会刷新，这个问题有待更优雅的解决方式！
+    // 或者应该是这样？ editing -> saving -> saved
+    let i = this.getDataByServiceId( data.getIn( [ index, serviceId.key ] ) );
+    if ( i >= 0 ) {
+      let formatData = this.state.formatData.set( i, data.get( index ) );
+      this.setState( { formatData: formatData } )
+    }
+    this.everyOneInEdit = false;
+  }
+  /**
+   * 如果这个页面的表头含有 “通知情况”，要判断用户是否输入了，不然不允许提交
+   */
+  checkRemark = ( index, val ) => {
+    let result = true;
+    if ( this.columnConfig.includes( remark.key ) ) {
+      if ( val === '' ) {
+        fun.showNotification( '不允许提交！', '通知情况不允许留空，请填写后再提交。', 'warning' );
+        this.edit( index );
+        return false;
       }
     }
+    return result;
   }
   /**
    * 重构数据，剔除掉提交时不需要的字段
@@ -351,6 +381,7 @@ class InfoTable extends React.Component {
    * 点击编辑按钮
    */
   edit = ( index ) => {
+    this.everyOneInEdit = true;
     this.setState( {
       filterData: this.state.filterData
         .setIn( [ index, 'myStatus' ], config.ritStatus.editing )
@@ -373,9 +404,9 @@ class InfoTable extends React.Component {
     const { filterData, submitCallback } = this.state;
     // 当前状态是显示，既未在编辑状态下，而是直接点击提交按钮
     if ( filterData.getIn( [ index, 'myStatus' ] ) === config.ritStatus.general ) {
+      if ( !this.checkRemark( index, filterData.getIn( [ index, remark.key ] ) ) ) return;
       let row = this.rebuildData(
         filterData.setIn( [ index, status.key ], ORDER_STATUS.treated ).get( index ) ).toJS();
-      // if ( this.hasChildFrom ) row.scheme =
       if ( typeof submitCallback === 'function' )
         submitCallback( row, ( id ) => { this.successCallback( id ) } );
     }
@@ -412,11 +443,7 @@ class InfoTable extends React.Component {
    */
   revoke = ( index ) => {
     const { filterData, submitCallback } = this.state;
-    // let i = this.getDataByServiceId( filterData.getIn( [ index, serviceId.key ] ) );
-    // let ftd = formatData.setIn( [ i, status.key ], ORDER_STATUS.untreated );
-    let row = this.rebuildData( filterData.setIn( [ index, status.key ], ORDER_STATUS.untreated )
-      .get( index ) );
-    // this.setState( { formatData: ftd } );
+    let row = this.rebuildData( filterData.setIn( [ index, status.key ], ORDER_STATUS.untreated ).get( index ) );
 
     if ( typeof submitCallback === 'function' )
       submitCallback( row.toJS(), ( id ) => { this.successCallback( id ) } );
@@ -425,6 +452,7 @@ class InfoTable extends React.Component {
    * 确认撤销：取消刚刚录入的数据，并回到非编辑状态
    */
   cancel = ( index ) => {
+    this.everyOneInEdit = false;
     this.setState( {
       filterData: this.state.filterData.setIn( [ index, 'myStatus' ], config.ritStatus.cancel )
     } );
@@ -456,6 +484,9 @@ class InfoTable extends React.Component {
     let filterData = this.state.filterData.setIn( [ filterIndex, followUp.key ], data );
     this.setState( { formatData, filterData } );
   }
+  /**
+   * 根据rownum找到这条数据在 filterData 中的下标
+   */
   getFilterDataIndex = ( num ) => {
     let index = -1;
     this.state.filterData.forEach(
@@ -482,11 +513,13 @@ class InfoTable extends React.Component {
     let operationStatus = nextProps.orderStatus === ORDER_STATUS.treated ? true : false;
     let columns = [];
     let filterData = [];
-    if ( nextProps.name != this.state.parentName ) {
-      columns = this.getColums()
+    if ( nextProps.name != this.parentName ) {
+      columns = this.getColums( nextProps );
     }
+
     // 有新数据进来
-    if ( !is( nextProps.data, this.state.data ) ) {
+    if ( !is( immutable.fromJS( nextProps.data ), immutable.fromJS( this.state.data ) ) ||
+      nextProps.name != this.parentName ) {
       let formatData = this.getFormatData( nextProps.data );
       if ( nextProps.userType === config.userType.worker ) {
         filterData = this.getFilterData( formatData, nextProps.orderStatus );
@@ -495,12 +528,13 @@ class InfoTable extends React.Component {
       }
 
       if ( columns.length > 0 ) {
+        this.parentName = nextProps.name;
         this.setState( {
           data: nextProps.data,
           formatData: formatData,
           filterData: filterData,
           operationStatus: operationStatus,
-          columns: this.getColums()
+          columns: columns
         } );
       }
       else {

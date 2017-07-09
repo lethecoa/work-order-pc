@@ -1,12 +1,9 @@
 import React from 'react';
 import { routerRedux } from 'dva/router';
-import immutable from 'immutable';
 import styles from './ResidentInfoTable.less';
 import { Table, Button, Icon, Upload, message, Radio } from 'antd';
 import InfoTable from './InfoTabel';
 import { fun, modular, api, config } from '../../common';
-
-const { is } = immutable;
 
 const moduleName = '居民信息表控件(ResidentInfoTable)';
 const RadioButton = Radio.Button;
@@ -24,7 +21,7 @@ const ORDER_STATUS = config.ORDER_STATUS;
  * @monitor 表格一行内有几个可编辑的单元格项
  * @disabled 控制上传excel和下载excel模板按钮是否可见
  */
-class ResidentInfoTable extends React.Component {
+export default class ResidentInfoTable extends React.Component {
   constructor( props ) {
     super( props );
 
@@ -138,9 +135,7 @@ class ResidentInfoTable extends React.Component {
   }
 
   componentWillReceiveProps( nextProps ) {
-    if ( !is( nextProps.data, this.state.data ) ) {
-      this.setState( { data: nextProps.data } );
-    }
+    this.setState( { data: nextProps.data } );
   }
   /*
     shouldComponentUpdate( nextProps, nextState ) {
@@ -148,5 +143,3 @@ class ResidentInfoTable extends React.Component {
         || nextProps.disabled !== this.state.disabled;
     }*/
 }
-
-export default ResidentInfoTable;

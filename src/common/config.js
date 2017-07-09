@@ -1,6 +1,6 @@
 module.exports = {
 	debug: true,
-	ver: '1.03',
+	ver: '1.05',
 	api: '/api',
 	/** 下载模版的根路径 */
 	tpl: '/tpl/',
