@@ -28,7 +28,6 @@ export default class ResidentInfoTable extends React.Component {
     this.state = {
       ritRef: modular[ props.name ][ 'ritRef' ], // 上传excel后返回的服务器对应数据字段
       data: props.data, // 外层传进来的原始数据
-      disabled: props.disabled, // 当前页面元件是否可用
       showDoctor: props.userType === config.userType.doctor ? true : false,
       showWorker: props.userType === config.userType.worker ? true : false,
       isOver: props.isOver || false, // 订单处理状态：true 已完结
@@ -135,7 +134,11 @@ export default class ResidentInfoTable extends React.Component {
   }
 
   componentWillReceiveProps( nextProps ) {
-    this.setState( { data: nextProps.data } );
+    this.setState( {
+      data: nextProps.data,
+      ritRef: modular[ nextProps.name ][ 'ritRef' ],
+      isOver: nextProps.isOver || false
+    } );
   }
   /*
     shouldComponentUpdate( nextProps, nextState ) {
