@@ -93,7 +93,7 @@ export default {
 					residentList: data.entity.residentList,
 					disabledConfirmOrder: !!count,
 					count: count,
-					isOver: !count,
+					isOver: data.entity.order.orderStatus === '2',
 				},
 			} );
 			yield put( routerRedux.push( url ) );
@@ -148,7 +148,7 @@ export default {
 			if ( data.success ) {
 				yield put( { type: 'changeBtnDisabled', payload: true } );
 				yield put( { type: 'changeIsOver', payload: true } );
-				yield Promise.delay(2000);
+				yield Promise.delay( 2000 );
 				yield put( routerRedux.push( '/orderList' ) );
 			}
 		}
