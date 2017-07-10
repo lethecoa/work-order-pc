@@ -25,7 +25,7 @@ export default class EditableSelectCell extends EditableCell {
         {
           myStatus === config.ritStatus.editing ?
             <Select mode='combobox' size="small" value={ value }
-              onChange={ v => this.handleChange( v ) }
+              onChange={ v => this.handleChange( v ) } allowClear='true'
             >
               {
                 this.options.map(( item, index, arr ) => {

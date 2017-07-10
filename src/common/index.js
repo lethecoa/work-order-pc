@@ -7,6 +7,7 @@ import model from './model';
 import action from './action';
 import fun from './fun';
 import storeage from './storeage';
+import updateLog from './updateLog';
 
 module.exports = {
   config,
@@ -18,4 +19,5 @@ module.exports = {
   action,
   fun,
   storeage,
+  updateLog,
 }
