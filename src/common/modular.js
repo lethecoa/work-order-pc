@@ -76,7 +76,7 @@ module.exports = {
 		url: worker + 'yychfs', name: 'postpartum', monitor: 2, cn: '预约产后访视',
 	},
 	/**
-	 * 慢性病随访通知
+	 * 通知代理
 	 */
 	chronicDisease: {
 		url: 'chronicDisease', name: 'chronicDisease', cn: '慢性病随访通知', ritRef: 'mbsftz',
@@ -128,6 +128,9 @@ module.exports = {
 	workeretsftz: {
 		url: worker + 'etsftz', name: 'childHealth', monitor: 2, cn: '儿童健康随访通知',
 	},
+	/**
+	 * 跟踪提醒
+	 */
 	medication: {
 		url: 'medication', name: 'medication', cn: '用药提醒', ritRef: 'yytx00',
 		model: model.trackingReminder, action: action.TR_saveDrug, monitor: 1,
@@ -148,6 +151,9 @@ module.exports = {
 	workeryylxgz: {
 		url: worker + 'yylxgz', name: 'curativeEffect', monitor: 1, cn: '用药疗效跟踪',
 	},
+	/**
+	 * 慢病随访
+	 */
 	hypertension: {
 		url: 'hypertension', name: 'hypertension', cn: '高血压随访', ritRef: 'gxysf0',
 		model: model.chronicDisease, action: action.CD_saveBlood, monitor: 1,
