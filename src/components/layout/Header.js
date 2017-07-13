@@ -10,7 +10,7 @@ const Header = ( { dispatch, user } ) => {
   const userInfo = (
     <div>
       <p>当前账户余额：3000</p>
-      <a onClick={ recharge }>朕要充值</a>
+      <a onClick={ recharge }>我要充值</a>
     </div>
   );
   /**
