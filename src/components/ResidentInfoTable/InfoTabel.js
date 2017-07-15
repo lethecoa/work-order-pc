@@ -304,7 +304,11 @@ class InfoTable extends React.Component {
    * 取消编辑的回调函数，将该条数据的编辑状态修改成 显示状态
    */
   handleCancel = ( index ) => {
-    this.state.filterData = this.state.filterData.setIn( [ index, 'myStatus' ], config.ritStatus.general );
+    let monitor = this.state.filterData.getIn( [ index, 'monitor' ] );
+    monitor--;
+    if ( monitor <= 0 ) {
+      this.state.filterData = this.state.filterData.setIn( [ index, 'myStatus' ], config.ritStatus.general );
+    }
   }
   /**
    * 操作栏按钮的点击的回调函数
@@ -477,7 +481,6 @@ class InfoTable extends React.Component {
    * 更新子表格的数据
    */
   updeteChildFormData = ( num, data ) => {
-    // let num = parseInt( this.state.filterData.getIn( [ index, rownum.key ] ) ) - 1;
     let filterIndex = this.getFilterDataIndex( num );
     let formatIndex = parseInt( num ) - 1;
     let formatData = this.state.formatData.setIn( [ formatIndex, followUp.key ], data );
