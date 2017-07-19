@@ -208,9 +208,9 @@ class MedicationInfo extends React.Component {
 	render() {
 		const { value } = this.state;
 		const disable = this.props.disabled;
-		const columns = this.columns;
+		let columns = this.columns;
 		if ( disable ) {
-			columns.pop();
+			columns = columns.slice( 0, 3 );
 		}
 		return (
 			<div>

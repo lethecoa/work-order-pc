@@ -93,7 +93,7 @@ module.exports = {
 		model: model.noticeAgent, action: action.NA_savePolicy, monitor: 2,
 		tpl: config.tpl + 'newestPolicy.xls',
 		ritDoctor: [ rownum.key, name.key, sex.key, birthday.key, tel.key ],
-		ritWorker: [ rownum.key, name.key, sex.key, birthday.key, tel.key, present.key, remark.key, operation.key ]
+		ritWorker: [ rownum.key, name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ]
 	},
 	workerzxzctz: {
 		url: worker + 'zxzctz', name: 'newestPolicy', monitor: 2, cn: '最新政策通知',
