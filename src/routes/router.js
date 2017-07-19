@@ -21,7 +21,7 @@ function RouterConfig( { history, app } ) {
 				getComponent( nextState, cb ) {
 					require.ensure( [], ( require ) => {
 						cb( null, require( './IndexPage/IndexPage' ) )
-					}, 'IndexPage' );
+					} );
 				},
 			},
 			childRoutes: [
@@ -188,7 +188,7 @@ function RouterConfig( { history, app } ) {
 				require.ensure( [], ( require ) => {
 					registerModel( app, require( '../models/loginModel' ) );
 					cb( null, require( './Login/Login' ) );
-				}, 'loginModel' );
+				} );
 			},
 		},
 		{
@@ -199,7 +199,7 @@ function RouterConfig( { history, app } ) {
 					require.ensure( [], ( require ) => {
 						registerModel( app, require( '../models/workerModel' ) );
 						cb( null, require( './OrderList/OrderList' ) )
-					}, 'workerModel' );
+					} );
 				},
 			},
 			childRoutes: [

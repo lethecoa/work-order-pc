@@ -38,7 +38,7 @@ const OrderPage = ( {
 	user,
 } ) => {
 	/*fun.printLoader( 'orderPage' );*/
-	const { userType, orderHandlerId, orderHandlerName } = user;
+	const { userType, orderHandlerId, orderHandlerName, group } = user;
 	const { currentStep, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel ? orderModel : {};
 	const { serviceDetail, disabledConfirmOrder, pagination, isOver } = workerModel ? workerModel : {};
 	const { currentData, display, disabled, residentList } = workerModel ? workerModel : orderModel;
@@ -81,13 +81,13 @@ const OrderPage = ( {
 		} );
 	};
 	/** 医生端-提交表单数据 */
-	const handleSubmit = ( expenseAccount ) => {
+	const handleSubmit = ( expenseAccount, groupId ) => {
 		baseInfo.validateFieldsAndScroll( ( errOut, valuesOut ) => {
 			if ( !errOut ) {
 				need.validateFieldsAndScroll( ( err, values ) => {
 					if ( !err ) {
 						let result = {
-							data: Object.assign( values, valuesOut, { expenseAccount, residentQueryDtoList: dataList } ),
+							data: Object.assign( values, valuesOut, { expenseAccount, groupId, residentQueryDtoList: dataList } ),
 							fun: payModal.handleOver,
 						};
 						dispatch( { type: fun.fuse( modular[ path ].model, modular[ path ].action ), payload: result } );
@@ -145,6 +145,7 @@ const OrderPage = ( {
 	const payModalProps = {
 		handleSubmit: handleSubmit,
 		remainingBalance: remainingBalance,
+		group,
 	};
 	/** 居民信息样本参数 */
 	const residentInfoProps = {
@@ -210,7 +211,7 @@ const OrderPage = ( {
 							<div className={ styles.submit } style={ { display: display } }>
 								<Row>
 									<Col span={ 12 }>
-										<Button size="large" type="primary"  style={ { width: 200 } } disabled={ submitDisabled }
+										<Button size="large" type="primary" style={ { width: 200 } } disabled={ submitDisabled }
 										        loading={ loading } onClick={ showModal }>确认委托并支付</Button>
 									</Col>
 									<Col span={ 12 }>

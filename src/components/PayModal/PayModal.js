@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Button, Form, Input} from 'antd';
+import {Modal, Button, Form, Input, Select} from 'antd';
 const FormItem = Form.Item;
 import styles from './PayModal.less';
 
@@ -19,6 +19,7 @@ export default class PayModal extends React.Component {
 		this.setState( {
 			visible: true,
 			expenseAccount: expenseAccount,
+			groupId: 1,
 		} );
 	};
 
@@ -28,15 +29,19 @@ export default class PayModal extends React.Component {
 
 	handleOk = () => {
 		this.setState( { loading: true } );
-		this.props.handleSubmit( this.state.expenseAccount );
+		this.props.handleSubmit( this.state.expenseAccount, this.state.groupId );
 	};
 
 	handleCancel = () => {
 		this.setState( { loading: false, visible: false } );
 	};
+	handleChange = ( value ) => {
+		this.setState( { groupId: value } );
+	};
 
 	render() {
 		const { visible, loading, expenseAccount } = this.state;
+		const { remainingBalance, group } = this.props;
 		return (
 			<div>
 				<Modal
@@ -53,8 +58,16 @@ export default class PayModal extends React.Component {
 						</Button>,
 					]}
 				>
+
+					<FormItem {...formItemLayout} label="选择客服中心">
+						<Select onChange={this.handleChange} style={{ width: '100%' }} defaultValue="1">
+							{group ? group.map( ( item, index ) => {
+								return (<Select.Option value={item.groupId} key={index}>{item.groupName}</Select.Option>)
+							} ) : ''}
+						</Select>
+					</FormItem>
 					<FormItem {...formItemLayout} label="账户余额">
-						<Input className={styles.right} type="text" value={this.props.remainingBalance + '元'} disabled/>
+						<Input className={styles.right} type="text" value={remainingBalance + '元'} disabled/>
 					</FormItem>
 					<FormItem {...formItemLayout} label="本次委托费用">
 						<Input className={styles.right} type="text" value={expenseAccount + '元'} disabled/>

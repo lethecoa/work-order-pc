@@ -39,14 +39,17 @@ export default {
 	effects: {
 		*initOrderList( {}, { put, select, call } ) {
 			const pagination = yield select( state => state.workerModel.pagination );
+			const groupId = yield select( state => state.appModel.user.groupId );
 			const data = yield call( getOrders, {
 				dateStart: pagination.dateStart,
 				dateEnd: pagination.dateEnd,
 				pageSize: pagination.pageSize,
 				serverPackName: pagination.serverPackName,
 				pageNumber: pagination.page,
-				status: pagination.status
+				status: pagination.status,
+				groupId,
 			} );
+			pagination.groupId = groupId;
 			yield put( {
 				type: 'save',
 				payload: {
@@ -64,7 +67,8 @@ export default {
 				pageSize: pagination.pageSize,
 				serverPackName: serverPackName,
 				pageNumber: page,
-				status: status
+				status: status,
+				groupId: pagination.groupId,
 			} );
 			pagination.page = parseInt( page, 10 );
 			pagination.status = status;
@@ -97,7 +101,6 @@ export default {
 				},
 			} );
 			yield put( routerRedux.push( url ) );
-
 		},
 		*saveOrderDetail( { payload }, { call, put, select } ) {
 			fun.print( JSON.stringify( payload.data ), 'saveOrderDetail', model.worker );
