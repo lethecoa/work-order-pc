@@ -71,8 +71,8 @@ function ResidentInspect( props ) {
 				          help="时间需精确到小时（日期选择里可以切换时间显示，默认使用当前的时间）">
 					{getFieldDecorator( 'allowDate', {
 						initialValue: props.examineDateStart ? [
-							moment( fun.getLocalTime( props.examineDateStart ), 'YYYY-MM-DD HH:00' ),
-							moment( fun.getLocalTime( props.examineDateEnd ), 'YYYY-MM-DD HH:00' ) ] : [],
+							moment( new Date( parseInt( props.examineDateStart ) ), 'YYYY-MM-DD HH:mm' ),
+							moment( new Date( parseInt( props.examineDateEnd ) ), 'YYYY-MM-DD HH:mm' ) ] : [],
 						rules: [
 							{
 								required: true,
@@ -81,12 +81,12 @@ function ResidentInspect( props ) {
 							},
 						],
 					} )( <RangePicker
-									size="small"
-									showTime
-									format="YYYY-MM-DD HH:00"
-									disabled={props.disabled}
-									disabledDate={(current)=> current && current.valueOf() < Date.now()}
-							/> )}
+						size="small"
+						showTime
+						format="YYYY-MM-DD HH:mm"
+						disabled={props.disabled}
+						disabledDate={( current ) => current && current.valueOf() < Date.now()}
+					/> )}
 				</FormItem>
 				<FormItem {...config.formItemLayout} label="体检是否免费">
 					{getFieldDecorator( 'isFree', {
