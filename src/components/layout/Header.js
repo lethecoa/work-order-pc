@@ -23,17 +23,18 @@ const Header = ( { dispatch, user } ) => {
   return (
     <div className={ styles.normal }>
       <div className={ styles.info }>
-        <Popover content={ userInfo } title="用户信息" placement="leftTop">
-          <span className={ styles.hand }>hi~ { user.doctorName }</span>
-        </Popover>
+        <span className={ styles.name }>hi~ { user.doctorName }</span>
         <br />
         <div className={ styles.btnBg }>
           <Popover content={ updateLog.getLog( config.ver ) } title={ '更新日志 (' + config.ver + ')' } placement="bottomRight">
-            <span className={ styles.hand }>ver{ config.ver }</span>
+            <span className={ styles.ver }>ver{ config.ver }</span>
           </Popover>
           &nbsp;&nbsp;&nbsp;
           <a href={ urlMap.index }>首页</a>&nbsp;&nbsp;<a onClick={ logout }>退出登录</a>&nbsp;
         </div>
+        <Popover content={ userInfo } title="用户信息" placement="bottomRight">
+          <div className={ styles.avatar }><img src={ require( '../../assets/doctor1.png' ) } /></div>
+        </Popover>
       </div>
     </div>
   );

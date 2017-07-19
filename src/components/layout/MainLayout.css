@@ -4,6 +4,6 @@
 
 .sider {
     width: 240px;
-    background: url('../../assets/sidebarBg.png') repeat-y;
+    background: #333;
     overflow: auto;
 }

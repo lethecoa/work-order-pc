@@ -1,49 +1,127 @@
-import {browserHistory} from "dva/router";
+import { browserHistory } from "dva/router";
 import styles from './Sidebar.less';
-import {Tree} from 'antd';
-import {modular} from '../../common';
+import { Menu } from 'antd';
+import { modular } from '../../common';
 
-const TreeNode = Tree.TreeNode;
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 
 function Sidebar() {
-	const onSelect = ( selectedKeys, info ) => {
-		if ( selectedKeys[ 0 ] ) {
-			browserHistory.push( selectedKeys[ 0 ] );
+	const onSelect = ( obj ) => {
+		if ( obj.key !== '' ) {
+			browserHistory.push( obj.key );
 		}
 	};
 
 	return (
-		<Tree showLine defaultExpandAll onSelect={onSelect} className={styles.menu}>
-			<TreeNode key="0" title="云医助">
-
-				{/*<TreeNode key={modular.signFamily.url} title={modular.signFamily.cn}/>*/}
-				<TreeNode key="bookingAgentMenu" title="预约代理">
-					<TreeNode key={modular.residentSign.url} title={modular.residentSign.cn}/>
-					<TreeNode key={modular.residentInspect.url} title={modular.residentInspect.cn}/>
-					<TreeNode key={modular.newborn.url} title={modular.newborn.cn}/>
-					<TreeNode key={modular.postpartum.url} title={modular.postpartum.cn}/>
-				</TreeNode>
-				<TreeNode key="noticeAgentMenu" title="通知代理">
-					<TreeNode key={modular.chronicDisease.url} title={modular.chronicDisease.cn}/>
-					<TreeNode key={modular.newestPolicy.url} title={modular.newestPolicy.cn}/>
-					<TreeNode key={modular.newestActivity.url} title={modular.newestActivity.cn}/>
-					<TreeNode key={modular.antenatalCare.url} title={modular.antenatalCare.cn}/>
-					<TreeNode key={modular.childHealth.url} title={modular.childHealth.cn}/>
-					{/*<TreeNode key="vaccination" title="疫苗接种通知" />
-					 <TreeNode key="healthManual" title="孕产妇建立保健手册通知" />*/}
-				</TreeNode>
-			</TreeNode>
-			<TreeNode key="1" title="云健管">
-				<TreeNode key="trackingReminderMenu" title="跟踪提醒">
-					<TreeNode key={modular.medication.url} title={modular.medication.cn}/>
-					<TreeNode key={modular.curativeEffect.url} title={modular.curativeEffect.cn}/>
-				</TreeNode>
-				<TreeNode key="chronicDiseaseMenu" title="慢病随访">
-					<TreeNode key={modular.hypertension.url} title={modular.hypertension.cn}/>
-					<TreeNode key={modular.diabetes.url} title={modular.diabetes.cn}/>
-				</TreeNode>
-			</TreeNode>
-		</Tree>
+		<div className={ styles.menu }>
+			<Menu
+				defaultSelectedKeys={ [ modular.index.url ] }
+				defaultOpenKeys={ [ '0', '1' ] }
+				mode="inline"
+				theme="dark"
+				onClick={ onSelect }
+			>
+				<Menu.Item key={ modular.index.url }>
+					<span className={ styles.menuItem }>
+						<i className={ styles.wof1 + ' ' + styles[ 'woc-shouye' ] }></i>
+						<span className={ styles.m1 }>{ modular.index.cn }</span></span>
+				</Menu.Item>
+				<SubMenu key="0" title={ <span className={ styles.menuItem }>
+					<i className={ styles.wof1 + ' ' + styles[ 'woc-yyz' ] }></i>
+					<span className={ styles.m1 }>云医助</span></span> }>
+					<MenuItemGroup key="bookingAgentMenu" title={ <span className={ styles.menuItem }>
+						<i className={ styles.wof2 + ' ' + styles[ 'woc-yuyue' ] }></i>
+						<span className={ styles.m2 }>预约代理</span></span> }>
+						<Menu.Item key={ modular.residentSign.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-jiatingyisheng' ] }></i>
+								<span className={ styles.m3 }>{ modular.residentSign.cn }</span></span>
+						</Menu.Item>
+						<Menu.Item key={ modular.residentInspect.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-tijian' ] }></i>
+								<span className={ styles.m3 }>{ modular.residentInspect.cn }</span></span>
+						</Menu.Item>
+						<Menu.Item key={ modular.newborn.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-xset' ] }></i>
+								<span className={ styles.m3 }>{ modular.newborn.cn }</span></span>
+						</Menu.Item>
+						<Menu.Item key={ modular.postpartum.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-chanhoutiantijian' ] }></i>
+								<span className={ styles.m3 }>{ modular.postpartum.cn }</span></span>
+						</Menu.Item>
+					</MenuItemGroup>
+					<MenuItemGroup key="noticeAgentMenu"
+						title={ <span className={ styles.menuItem }>
+							<i className={ styles.wof2 + ' ' + styles[ 'woc-notice' ] }></i>
+							<span className={ styles.m2 }>通知代理</span></span> }>
+						<Menu.Item key={ modular.chronicDisease.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-manxingjibing' ] }></i>
+								<span className={ styles.m3 }>{ modular.chronicDisease.cn }</span></span>
+						</Menu.Item>
+						<Menu.Item key={ modular.newestPolicy.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-zhengce' ] }></i>
+								<span className={ styles.m3 }>{ modular.newestPolicy.cn }</span></span>
+						</Menu.Item>
+						<Menu.Item key={ modular.newestActivity.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-huodong' ] }></i>
+								<span className={ styles.m3 }>{ modular.newestActivity.cn }</span></span>
+						</Menu.Item>
+						<Menu.Item key={ modular.antenatalCare.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-yunfu' ] }></i>
+								<span className={ styles.m3 }>{ modular.antenatalCare.cn }</span></span>
+						</Menu.Item>
+						<Menu.Item key={ modular.childHealth.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-quanshengzhengzhuang' ] }></i>
+								<span className={ styles.m3 }>{ modular.childHealth.cn }</span></span>
+						</Menu.Item>
+					</MenuItemGroup>
+				</SubMenu>
+				<SubMenu key="1"
+					title={ <span className={ styles.menuItem }>
+						<i className={ styles.wof1 + ' ' + styles[ 'woc-jiankang' ] }></i>
+						<span className={ styles.m1 }>云健管</span></span> }>
+					<MenuItemGroup key="trackingReminderMenu"
+						title={ <span className={ styles.menuItem }>
+							<i className={ styles.wof2 + ' ' + styles[ 'woc-tixing' ] }></i>
+							<span className={ styles.m2 }>跟踪提醒</span></span> }>
+						<Menu.Item key={ modular.medication.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-yongyaotixing' ] }></i>
+								<span className={ styles.m3 }>{ modular.medication.cn }</span></span>
+						</Menu.Item>
+						<Menu.Item key={ modular.curativeEffect.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-changyongyao' ] }></i>
+								<span className={ styles.m3 }>{ modular.curativeEffect.cn }</span></span>
+						</Menu.Item>
+					</MenuItemGroup>
+					<MenuItemGroup key="chronicDiseaseMenu"
+						title={ <span className={ styles.menuItem }>
+							<i className={ styles.wof2 + ' ' + styles[ 'woc-assistant' ] }></i>
+							<span className={ styles.m2 }>慢病随访</span></span> }>
+						<Menu.Item key={ modular.hypertension.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-gxy' ] }></i>
+								<span className={ styles.m3 }>{ modular.hypertension.cn }</span></span>
+						</Menu.Item>
+						<Menu.Item key={ modular.diabetes.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-tnb' ] }></i>
+								<span className={ styles.m3 }>{ modular.diabetes.cn }</span></span>
+						</Menu.Item>
+					</MenuItemGroup>
+				</SubMenu>
+			</Menu>
+		</div>
 	);
 }
 
