@@ -63,8 +63,8 @@ function NewestActivity( props ) {
 				          help="时间需精确到小时（日期选择里可以切换时间显示，默认使用当前的时间）">
 					{getFieldDecorator( 'allowDate', {
 						initialValue: props.activityDateStart ? [
-							moment( fun.getLocalTime( props.activityDateStart ), 'YYYY-MM-DD HH:00' ),
-							moment( fun.getLocalTime( props.activityDateEnd ), 'YYYY-MM-DD HH:00' ) ] : [],
+							moment( new Date( parseInt( props.activityDateStart ) ), 'YYYY-MM-DD HH:mm' ),
+							moment( new Date( parseInt( props.activityDateEnd ) ), 'YYYY-MM-DD HH:mm' ) ] : [],
 						rules: [
 							{
 								required: true,
@@ -73,12 +73,12 @@ function NewestActivity( props ) {
 							},
 						],
 					} )( <RangePicker
-									size="small"
-									showTime
-									format="YYYY-MM-DD HH:00"
-									disabled={props.disabled}
-									disabledDate={(current)=> current && current.valueOf() < Date.now()}
-								/> )}
+						size="small"
+						showTime
+						format="YYYY-MM-DD HH:mm"
+						disabled={props.disabled}
+						disabledDate={( current ) => current && current.valueOf() < Date.now()}
+					/> )}
 				</FormItem>
 				<FormItem {...config.formItemLayout} label="其他要求">
 					{getFieldDecorator( 'otherRequirements', {
