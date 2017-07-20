@@ -22,6 +22,7 @@ module.exports = {
 	 */
 	index: { url: root, name: 'IndexPage', cn: '首页' },
 	login: root + 'login',
+	secretaryLogin: root + 'secretaryLogin',
 	worker: root + 'worker',
 	/**
 	 * 签约家庭

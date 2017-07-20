@@ -182,12 +182,22 @@ function RouterConfig( { history, app } ) {
 			]
 		},
 		{
-			path: urlMap.login,
+			path: modular.login,
 			name: 'Login',
 			getComponent( nextState, cb ) {
 				require.ensure( [], ( require ) => {
 					registerModel( app, require( '../models/loginModel' ) );
 					cb( null, require( './Login/Login' ) );
+				} );
+			},
+		},
+		{
+			path: modular.secretaryLogin,
+			name: 'secretaryLogin',
+			getComponent( nextState, cb ) {
+				require.ensure( [], ( require ) => {
+					registerModel( app, require( '../models/loginModel' ) );
+					cb( null, require( './Login/SecretaryLogin' ) );
 				} );
 			},
 		},

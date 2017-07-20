@@ -159,7 +159,7 @@ export default {
 	subscriptions: {
 		setup( { dispatch, history } ) {
 			history.listen( ( { pathname } ) => {
-				if ( pathname === '/orderList' ) {
+				if ( pathname === '/orderList' || pathname === 'orderList' ) {
 					dispatch( { type: action.worker_initOrderList } )
 				}
 			} )

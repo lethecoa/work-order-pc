@@ -45,7 +45,7 @@ function Login( { dispatch, loading, loginInfo = {},
     <div className={styles.body}>
       <div className={styles.form}>
         <div className={styles.logo}>
-          <img src="/loginLogo.png" />
+          <img src="/loginLogo2.png"/>
         </div>
         <form>
           {true ? '' :

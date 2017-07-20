@@ -2,6 +2,7 @@ module.exports = {
 	app_init: 'init',
 	checkLogin: 'checkLogin',
 	login: 'login',
+	secretaryLogin: 'secretaryLogin',
 	logout: 'logout',
 	login_setInfo: 'setInfo',
 	APP_getItemPrice: 'getItemPrice',
@@ -30,5 +31,5 @@ module.exports = {
 	worker_getOrders: 'getOrders',
 	worker_getOrderDetail: 'getOrderDetail',
 	worker_saveOrderDetail: 'saveOrderDetail',
-	worker_confirmOrder:'confirmOrder',
+	worker_confirmOrder: 'confirmOrder',
 };

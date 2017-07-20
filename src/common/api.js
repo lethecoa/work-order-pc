@@ -2,6 +2,7 @@ import config from './config';
 
 module.exports = {
 	userLogin: config.api + '/wo/login',
+	secretaryLogin: config.api + '/callCenter/secretaryLogin',
 	userLogout: '',
 	getItemInfoById: config.api + '/workorder/getItemInfoById',
 	uploadExcel: config.api + '/callCenter/resolveExcel',

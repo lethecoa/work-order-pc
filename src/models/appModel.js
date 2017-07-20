@@ -1,6 +1,6 @@
 import {routerRedux} from 'dva/router';
 import {getItemInfoById} from '../services/appService';
-import {config, storeage, model, urlMap, action, fun} from '../common';
+import {config, storeage, model, urlMap, action, fun, modular} from '../common';
 
 export default {
 	namespace: model.app,
@@ -15,17 +15,38 @@ export default {
 		}
 	},
 	effects: {
-		*checkLogin( {}, { select, put } ) {
-			let user = storeage.get( config.local.user );
-			fun.print( user, '存储在浏览器内的user数据' );
-			if ( user && user.userType === config.userType.doctor ) {
-				const stateUser = yield select( state => state.appModel.user );
-				if ( !stateUser || fun.isEmptyObject( stateUser ) ) {
-					yield put( { type: action.app_init, payload: user } );
-				}
+		*checkLogin( { payload: { pathname, query } }, { select, put } ) {
+			if ( pathname === '/login' || pathname === '/secretaryLogin' ) {
+				return
 			}
-			else {
-				yield put( routerRedux.push( urlMap.login ) );
+			let storeageUser = storeage.get( config.local.user );
+			fun.print( storeageUser, '存储在浏览器内的user数据' );
+			let currentUser = {};
+			if ( pathname === '/orderList' || pathname === 'orderList' ) {
+				if ( query.orderHandlerId ) {
+					currentUser = query;
+					currentUser.userType = config.userType.worker;
+					storeage.set( config.local.user, currentUser );
+					yield put( { type: action.app_init, payload: currentUser } );
+				} else if ( storeageUser && storeageUser.userType === config.userType.worker ) {
+					yield put( { type: action.app_init, payload: storeageUser } );
+				} else {
+					yield put( routerRedux.push( modular.secretaryLogin ) );
+				}
+			} else if ( pathname.indexOf( 'worker' ) > 0 ) {
+				if ( storeageUser && storeageUser.userType === config.userType.worker ) {
+					const workerModel = yield select( state => state.workerModel );
+					if ( !workerModel ) {
+						yield put( { type: action.app_init, payload: storeageUser } );
+						yield put( routerRedux.push( modular.orderList.url ) );
+					}
+				} else {
+					yield put( routerRedux.push( modular.secretaryLogin ) );
+				}
+			} else if ( storeageUser && storeageUser.userType === config.userType.doctor ) {
+				yield put( { type: action.app_init, payload: storeageUser } );
+			} else {
+				yield put( routerRedux.push( modular.login ) );
 			}
 		},
 		*logout( {}, { put } ) {
@@ -44,16 +65,17 @@ export default {
 	subscriptions: {
 		setup ( { dispatch, history } ) {
 			history.listen( ( { pathname, query } ) => {
-				if ( pathname === '/orderList') {
-					if(query.orderHandlerId){
-						let user = { userType: config.userType.worker };
-						user = Object.assign( {}, user, query );
-						storeage.set( config.local.user, user );
-						dispatch( { type: action.app_init, payload: user } );
-					}
-				} else if ( pathname !== '/login' && pathname.indexOf( 'worker' ) < 0 ) {
-					dispatch( { type: action.checkLogin } );
-				}
+				dispatch( { type: action.checkLogin, payload: { pathname, query } } );
+				// if ( pathname === '/orderList') {
+				// 	if(query.orderHandlerId){
+				// 		let user = { userType: config.userType.worker };
+				// 		user = Object.assign( {}, user, query );
+				// 		storeage.set( config.local.user, user );
+				// 		dispatch( { type: action.app_init, payload: user } );
+				// 	}
+				// } else if ( pathname !== '/login' && pathname.indexOf( 'worker' ) < 0 ) {
+				// 	dispatch( { type: action.checkLogin } );
+				// }
 			} )
 		},
 	},
