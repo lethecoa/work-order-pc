@@ -11,20 +11,22 @@ const moudleName = '主框架(MainLayout)';
 function MainLayout( { dispatch, children, user } ) {
   fun.print( user, 'user', moudleName );
   return (
-    <div>
+    <Layout style={ { height: '100%' } }>
       <div className={ styles.header }>
         <Header user={ user } dispatch={ dispatch } /></div>
-      <Layout style={ { marginTop: '82px' } }>
-        <Sider className={ styles.sider } width={ 240 }>
-          <Sidebar />
-        </Sider>
-        <Layout className={ styles.main }>
+      <Layout style={ { marginTop: 82 } }>
+        <div className={ styles.sider }>
+          <Sider width={ 240 }>
+            <Sidebar />
+          </Sider>
+        </div>
+        <Layout className={ styles.main } style={ { marginLeft: 240 } }>
           <Content>
             { children }
           </Content>
         </Layout>
       </Layout>
-    </div >
+    </Layout>
   );
 }
 
