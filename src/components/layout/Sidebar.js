@@ -1,12 +1,12 @@
-import { browserHistory } from "dva/router";
+import {browserHistory} from "dva/router";
 import styles from './Sidebar.less';
-import { Menu } from 'antd';
-import { modular } from '../../common';
+import {Menu} from 'antd';
+import {modular} from '../../common';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
-function Sidebar() {
+function Sidebar( { pathname } ) {
 	const onSelect = ( obj ) => {
 		if ( obj.key !== '' ) {
 			browserHistory.push( obj.key );
@@ -16,7 +16,7 @@ function Sidebar() {
 	return (
 		<div className={ styles.menu }>
 			<Menu
-				defaultSelectedKeys={ [ modular.index.url ] }
+				defaultSelectedKeys={ [ pathname ] }
 				defaultOpenKeys={ [ '0', '1' ] }
 				mode="inline"
 				theme="dark"
@@ -55,7 +55,7 @@ function Sidebar() {
 						</Menu.Item>
 					</MenuItemGroup>
 					<MenuItemGroup key="noticeAgentMenu"
-						title={ <span className={ styles.menuItem }>
+					               title={ <span className={ styles.menuItem }>
 							<i className={ styles.wof2 + ' ' + styles[ 'woc-notice' ] }></i>
 							<span className={ styles.m2 }>通知代理</span></span> }>
 						<Menu.Item key={ modular.chronicDisease.url }>
@@ -86,11 +86,11 @@ function Sidebar() {
 					</MenuItemGroup>
 				</SubMenu>
 				<SubMenu key="1"
-					title={ <span className={ styles.menuItem }>
+				         title={ <span className={ styles.menuItem }>
 						<i className={ styles.wof1 + ' ' + styles[ 'woc-jiankang' ] }></i>
 						<span className={ styles.m1 }>云健管</span></span> }>
 					<MenuItemGroup key="trackingReminderMenu"
-						title={ <span className={ styles.menuItem }>
+					               title={ <span className={ styles.menuItem }>
 							<i className={ styles.wof2 + ' ' + styles[ 'woc-tixing' ] }></i>
 							<span className={ styles.m2 }>跟踪提醒</span></span> }>
 						<Menu.Item key={ modular.medication.url }>
@@ -105,7 +105,7 @@ function Sidebar() {
 						</Menu.Item>
 					</MenuItemGroup>
 					<MenuItemGroup key="chronicDiseaseMenu"
-						title={ <span className={ styles.menuItem }>
+					               title={ <span className={ styles.menuItem }>
 							<i className={ styles.wof2 + ' ' + styles[ 'woc-assistant' ] }></i>
 							<span className={ styles.m2 }>慢病随访</span></span> }>
 						<Menu.Item key={ modular.hypertension.url }>
