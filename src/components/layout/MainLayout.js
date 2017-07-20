@@ -14,7 +14,7 @@ function MainLayout( { dispatch, children, user } ) {
     <Layout style={ { height: '100%' } }>
       <div className={ styles.header }>
         <Header user={ user } dispatch={ dispatch } /></div>
-      <Layout style={ { marginTop: 82 } }>
+      <Layout style={ { marginTop: 90 } }>
         <div className={ styles.sider }>
           <Sider width={ 240 }>
             <Sidebar />
