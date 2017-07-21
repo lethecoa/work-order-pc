@@ -1,17 +1,23 @@
 .normal {
-    border: 1px solid #808080;
     border-top: none;
 }
 
 .title {
     font-weight: bold;
-    padding: 5px 15px;
-    background: #f0f0f0;
+    padding: 5px 15px 5px 40px;
     line-height: 28px;
-    border-bottom: 1px solid #808080;
+    background: #e6e6e6;
+    border-left: 5px solid #93c6f9;
     font-size: 12px;
+    position: relative;
     .button {
         float: right;
+    }
+    .icon {
+        color: #b6b6b6;
+        top: 5px;
+        left: 15px;
+        position: absolute;
     }
 }
 
@@ -21,4 +27,16 @@
         color: #f0f0f0;
         border: 1px solid #015aef;
     }
+}
+
+.wof {
+    font-family: "wof" !important;
+    font-size: 20px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.woc-jumin:before {
+    content: "\e60d";
 }

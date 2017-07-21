@@ -1,5 +1,5 @@
-import React, {Component, PropTypes} from 'react';
-import {Row, Col, Form, DatePicker, Input} from 'antd';
+import React, { Component, PropTypes } from 'react';
+import { Row, Col, Form, DatePicker, Input } from 'antd';
 import moment from 'moment';
 import styles from './BaseInfo.less';
 const FormItem = Form.Item;
@@ -37,50 +37,51 @@ class BaseInfo extends Component {
 	render() {
 		const { getFieldDecorator } = this.props.form;
 		return (
-			<div className={styles.need}>
-				<div className={styles.title}>基本信息</div>
-				<div className={styles.form}>
+			<div className={ styles.need }>
+				<div className={ styles.title }>
+					<i className={ styles.wof + ' ' + styles[ 'woc-xinxi' ] }></i>基本信息</div>
+				<div className={ styles.form }>
 					<FormItem>
-						{getFieldDecorator( 'doctorId', {
+						{ getFieldDecorator( 'doctorId', {
 							initialValue: this.props.doctorId
-						} )( <Input style={{ width: 200 }} disabled type="hidden"/> )}
+						} )( <Input style={ { width: 200 } } disabled type="hidden" /> ) }
 					</FormItem>
 					<Row>
-						<Col span={12}>
+						<Col span={ 12 }>
 							<FormItem {...formItemLayout} label="委托人姓名">
-								{getFieldDecorator( 'doctorName', {
+								{ getFieldDecorator( 'doctorName', {
 									initialValue: this.props.doctorName
-								} )( <Input style={{ width: 200 }} disabled/> )}
+								} )( <Input style={ { width: 200 } } disabled /> ) }
 							</FormItem>
 						</Col>
-						<Col span={12}>
+						<Col span={ 12 }>
 							<FormItem {...formItemLayout} label="委托人联系方式">
-								{getFieldDecorator( 'doctorTel', {
+								{ getFieldDecorator( 'doctorTel', {
 									initialValue: this.props.doctorTel
-								} )( <Input style={{ width: 200 }} disabled/> )}
+								} )( <Input style={ { width: 200 } } disabled /> ) }
 							</FormItem>
 						</Col>
 					</Row>
 					<Row>
-						<Col span={12}>
+						<Col span={ 12 }>
 							<FormItem {...formItemLayout} label="任务截止时间">
-								{getFieldDecorator( 'taskDeadlineDate', {
+								{ getFieldDecorator( 'taskDeadlineDate', {
 									initialValue: this.props.taskDeadlineDate ? moment( this.props.taskDeadlineDate, 'YYYY-MM-DD' ) : undefined,
 									rules: [
 										{ required: true, message: '请选择截止日期！' },
 									],
 								} )( <DatePicker
-									style={{ width: 200 }}
-									disabled={this.props.disabled}
-									disabledDate={this.disabledDate}
-								/> )}
+									style={ { width: 200 } }
+									disabled={ this.props.disabled }
+									disabledDate={ this.disabledDate }
+								/> ) }
 							</FormItem>
 						</Col>
-						<Col span={12}>
-							<FormItem {...formItemLayout} label="委托人数" style={{ display: this.props.display }}>
-								{getFieldDecorator( 'entrustNumber', {
+						<Col span={ 12 }>
+							<FormItem {...formItemLayout} label="委托人数" style={ { display: this.props.display } }>
+								{ getFieldDecorator( 'entrustNumber', {
 									initialValue: this.props.entrustNumber
-								} )( <Input style={{ width: 200 }} disabled/> )}
+								} )( <Input style={ { width: 200 } } disabled /> ) }
 							</FormItem>
 						</Col>
 					</Row>

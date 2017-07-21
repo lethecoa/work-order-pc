@@ -125,6 +125,7 @@ export default class ResidentInfoTable extends React.Component {
               </RadioGroup>
             </div>
             : '' }
+          <i className={ styles.icon + ' ' + styles.wof + ' ' + styles[ 'woc-jumin' ] }></i>
           居民信息表样本
         </div>
         <InfoTable {...this.props} orderStatus={ this.state.orderStatus } data={ this.state.data } ref="infoTable"
