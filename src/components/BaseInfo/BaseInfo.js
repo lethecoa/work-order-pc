@@ -39,7 +39,7 @@ class BaseInfo extends Component {
 		return (
 			<div className={ styles.need }>
 				<div className={ styles.title }>
-					<i className={ styles.wof + ' ' + styles[ 'woc-xinxi' ] }></i>基本信息</div>
+					<i className={ styles.icon + ' ' + styles.wof + ' ' + styles[ 'woc-xinxi' ] }></i>基本信息</div>
 				<div className={ styles.form }>
 					<FormItem>
 						{ getFieldDecorator( 'doctorId', {

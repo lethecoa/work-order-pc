@@ -24,6 +24,10 @@ function MainLayout( { dispatch, children, user, pathname } ) {
           </Content>
         </Layout>
       </Layout>
+      <div className={ styles.footer }>
+        技术支持：易联众信息技术股份有限公司 © 1997-2017&nbsp;&nbsp;&nbsp;&nbsp;
+        合作邮箱：yangruiping@21cn.com
+      </div>
     </Layout>
   );
 }
