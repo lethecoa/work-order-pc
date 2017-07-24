@@ -44,9 +44,9 @@ export default {
 					currentUser = query;
 					currentUser.userType = config.userType.worker;
 					storeage.set( config.local.user, currentUser );
-					yield put( { type: action.app_init, payload: currentUser } );
+					yield put( { type: action.app_initWithPath, payload: { user: currentUser, path: matchWorker[ 2 ] } } );
 				} else if ( storeageUser && storeageUser.userType === config.userType.worker ) {
-					yield put( { type: action.app_init, payload: storeageUser } );
+					yield put( { type: action.app_initWithPath, payload: { user: storeageUser, path: matchWorker[ 2 ] } } );
 				} else {
 					yield put( { type: action.app_saveUserType, payload: config.userType.worker } );
 					yield put( routerRedux.push( modular.login ) );

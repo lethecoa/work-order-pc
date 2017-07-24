@@ -38,9 +38,15 @@ export default {
 		}
 	},
 	effects: {
-		*initOrderList( { payload: { status, page = 1 } }, { put, select, call } ) {
+		*initOrderList( { payload: { status, page } }, { put, select, call } ) {
 			const pagination = yield select( state => state.workerModel.pagination );
 			const groupId = yield select( state => state.appModel.user.groupId );
+			if ( !page ) {
+				pagination.serverPackName = "0";
+				pagination.dateStart = undefined;
+				pagination.dateEnd = undefined;
+				page = 1;
+			}
 			const data = yield call( getOrders, {
 				dateStart: pagination.dateStart,
 				dateEnd: pagination.dateEnd,
@@ -53,9 +59,6 @@ export default {
 			pagination.page = parseInt( page, 10 );
 			pagination.groupId = groupId;
 			pagination.status = status;
-			// pagination.serverPackName = "0";
-			// pagination.dateStart = undefined;
-			// pagination.dateEnd = undefined;
 
 			yield put( {
 				type: 'save',

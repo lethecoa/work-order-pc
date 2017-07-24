@@ -5,7 +5,9 @@ import OrderStep from './OrderStep/OrderStep';
 // 基本信息
 import BaseInfo from './BaseInfo/BaseInfo';
 // 确认支付
-import PayModal from './PayModal/PayModal'
+import PayModal from './PayModal/PayModal';
+//查询栏
+import SearchBar from './SearchBar/SearchBar';
 // 表单项
 import CarryMaterial from './formItme/CarryMaterial/CarryMaterial';
 //预约居民签约
@@ -52,6 +54,7 @@ export {
 	BaseInfo,
 	CarryMaterial,
 	PayModal,
+	SearchBar,
 	ResidentSign,
 	ResidentInspect,
 	Newborn,

@@ -2,16 +2,17 @@ import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 import {Form, Select, DatePicker, Button, Table, Pagination, Radio} from 'antd';
-import {CustomRangePicker} from '../../components/formItme'
-import moment from 'moment';
+import {SearchBar} from '../../components'
+// import moment from 'moment';
 import {action, model, fun, modular} from '../../common';
 import styles from './OrderList.less';
 
-const FormItem = Form.Item;
-const Option = Select.Option;
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
+// const FormItem = Form.Item;
+// const Option = Select.Option;
+// const RadioButton = Radio.Button;
+// const RadioGroup = Radio.Group;
 
+let searchBar;
 const columns = [ {
 	title: '序号',
 	dataIndex: 'rownum',
@@ -45,23 +46,22 @@ const columns = [ {
 } ];
 
 const OrderList = ( {
-	form,
 	loading,
 	workerModel,
 	dispatch,
+	path
 } ) => {
 	/*fun.printLoader( 'orderList' );*/
-	const { resetFields, validateFieldsAndScroll, getFieldDecorator } = form;
+	// const { resetFields, validateFieldsAndScroll, getFieldDecorator } = form;
 	const { pagination, list: dataSource, total } = workerModel;
 	/** 查询 */
 	const search = ( values ) => {
-		if ( values.allowDate.dateStart ) {
-			values.dateStart = values.allowDate.dateStart.format( 'YYYY-MM-DD' );
+		if ( values.dateStart ) {
+			values.dateStart = values.dateStart.format( 'YYYY-MM-DD' );
 		}
-		if ( values.allowDate.dateEnd ) {
-			values.dateEnd = values.allowDate.dateEnd.format( 'YYYY-MM-DD' );
+		if ( values.dateEnd ) {
+			values.dateEnd = values.dateEnd.format( 'YYYY-MM-DD' );
 		}
-		delete ( values[ "allowDate" ] );
 		dispatch( { type: fun.fuse( model.worker, action.worker_getOrders ), payload: values } );
 	};
 	/** 列表行点击 */
@@ -75,20 +75,20 @@ const OrderList = ( {
 	/** 点击查询按钮 */
 	const handlerSubmit = ( e ) => {
 		e.preventDefault();
-		validateFieldsAndScroll( ( err, values ) => {
+		searchBar.validateFieldsAndScroll( ( err, values ) => {
 			if ( !err ) {
 				search( values );
 			}
 		} );
 	};
-	/** 切换已处理、未处理 */
-	const handlerRadioChange = ( e ) => {
-		resetFields();
-		dispatch( { type: fun.fuse( model.worker, action.worker_getOrders ), payload: { status: e.target.value } } );
-	};
+	// /** 切换已处理、未处理 */
+	// const handlerRadioChange = ( e ) => {
+	// 	resetFields();
+	// 	dispatch( { type: fun.fuse( model.worker, action.worker_getOrders ), payload: { status: e.target.value } } );
+	// };
 	/** 翻页 */
 	const handlerPageChange = ( page ) => {
-		validateFieldsAndScroll( ( err, values ) => {
+		searchBar.validateFieldsAndScroll( ( err, values ) => {
 			if ( !err ) {
 				values.page = page;
 				search( values );
@@ -106,38 +106,7 @@ const OrderList = ( {
 	};
 	return (
 		<div>
-			<Form className={ styles.form } layout="inline" onSubmit={ handlerSubmit }>
-				{/*<FormItem className={ styles.fLeft }>
-				 { getFieldDecorator( 'status', {
-				 initialValue: pagination.status,
-				 } )( <RadioGroup className={ styles.tab } onChange={ handlerRadioChange }>
-				 <RadioButton value="1">待处理</RadioButton>
-				 <RadioButton value="2">已处理</RadioButton>
-				 </RadioGroup> ) }
-				 </FormItem>*/}
-				<FormItem>
-					{ getFieldDecorator( 'serverPackName', {
-						initialValue: pagination.serverPackName,
-					} )( <Select style={ { width: 210 } }>
-						<Option value="0">所有委托单</Option>
-						{/*<Option value="1">家庭医生签约（云医助）</Option>*/ }
-						<Option value="2">预约代理（云医助）</Option>
-						<Option value="3">代理通知（云医助）</Option>
-						<Option value="4">跟踪提醒（云健管）</Option>
-						<Option value="5">慢病随访（云键管）</Option>
-						<Option value="6">慢病健康管理参考方案（云健管）</Option>
-					</Select> ) }
-				</FormItem>
-				<FormItem>
-					{ getFieldDecorator( 'allowDate', {
-						initialValue: {
-							dateStart: pagination.dateStart ? moment( pagination.dateStart, 'YYYY-MM-DD' ) : undefined,
-							dateEnd: pagination.dateEnd ? moment( pagination.dateEnd, 'YYYY-MM-DD' ) : undefined,
-						}
-					} )( <CustomRangePicker/> ) }
-				</FormItem>
-				<Button size="large" type="primary" htmlType="submit">查询</Button>
-			</Form>
+			<SearchBar ref={ e => ( searchBar = e )} path={path} {...pagination} handlerSubmit={handlerSubmit}/>
 			<Table
 				className={ styles.table }
 				bordered
@@ -156,7 +125,8 @@ const mapStateToProps = ( state ) => {
 	return {
 		...state,
 		loading: state.loading.models.workerModel,
+		path: state.appModel.path,
 	};
 };
 
-export default connect( mapStateToProps )( Form.create()( OrderList ) );
+export default connect( mapStateToProps )( OrderList );
