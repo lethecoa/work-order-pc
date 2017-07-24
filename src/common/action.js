@@ -1,5 +1,7 @@
 module.exports = {
 	app_init: 'init',
+	app_initWithPath: 'initWithPath',
+	app_saveUserType: 'saveUserType',
 	checkLogin: 'checkLogin',
 	login: 'login',
 	secretaryLogin: 'secretaryLogin',

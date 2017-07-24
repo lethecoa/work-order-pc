@@ -9,7 +9,7 @@ module.exports = {
 	/** 存储在浏览器内的数据 key 的前缀 */
 	storage_prefix: 'wop$',
 	/** 存储在浏览器内的数据 */
-	local: { user: 'user', loginInfo: 'loginInfo' },
+	local: { user: 'user', loginInfo: 'loginInfo', userType: 'userType' },
 	/** 表单布局 */
 	formItemLayout: { labelCol: { span: 4 }, wrapperCol: { span: 12 } },
 	/** 用户类型 */

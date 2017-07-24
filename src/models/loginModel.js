@@ -16,52 +16,37 @@ export default {
 		}
 	},
 	effects: {
-		*init( {}, { put } ) {
-			let info = storeage.get( config.local.loginInfo );
-			yield put( { type: action.login_setInfo, payload: info } );
-		},
-		*login( { payload }, { put, call } ) {
-			// 测试模式并且手机号输入0，直接进入主页
-			if ( config.debug && payload.telMobile === '0' ) {
-				yield put( routerRedux.push( urlMap.index ) );
+		*login( { payload }, { put, call, select } ) {
+			const userType = yield select( state => state.appModel.userType );
+			let path = '';
+			let data = {};
+			if ( userType === config.userType.worker ) {
+				data = yield call( secretaryLogin, payload );
+				path = modular.unfinished.url;
+			} else {
+				data = yield call( login, payload );
+				path = modular.index.url;
 			}
-			else {
-				const data = yield call( login, payload );
-				if ( data.success ) {
-					// 存储登录数据到浏览器内
-					payload.password = '';
-					if ( payload.remember ) {
-						yield put( { type: action.login_setInfo, payload: payload } );
-						storeage.set( config.local.loginInfo, payload );
-					} else {
-						yield put( { type: action.login_setInfo, payload: {} } );
-						storeage.set( config.local.loginInfo, null );
-					}
-					let user = data.entity;
-					user.userType = config.userType.doctor;
-					storeage.set( config.local.user, user );
-					yield put( { type: fun.fuse( model.app, action.app_init ), payload: user } );
-					yield put( routerRedux.push( urlMap.index ) );
-				} else {
-					fun.showNotification( data.message, "登录失败！", 'error' );
-				}
-			}
-		},
-		*secretaryLogin( { payload }, { put, call } ){
-			const data = yield call( secretaryLogin, payload );
 			if ( data.success ) {
-				let user = {};
-				user.userType = config.userType.worker;
-				user.orderHandlerId = data.entity.secretaryId;
-				user.orderHandlerName = data.entity.name;
-				user.groupId = data.entity.groupId;
+				// 存储登录数据到浏览器内
+				payload.password = '';
+				if ( payload.remember ) {
+					yield put( { type: action.login_setInfo, payload: payload } );
+					storeage.set( config.local.loginInfo, payload );
+				} else {
+					yield put( { type: action.login_setInfo, payload: {} } );
+					storeage.set( config.local.loginInfo, null );
+				}
+				let user = data.entity;
+				user.userType = userType;
 				storeage.set( config.local.user, user );
+				storeage.set( config.local.userType, userType );
 				yield put( { type: fun.fuse( model.app, action.app_init ), payload: user } );
-				yield put( routerRedux.push( modular.orderList.url ) );
+				yield put( routerRedux.push( path ) );
 			} else {
 				fun.showNotification( data.message, "登录失败！", 'error' );
 			}
-		}
+		},
 	},
 	subscriptions: {},
 };

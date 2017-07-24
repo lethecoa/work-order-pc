@@ -2,19 +2,16 @@ import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 import {Form, Select, DatePicker, Button, Table, Pagination, Radio} from 'antd';
-import {Scheme} from '../../components';
 import {CustomRangePicker} from '../../components/formItme'
 import moment from 'moment';
 import {action, model, fun, modular} from '../../common';
 import styles from './OrderList.less';
 
-const moduleName = modular.getModuleName( modular.orderList );
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
-let scheme;
 const columns = [ {
 	title: '序号',
 	dataIndex: 'rownum',
@@ -69,9 +66,10 @@ const OrderList = ( {
 	};
 	/** 列表行点击 */
 	const handlerRowClick = ( record, index ) => {
+		const state = pagination.status === '1' ? 'unfinished/' : 'finish/';
 		dispatch( {
 			type: fun.fuse( model.worker, action.worker_getOrderDetail ),
-			payload: { order: record, url: modular.worker + record.itemId }
+			payload: { order: record, url: modular.worker + state + record.itemId }
 		} );
 	};
 	/** 点击查询按钮 */
@@ -97,18 +95,26 @@ const OrderList = ( {
 			}
 		} );
 	};
-
+	/**表格分页器*/
+	const tablePagination = {
+		total: total,
+		current: pagination.page,
+		pageSize: pagination.pageSize,
+		onChange: handlerPageChange,
+		showQuickJumper: true,
+		showTotal: total => `共 ${total} 条`,
+	};
 	return (
 		<div>
 			<Form className={ styles.form } layout="inline" onSubmit={ handlerSubmit }>
-				<FormItem className={ styles.fLeft }>
-					{ getFieldDecorator( 'status', {
-						initialValue: pagination.status,
-					} )( <RadioGroup className={ styles.tab } onChange={ handlerRadioChange }>
-						<RadioButton value="1">待处理</RadioButton>
-						<RadioButton value="2">已处理</RadioButton>
-					</RadioGroup> ) }
-				</FormItem>
+				{/*<FormItem className={ styles.fLeft }>
+				 { getFieldDecorator( 'status', {
+				 initialValue: pagination.status,
+				 } )( <RadioGroup className={ styles.tab } onChange={ handlerRadioChange }>
+				 <RadioButton value="1">待处理</RadioButton>
+				 <RadioButton value="2">已处理</RadioButton>
+				 </RadioGroup> ) }
+				 </FormItem>*/}
 				<FormItem>
 					{ getFieldDecorator( 'serverPackName', {
 						initialValue: pagination.serverPackName,
@@ -139,21 +145,9 @@ const OrderList = ( {
 				dataSource={ dataSource }
 				loading={ loading }
 				rowKey={ record => record.orderId }
-				pagination={ false }
+				pagination={ tablePagination }
 				onRowClick={ handlerRowClick }
 			/>
-			<Pagination
-				className="ant-table-pagination"
-				total={ total }
-				current={ pagination.page }
-				pageSize={ pagination.pageSize }
-				onChange={ handlerPageChange }
-			/>
-			{/*<Scheme name={'hypertension'} interviewScheme={'1'} ref={e => ( scheme = e )} disabled={true} 
-			 scheme={{drugList:[{key:'1',drugName:'1',drugFrequency:'2',dosage:'3'}]}}/>
-
-			 <Button onClick={ () => { console.log( scheme.getData() ); } }>getData</Button>*/}
-
 		</div>
 	);
 };
@@ -166,4 +160,3 @@ const mapStateToProps = ( state ) => {
 };
 
 export default connect( mapStateToProps )( Form.create()( OrderList ) );
-

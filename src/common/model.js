@@ -4,8 +4,7 @@ module.exports = {
 	order: 'orderModel',
 	worker: 'workerModel',
 	bookingAgent: 'bookingAgentModel',
-	chronicDisease: 'chronicDiseaseModel',
 	noticeAgent: 'noticeAgentModel',
 	trackingReminder: 'trackingReminderModel',
 	chronicDisease: 'chronicDiseaseModel',
-}
+};

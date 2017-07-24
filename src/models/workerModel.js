@@ -1,5 +1,6 @@
 import {routerRedux} from 'dva/router';
-import {fun, model, action, config, api} from '../common';
+import pathToRegexp from 'path-to-regexp'
+import {fun, model, action, config, api, modular} from '../common';
 import {getOrders, getOrderDetail, saveService, confirmOrder} from '../services/workerService';
 import Promise from 'bluebird';
 
@@ -37,7 +38,7 @@ export default {
 		}
 	},
 	effects: {
-		*initOrderList( {}, { put, select, call } ) {
+		*initOrderList( { payload: { status, page = 1 } }, { put, select, call } ) {
 			const pagination = yield select( state => state.workerModel.pagination );
 			const groupId = yield select( state => state.appModel.user.groupId );
 			const data = yield call( getOrders, {
@@ -45,11 +46,17 @@ export default {
 				dateEnd: pagination.dateEnd,
 				pageSize: pagination.pageSize,
 				serverPackName: pagination.serverPackName,
-				pageNumber: pagination.page,
-				status: pagination.status,
+				pageNumber: page,
+				status: status,
 				groupId,
 			} );
+			pagination.page = parseInt( page, 10 );
 			pagination.groupId = groupId;
+			pagination.status = status;
+			// pagination.serverPackName = "0";
+			// pagination.dateStart = undefined;
+			// pagination.dateEnd = undefined;
+
 			yield put( {
 				type: 'save',
 				payload: {
@@ -59,7 +66,7 @@ export default {
 				},
 			} );
 		},
-		*getOrders( { payload: { page = 1, status = "1", serverPackName = "0", dateStart = undefined, dateEnd = undefined } }, { call, put, select } ) {
+		*getOrders( { payload: { page = 1, serverPackName = "0", dateStart = undefined, dateEnd = undefined } }, { call, put, select } ) {
 			const pagination = yield select( state => state.workerModel.pagination );
 			const data = yield call( getOrders, {
 				dateStart: dateStart,
@@ -67,11 +74,10 @@ export default {
 				pageSize: pagination.pageSize,
 				serverPackName: serverPackName,
 				pageNumber: page,
-				status: status,
+				status: pagination.status,
 				groupId: pagination.groupId,
 			} );
 			pagination.page = parseInt( page, 10 );
-			pagination.status = status;
 			pagination.serverPackName = serverPackName;
 			pagination.dateStart = dateStart;
 			pagination.dateEnd = dateEnd;
@@ -152,15 +158,17 @@ export default {
 				yield put( { type: 'changeBtnDisabled', payload: true } );
 				yield put( { type: 'changeIsOver', payload: true } );
 				yield Promise.delay( 2000 );
-				yield put( routerRedux.push( '/orderList' ) );
+				yield put( routerRedux.push( modular.unfinished.url ) );
 			}
 		}
 	},
 	subscriptions: {
 		setup( { dispatch, history } ) {
-			history.listen( ( { pathname } ) => {
-				if ( pathname === '/orderList' || pathname === 'orderList' ) {
-					dispatch( { type: action.worker_initOrderList } )
+			history.listen( ( { pathname, query } ) => {
+				const matchWorker = pathToRegexp( '/worker/:state/:subPath' ).exec( pathname );
+				if ( matchWorker && matchWorker[ 1 ] === 'orderList' ) {
+					const status = matchWorker[ 2 ] === 'unfinished' ? '1' : '2';
+					dispatch( { type: action.worker_initOrderList, payload: { status, page: query.page } } )
 				}
 			} )
 		},

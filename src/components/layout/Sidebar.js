@@ -1,12 +1,12 @@
 import {browserHistory} from "dva/router";
 import styles from './Sidebar.less';
 import {Menu} from 'antd';
-import {modular} from '../../common';
+import {modular, config} from '../../common';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
-function Sidebar( { pathname } ) {
+function Sidebar( { pathname, userType } ) {
 	const onSelect = ( obj ) => {
 		if ( obj.key !== '' ) {
 			browserHistory.push( obj.key );
@@ -15,112 +15,135 @@ function Sidebar( { pathname } ) {
 
 	return (
 		<div className={ styles.menu }>
-			<Menu
-				defaultSelectedKeys={ [ pathname ] }
-				defaultOpenKeys={ [ '0', '1' ] }
-				mode="inline"
-				theme="dark"
-				onClick={ onSelect }
-			>
-				<Menu.Item key={ modular.index.url }>
+			{userType === config.userType.doctor ?
+				<Menu
+					defaultSelectedKeys={ [ pathname ] }
+					defaultOpenKeys={ [ '0', '1' ] }
+					mode="inline"
+					theme="dark"
+					onClick={ onSelect }
+				>
+					<Menu.Item key={ modular.index.url }>
 					<span className={ styles.menuItem }>
-						<i className={ styles.wof1 + ' ' + styles[ 'woc-shouye' ] }></i>
+						<i className={ styles.wof1 + ' ' + styles[ 'woc-shouye' ] }/>
 						<span className={ styles.m1 }>{ modular.index.cn }</span></span>
-				</Menu.Item>
-				<SubMenu key="0" title={ <span className={ styles.menuItem }>
-					<i className={ styles.wof1 + ' ' + styles[ 'woc-yyz' ] }></i>
+					</Menu.Item>
+					<SubMenu key="0" title={ <span className={ styles.menuItem }>
+					<i className={ styles.wof1 + ' ' + styles[ 'woc-yyz' ] }/>
 					<span className={ styles.m1 }>云医助</span></span> }>
-					<MenuItemGroup key="bookingAgentMenu" title={ <span className={ styles.menuItem }>
-						<i className={ styles.wof2 + ' ' + styles[ 'woc-yuyue' ] }></i>
+						<MenuItemGroup key="bookingAgentMenu" title={ <span className={ styles.menuItem }>
+						<i className={ styles.wof2 + ' ' + styles[ 'woc-yuyue' ] }/>
 						<span className={ styles.m2 }>预约代理</span></span> }>
-						<Menu.Item key={ modular.residentSign.url }>
+							<Menu.Item key={ modular.residentSign.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-jiatingyisheng' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-jiatingyisheng' ] }/>
 								<span className={ styles.m3 }>{ modular.residentSign.cn }</span></span>
-						</Menu.Item>
-						<Menu.Item key={ modular.residentInspect.url }>
+							</Menu.Item>
+							<Menu.Item key={ modular.residentInspect.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-tijian' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-tijian' ] }/>
 								<span className={ styles.m3 }>{ modular.residentInspect.cn }</span></span>
-						</Menu.Item>
-						<Menu.Item key={ modular.newborn.url }>
+							</Menu.Item>
+							<Menu.Item key={ modular.newborn.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-xset' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-xset' ] }/>
 								<span className={ styles.m3 }>{ modular.newborn.cn }</span></span>
-						</Menu.Item>
-						<Menu.Item key={ modular.postpartum.url }>
+							</Menu.Item>
+							<Menu.Item key={ modular.postpartum.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-chanhoutiantijian' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-chanhoutiantijian' ] }/>
 								<span className={ styles.m3 }>{ modular.postpartum.cn }</span></span>
-						</Menu.Item>
-					</MenuItemGroup>
-					<MenuItemGroup key="noticeAgentMenu"
-					               title={ <span className={ styles.menuItem }>
-							<i className={ styles.wof2 + ' ' + styles[ 'woc-notice' ] }></i>
+							</Menu.Item>
+						</MenuItemGroup>
+						<MenuItemGroup key="noticeAgentMenu" title={ <span className={ styles.menuItem }>
+							<i className={ styles.wof2 + ' ' + styles[ 'woc-notice' ] }/>
 							<span className={ styles.m2 }>通知代理</span></span> }>
-						<Menu.Item key={ modular.chronicDisease.url }>
+							<Menu.Item key={ modular.chronicDisease.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-manxingjibing' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-manxingjibing' ] }/>
 								<span className={ styles.m3 }>{ modular.chronicDisease.cn }</span></span>
-						</Menu.Item>
-						<Menu.Item key={ modular.newestPolicy.url }>
+							</Menu.Item>
+							<Menu.Item key={ modular.newestPolicy.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-zhengce' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-zhengce' ] }/>
 								<span className={ styles.m3 }>{ modular.newestPolicy.cn }</span></span>
-						</Menu.Item>
-						<Menu.Item key={ modular.newestActivity.url }>
+							</Menu.Item>
+							<Menu.Item key={ modular.newestActivity.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-huodong' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-huodong' ] }/>
 								<span className={ styles.m3 }>{ modular.newestActivity.cn }</span></span>
-						</Menu.Item>
-						<Menu.Item key={ modular.antenatalCare.url }>
+							</Menu.Item>
+							<Menu.Item key={ modular.antenatalCare.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-yunfu' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-yunfu' ] }/>
 								<span className={ styles.m3 }>{ modular.antenatalCare.cn }</span></span>
-						</Menu.Item>
-						<Menu.Item key={ modular.childHealth.url }>
+							</Menu.Item>
+							<Menu.Item key={ modular.childHealth.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-quanshengzhengzhuang' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-quanshengzhengzhuang' ] }/>
 								<span className={ styles.m3 }>{ modular.childHealth.cn }</span></span>
-						</Menu.Item>
-					</MenuItemGroup>
-				</SubMenu>
-				<SubMenu key="1"
-				         title={ <span className={ styles.menuItem }>
-						<i className={ styles.wof1 + ' ' + styles[ 'woc-jiankang' ] }></i>
+							</Menu.Item>
+						</MenuItemGroup>
+					</SubMenu>
+					<SubMenu key="1"
+					         title={ <span className={ styles.menuItem }>
+						<i className={ styles.wof1 + ' ' + styles[ 'woc-jiankang' ] }/>
 						<span className={ styles.m1 }>云健管</span></span> }>
-					<MenuItemGroup key="trackingReminderMenu"
-					               title={ <span className={ styles.menuItem }>
-							<i className={ styles.wof2 + ' ' + styles[ 'woc-tixing' ] }></i>
+						<MenuItemGroup key="trackingReminderMenu"
+						               title={ <span className={ styles.menuItem }>
+							<i className={ styles.wof2 + ' ' + styles[ 'woc-tixing' ] }/>
 							<span className={ styles.m2 }>跟踪提醒</span></span> }>
-						<Menu.Item key={ modular.medication.url }>
+							<Menu.Item key={ modular.medication.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-yongyaotixing' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-yongyaotixing' ] }/>
 								<span className={ styles.m3 }>{ modular.medication.cn }</span></span>
-						</Menu.Item>
-						<Menu.Item key={ modular.curativeEffect.url }>
+							</Menu.Item>
+							<Menu.Item key={ modular.curativeEffect.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-changyongyao' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-changyongyao' ] }/>
 								<span className={ styles.m3 }>{ modular.curativeEffect.cn }</span></span>
-						</Menu.Item>
-					</MenuItemGroup>
-					<MenuItemGroup key="chronicDiseaseMenu"
-					               title={ <span className={ styles.menuItem }>
-							<i className={ styles.wof2 + ' ' + styles[ 'woc-assistant' ] }></i>
+							</Menu.Item>
+						</MenuItemGroup>
+						<MenuItemGroup key="chronicDiseaseMenu" title={ <span className={ styles.menuItem }>
+							<i className={ styles.wof2 + ' ' + styles[ 'woc-assistant' ] }/>
 							<span className={ styles.m2 }>慢病随访</span></span> }>
-						<Menu.Item key={ modular.hypertension.url }>
+							<Menu.Item key={ modular.hypertension.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-gxy' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-gxy' ] }/>
 								<span className={ styles.m3 }>{ modular.hypertension.cn }</span></span>
-						</Menu.Item>
-						<Menu.Item key={ modular.diabetes.url }>
+							</Menu.Item>
+							<Menu.Item key={ modular.diabetes.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-tnb' ] }></i>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-tnb' ] }/>
 								<span className={ styles.m3 }>{ modular.diabetes.cn }</span></span>
+							</Menu.Item>
+						</MenuItemGroup>
+					</SubMenu>
+				</Menu>
+				:
+				<Menu
+					defaultSelectedKeys={ [ pathname ] }
+					defaultOpenKeys={ [ '2' ] }
+					mode="inline"
+					theme="dark"
+					onClick={ onSelect }
+				>
+					<SubMenu key="2" title={ <span className={ styles.menuItem }>
+						<i className={ styles.wof1 + ' ' + styles[ 'woc-yuyue' ] }/>
+						<span className={ styles.m1 }>工单列表</span></span> }>
+						<Menu.Item key={ modular.unfinished.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-manxingjibing' ] }/>
+								<span className={ styles.m3 }>{ modular.unfinished.cn }</span></span>
 						</Menu.Item>
-					</MenuItemGroup>
-				</SubMenu>
-			</Menu>
+						<Menu.Item key={ modular.finish.url }>
+							<span className={ styles.menuItem }>
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-zhengce' ] }/>
+								<span className={ styles.m3 }>{ modular.finish.cn }</span></span>
+						</Menu.Item>
+					</SubMenu>
+				</Menu>
+			}
 		</div>
 	);
 }

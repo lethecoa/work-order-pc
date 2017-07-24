@@ -34,18 +34,18 @@ const OrderPage = ( {
 	orderModel,
 	workerModel,
 	dispatch,
-	route,
+	path,
 	user,
 } ) => {
 	/*fun.printLoader( 'orderPage' );*/
-	const { userType, orderHandlerId, orderHandlerName, group } = user;
+	const { userType, secretaryId, name, group } = user;
 	const { currentStep, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel ? orderModel : {};
 	const { serviceDetail, disabledConfirmOrder, pagination, isOver } = workerModel ? workerModel : {};
-	const { currentData, display, disabled, residentList } = workerModel ? workerModel : orderModel;
+	const { currentData, display, disabled, residentList } = userType === config.userType.worker ? workerModel : orderModel;
 	const { orgName, remainingBalance } = currentData;
 	const { interviewScheme } = serviceDetail ? serviceDetail : {};
-	/** 获取页面path,初始化dataList */
-	let path = route.path.replace( '/', '' );
+
+	/** 初始化dataList */
 	let dataList = residentList;
 	/** 医生端-校验表单输入数据*/
 	const validAndConfirm = () => {
@@ -123,15 +123,16 @@ const OrderPage = ( {
 	/** 客服端-确认完成订单所有委托 */
 	const confirmOrder = () => {
 		let orderData = {
-			orderHandlerId,
-			orderHandlerName,
+			orderHandlerId: secretaryId,
+			orderHandlerName: name,
 			orderId: currentData.orderId,
 		};
 		dispatch( { type: fun.fuse( model.worker, action.worker_confirmOrder ), payload: orderData } );
 	};
 	/** 客服端-返回列表页 */
 	const backToList = () => {
-		dispatch( routerRedux.push( { pathname: modular.index.url + modular.orderList.url, } ) );
+		const state = pagination.status === '1' ? 'unfinished' : 'finish';
+		dispatch( routerRedux.push( { pathname: modular[ state ].url, query: { page: pagination.page }, } ) );
 	};
 	/** 基本信息参数 */
 	const baseInfoProps = {
@@ -173,34 +174,34 @@ const OrderPage = ( {
 					<BaseInfo {...baseInfoProps} ref={ e => ( baseInfo = e ) }/>
 					{ path === 'signFamily' ? <ResidentSign disabled={ disabled } ref={ e => ( need = e ) } signSite={ orgName }/> : '' }
 					{ path === 'residentSign' ? <ResidentSign disabled={ disabled } ref={ e => ( need = e ) } signSite={ orgName }/> : '' }
-					{ path === 'workeryyjmqy' ? <ResidentSign disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'yyjmqy' ? <ResidentSign disabled={ disabled } {...serviceDetail} /> : '' }
 					{ path === 'residentInspect' ? <ResidentInspect disabled={ disabled } ref={ e => ( need = e ) } examineSite={ orgName }/> : '' }
-					{ path === 'workeryyjmtj' ? <ResidentInspect disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'yyjmtj' ? <ResidentInspect disabled={ disabled } {...serviceDetail} /> : '' }
 					{ path === 'newborn' ? <Newborn disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'workeryyxsfs' ? <Newborn disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'yyxsfs' ? <Newborn disabled={ disabled } {...serviceDetail} /> : '' }
 					{ path === 'postpartum' ? <Newborn disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'workeryychfs' ? <Newborn disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'yychfs' ? <Newborn disabled={ disabled } {...serviceDetail} /> : '' }
 
 					{ path === 'chronicDisease' ? <ChronicDisease disabled={ disabled } ref={ e => ( need = e ) } interviewSite={ orgName }/> : '' }
-					{ path === 'workermbsftz' ? <ChronicDisease disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'mbsftz' ? <ChronicDisease disabled={ disabled } {...serviceDetail} /> : '' }
 					{ path === 'newestPolicy' ? <NewestPolicy disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'workerzxzctz' ? <NewestPolicy disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'zxzctz' ? <NewestPolicy disabled={ disabled } {...serviceDetail} /> : '' }
 					{ path === 'newestActivity' ? <NewestActivity disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'workerzxhdtz' ? <NewestActivity disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'zxhdtz' ? <NewestActivity disabled={ disabled } {...serviceDetail} /> : '' }
 					{ path === 'antenatalCare' ? <AntenatalCare disabled={ disabled } ref={ e => ( need = e ) } antenatalCareSite={ orgName }/> : '' }
-					{ path === 'workeryfcjtz' ? <AntenatalCare disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'yfcjtz' ? <AntenatalCare disabled={ disabled } {...serviceDetail} /> : '' }
 					{ path === 'childHealth' ? <ChildHealth disabled={ disabled } ref={ e => ( need = e ) } interviewSite={ orgName }/> : '' }
-					{ path === 'workeretsftz' ? <ChildHealth disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'etsftz' ? <ChildHealth disabled={ disabled } {...serviceDetail} /> : '' }
 
 					{ path === 'medication' ? <Medication disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'workeryytx00' ? <Medication disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'yytx00' ? <Medication disabled={ disabled } {...serviceDetail} /> : '' }
 					{ path === 'curativeEffect' ? <Medication disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'workeryylxgz' ? <Medication disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'yylxgz' ? <Medication disabled={ disabled } {...serviceDetail} /> : '' }
 
 					{ path === 'hypertension' ? <Hypertension disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'workergxysf0' ? <Hypertension disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'gxysf0' ? <Hypertension disabled={ disabled } {...serviceDetail} /> : '' }
 					{ path === 'diabetes' ? <Diabetes disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'workertnbsf0' ? <Diabetes disabled={ disabled } {...serviceDetail} /> : '' }
+					{ path === 'tnbsf0' ? <Diabetes disabled={ disabled } {...serviceDetail} /> : '' }
 
 					<ResidentInfoTable {...residentInfoProps} ref={ e => ( residentInfoTable = e ) }/>
 					{ userType === config.userType.doctor ?
@@ -240,8 +241,9 @@ const OrderPage = ( {
 const mapStateToProps = ( state ) => {
 	return {
 		...state,
-		loading: state.orderModel ? state.loading.models.orderModel : state.loading.models.workerModel,
+		loading: state.appModel.user.userType === config.userType.doctor ? state.loading.models.orderModel : state.loading.models.workerModel,
 		user: state.appModel.user,
+		path: state.appModel.path,
 	};
 };
 
