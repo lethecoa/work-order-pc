@@ -12,7 +12,7 @@ const Header = ( { dispatch, user, userType } ) => {
 	const userInfo = (
 		<div>
 			<p>当前账户余额：3000</p>
-			<a onClick={ recharge }>我要充值</a>
+			<a onClick={recharge}>我要充值</a>
 		</div>
 	);
 	/**
@@ -23,19 +23,19 @@ const Header = ( { dispatch, user, userType } ) => {
 	};
 
 	return (
-		<div className={ styles.normal }>
-			<div className={ styles.info }>
-				<span className={ styles.name }>hi~ { username}</span>
-				<br />
-				<div className={ styles.btnBg }>
-					<Popover content={ updateLog.getLog( config.ver ) } title={ '更新日志 (' + config.ver + ')' } placement="bottomRight">
-						<span className={ styles.ver }>ver{ config.ver }</span>
+		<div className={styles.normal}>
+			<div className={styles.info}>
+				<span className={styles.name}>hi~ {username}</span>
+				<br/>
+				<div className={styles.btnBg}>
+					<Popover content={updateLog.getLog( config.ver )} title={'更新日志 (' + config.ver + ')'} placement="bottomRight">
+						<span className={styles.ver}>ver{config.ver}</span>
 					</Popover>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onClick={ logout }>退出登录</a>&nbsp;
+					&nbsp;&nbsp;&nbsp;<a href={urlMap.index}>首页</a>&nbsp;&nbsp;<a onClick={logout}>退出登录</a>&nbsp;
 				</div>
-				<Popover content={ userInfo } title="用户信息" placement="bottomRight">
-					<div className={ styles.avatar }>
-						<img src={ portrait }/>
+				<Popover content={userInfo} title="用户信息" placement="bottomRight">
+					<div className={styles.avatar}>
+						<img src={portrait}/>
 					</div>
 				</Popover>
 			</div>

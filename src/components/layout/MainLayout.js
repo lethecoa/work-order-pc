@@ -16,7 +16,7 @@ function MainLayout( { dispatch, children, user, pathname } ) {
 				<Header user={ user } dispatch={ dispatch } userType={user.userType}/></div>
 			<Layout style={ { margin: '110px 20px 20px' } }>
 				<Sider width={ 240 }>
-					<Sidebar pathname={ pathname ? '/' + pathname : '/' } userType={user.userType}/>
+					<Sidebar pathname={ pathname ? '/' + pathname : '/' } user={user}/>
 				</Sider>
 				<Layout className={ styles.main }>
 					<Content>

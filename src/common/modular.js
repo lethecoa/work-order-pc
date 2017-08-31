@@ -177,6 +177,11 @@ module.exports = {
 		url: worker + 'tnbsf0', name: 'diabetes', monitor: 1, cn: '糖尿病随访',
 	},
 	/**
+	 * 订单列表
+	 */
+	finishList: { url: doctor + 'orderList?status=2', cn: '已完成订单' },
+	unfinishList: { url: doctor + 'orderList?status=1', cn: '待处理订单' },
+	/**
 	 * 订单列表页
 	 */
 	finish: { url: worker + 'orderList/finish', name: 'finish', cn: '已处理' },

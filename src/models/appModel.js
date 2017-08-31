@@ -26,11 +26,6 @@ export default {
 		}
 	},
 
-
-
-
-
-
 	effects: {
 		*checkLogin( { payload: { pathname, query } }, { select, put } ) {
 			const matchDoctor = pathToRegexp( '/doctor/:modelName/:subPath' ).exec( pathname );
