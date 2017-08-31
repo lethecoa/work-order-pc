@@ -47,12 +47,12 @@ function Login( {
 				<div className={styles.logo}>
 					<img src="/loginLogo.png"/>
 				</div>
-				{/*<div className={styles.radioBox}>
+				<div className={styles.radioBox}>
 					<RadioGroup defaultValue={userType ? userType : config.userType.doctor} onChange={handleChange}>
 						<RadioButton value={config.userType.doctor}>医生登录</RadioButton>
 						<RadioButton value={config.userType.worker}>客服登录</RadioButton>
 					</RadioGroup>
-				</div>*/}
+				</div>
 				<form>
 					{true ? '' :
 						<FormItem>
