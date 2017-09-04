@@ -228,6 +228,7 @@ class InfoTable extends React.Component {
   getColums = ( props ) => {
     this.columnConfig = props.userType === config.userType.doctor ?
       modular[ props.name ][ 'ritDoctor' ] : modular[ props.name ][ 'ritWorker' ];
+    if ( this.columnConfig === undefined ) return [];
     // 查看已完成订单时删除操作栏列
     if ( props.isOver ) {
       this.columnConfig = immutable.fromJS( this.columnConfig ).toJS();
@@ -519,6 +520,7 @@ class InfoTable extends React.Component {
     if ( nextProps.name != this.parentName ) {
       columns = this.getColums( nextProps );
     }
+    if ( columns.length == 0 ) return;
 
     // 有新数据进来
     if ( !is( immutable.fromJS( nextProps.data ), immutable.fromJS( this.state.data ) ) ||
