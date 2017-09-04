@@ -526,10 +526,10 @@ class InfoTable extends React.Component {
     if ( !is( immutable.fromJS( nextProps.data ), immutable.fromJS( this.state.data ) ) ||
       nextProps.name != this.parentName ) {
       let formatData = this.getFormatData( nextProps.data );
-      if ( nextProps.userType === config.userType.worker ) {
-        filterData = this.getFilterData( formatData, nextProps.orderStatus );
-      } else {
+      if ( nextProps.isOver ) {
         filterData = formatData;
+      } else {
+        filterData = this.getFilterData( formatData, nextProps.orderStatus );
       }
 
       if ( columns.length > 0 ) {

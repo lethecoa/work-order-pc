@@ -30,10 +30,10 @@ export default class ResidentInfoTable extends React.Component {
       data: props.data, // 外层传进来的原始数据
       showDoctor: props.userType === config.userType.doctor ? true : false,
       showWorker: props.userType === config.userType.worker ? true : false,
-      isOver: props.isOver || false, // 订单处理状态：true 已完结
+      isOver: props.isOver || false, // 整个订单处理状态：true 已完结
       untreated: 0, // 显示在切换按钮上的数字
       treated: 0,
-      orderStatus: ORDER_STATUS.untreated, // 订单状态：已处理(1)、未处理(2)
+      orderStatus: ORDER_STATUS.untreated, // 未完结的订单内的各明细状态：已处理(1)、未处理(2)
     }
   }
   // public function
