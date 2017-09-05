@@ -151,12 +151,12 @@ function Sidebar( { pathname, user } ) {
 						<span className={ styles.m1 }>工单列表</span></span> }>
 						<Menu.Item key={ modular.unfinished.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-finished' ] } />
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-untreated' ] } />
 								<span className={ styles.m3 }>{ modular.unfinished.cn }</span></span>
 						</Menu.Item>
 						<Menu.Item key={ modular.finish.url }>
 							<span className={ styles.menuItem }>
-								<i className={ styles.wof3 + ' ' + styles[ 'woc-untreated' ] } />
+								<i className={ styles.wof3 + ' ' + styles[ 'woc-finished' ] } />
 								<span className={ styles.m3 }>{ modular.finish.cn }</span></span>
 						</Menu.Item>
 					</SubMenu>
