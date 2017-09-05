@@ -28,11 +28,13 @@ module.exports = {
 		diseaseCase: { key: 'diseaseSituation', cn: '疾病情况 ', need: false },
 		cardDate: { key: 'buildCardDate', cn: '建卡日期 ', need: false },
 		drugs: { key: 'drugName', cn: '药品名称 ', need: false },
+		// 0否 1是 下同
 		present: { key: 'isOnScene', cn: '是否到场', need: true },
 		visit: { key: 'isInterview', cn: '是否可访', need: true },
 		remark: { key: 'remark', cn: '通知情况', need: true },
 		followUp: { key: 'scheme', cn: '随访情况', need: true },
 		operation: { key: 'operation', cn: '操作栏', need: false },
+		// 1已处理 2未处理
 		status: { key: 'status', cn: '处理状态', need: true },
 		// notice: 'notice', booking: 'booking'
 	},
