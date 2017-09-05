@@ -92,13 +92,13 @@ module.exports = {
 	},
 	newestPolicy: {
 		url: doctor + 'chronicDisease/newestPolicy', name: 'newestPolicy', cn: '最新政策通知', ritRef: 'zxzctz',
-		model: model.noticeAgent, action: action.NA_savePolicy, monitor: 2,
+		model: model.noticeAgent, action: action.NA_savePolicy, monitor: 1,
 		tpl: config.tpl + 'newestPolicy.xls',
 		ritDoctor: [ rownum.key, name.key, sex.key, birthday.key, tel.key ],
 		ritWorker: [ rownum.key, name.key, sex.key, birthday.key, tel.key, remark.key, operation.key ]
 	},
 	zxzctz: {
-		url: worker + 'zxzctz', name: 'newestPolicy', monitor: 2, cn: '最新政策通知',
+		url: worker + 'zxzctz', name: 'newestPolicy', monitor: 1, cn: '最新政策通知',
 	},
 	newestActivity: {
 		url: doctor + 'chronicDisease/newestActivity', name: 'newestActivity', cn: '最新活动通知', ritRef: 'zxhdtz',

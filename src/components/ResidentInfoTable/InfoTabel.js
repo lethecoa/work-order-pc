@@ -201,6 +201,7 @@ class InfoTable extends React.Component {
         if ( !v.has( visit.key ) ) v = v.set( visit.key, '1' );
         if ( !v.has( present.key ) ) v = v.set( present.key, '1' );
         if ( !v.has( rownum.key ) ) v = v.set( rownum.key, i + 1 );
+        if ( !v.has( status.key ) ) v = v.set( status.key, '1' );
         return v;
       } );
     }
@@ -218,7 +219,7 @@ class InfoTable extends React.Component {
       filterData = data.filter( item => is( item.get( 'status' ), orderStatus ) );
     this.treated = orderStatus === ORDER_STATUS.treated ? filterData.size : data.size - filterData.size;
     this.untreated = data.size - this.treated;
-    this.everyOneInEdit = false;
+    //this.everyOneInEdit = false;
 
     return filterData;
   }
@@ -337,6 +338,7 @@ class InfoTable extends React.Component {
           data.setIn( [ index, status.key ], ORDER_STATUS.treated ).get( index ) );
         submitCallback( row.toJS(), ( id ) => { this.successCallback( id ) } );
       }
+      this.everyOneInEdit = false;
     }
     //更新 formatData，
     // 这个部分存在问题：
@@ -348,9 +350,8 @@ class InfoTable extends React.Component {
     let i = this.getDataByServiceId( data.getIn( [ index, serviceId.key ] ) );
     if ( i >= 0 ) {
       let formatData = this.state.formatData.set( i, data.get( index ) );
-      this.setState( { formatData: formatData } )
+      this.setState( { formatData: formatData } );
     }
-    this.everyOneInEdit = false;
   }
   /**
    * 如果这个页面的表头含有 “通知情况”，要判断用户是否输入了，不然不允许提交
@@ -517,14 +518,11 @@ class InfoTable extends React.Component {
     let operationStatus = nextProps.orderStatus === ORDER_STATUS.treated ? true : false;
     let columns = [];
     let filterData = [];
-    if ( nextProps.name != this.parentName ) {
-      columns = this.getColums( nextProps );
-    }
-    if ( columns.length == 0 ) return;
 
     // 有新数据进来
     if ( !is( immutable.fromJS( nextProps.data ), immutable.fromJS( this.state.data ) ) ||
       nextProps.name != this.parentName ) {
+      columns = this.getColums( nextProps );
       let formatData = this.getFormatData( nextProps.data );
       if ( nextProps.isOver ) {
         filterData = formatData;
