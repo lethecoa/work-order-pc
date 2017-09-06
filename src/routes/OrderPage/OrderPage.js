@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
+import pathToRegexp from 'path-to-regexp'
 import {Spin, Row, Col, Form, Button, Modal, Popconfirm} from 'antd';
 import {action, model, fun, config, modular} from '../../common';
 import {
@@ -44,7 +45,10 @@ const OrderPage = ( {
 	const { currentData, display, disabled, residentList } = userType === config.userType.worker ? workerModel : orderModel;
 	const { orgName, remainingBalance } = currentData;
 	const { interviewScheme } = serviceDetail ? serviceDetail : {};
-
+	const match = pathToRegexp( '/:terminal/:model/:subPath' ).exec( location.pathname );
+	if ( match ) {
+		path = match[ 3 ];
+	}
 	/** 初始化dataList */
 	let dataList = residentList;
 	/** 医生端-校验表单输入数据*/
@@ -161,74 +165,74 @@ const OrderPage = ( {
 		onSubmit: ( r, callBack ) => submitRow( r, callBack ),
 	};
 	return (
-		<div className={ styles.wrap }>
-			<Spin spinning={ loading }>
-				<PayModal ref={ e => ( payModal = e ) } {...payModalProps} />
-				<div className={ styles.header }>{ modular[ path ].cn + '委托表' }</div>
-				{ userType === config.userType.doctor ?
-					<OrderStep currentStep={ currentStep }/>
+		<div className={styles.wrap}>
+			<Spin spinning={loading}>
+				<PayModal ref={e => ( payModal = e )} {...payModalProps} />
+				<div className={styles.header}>{modular[ path ].cn + '委托表'}</div>
+				{userType === config.userType.doctor ?
+					<OrderStep currentStep={currentStep}/>
 					:
-					<Button size="large" type="primary" className={ styles.back } onClick={ backToList }>返回</Button>
+					<Button size="large" type="primary" className={styles.back} onClick={backToList}>返回</Button>
 				}
 				<Form>
-					<BaseInfo {...baseInfoProps} ref={ e => ( baseInfo = e ) }/>
-					{ path === 'signFamily' ? <ResidentSign disabled={ disabled } ref={ e => ( need = e ) } signSite={ orgName }/> : '' }
-					{ path === 'residentSign' ? <ResidentSign disabled={ disabled } ref={ e => ( need = e ) } signSite={ orgName }/> : '' }
-					{ path === 'yyjmqy' ? <ResidentSign disabled={ disabled } {...serviceDetail} /> : '' }
-					{ path === 'residentInspect' ? <ResidentInspect disabled={ disabled } ref={ e => ( need = e ) } examineSite={ orgName }/> : '' }
-					{ path === 'yyjmtj' ? <ResidentInspect disabled={ disabled } {...serviceDetail} /> : '' }
-					{ path === 'newborn' ? <Newborn disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'yyxsfs' ? <Newborn disabled={ disabled } {...serviceDetail} /> : '' }
-					{ path === 'postpartum' ? <Newborn disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'yychfs' ? <Newborn disabled={ disabled } {...serviceDetail} /> : '' }
+					<BaseInfo {...baseInfoProps} ref={e => ( baseInfo = e )}/>
+					{path === 'signFamily' ? <ResidentSign disabled={disabled} ref={e => ( need = e )} signSite={orgName}/> : ''}
+					{path === 'residentSign' ? <ResidentSign disabled={disabled} ref={e => ( need = e )} signSite={orgName}/> : ''}
+					{path === 'yyjmqy' ? <ResidentSign disabled={disabled} {...serviceDetail} /> : ''}
+					{path === 'residentInspect' ? <ResidentInspect disabled={disabled} ref={e => ( need = e )} examineSite={orgName}/> : ''}
+					{path === 'yyjmtj' ? <ResidentInspect disabled={disabled} {...serviceDetail} /> : ''}
+					{path === 'newborn' ? <Newborn disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'yyxsfs' ? <Newborn disabled={disabled} {...serviceDetail} /> : ''}
+					{path === 'postpartum' ? <Newborn disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'yychfs' ? <Newborn disabled={disabled} {...serviceDetail} /> : ''}
 
-					{ path === 'chronicDisease' ? <ChronicDisease disabled={ disabled } ref={ e => ( need = e ) } interviewSite={ orgName }/> : '' }
-					{ path === 'mbsftz' ? <ChronicDisease disabled={ disabled } {...serviceDetail} /> : '' }
-					{ path === 'newestPolicy' ? <NewestPolicy disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'zxzctz' ? <NewestPolicy disabled={ disabled } {...serviceDetail} /> : '' }
-					{ path === 'newestActivity' ? <NewestActivity disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'zxhdtz' ? <NewestActivity disabled={ disabled } {...serviceDetail} /> : '' }
-					{ path === 'antenatalCare' ? <AntenatalCare disabled={ disabled } ref={ e => ( need = e ) } antenatalCareSite={ orgName }/> : '' }
-					{ path === 'yfcjtz' ? <AntenatalCare disabled={ disabled } {...serviceDetail} /> : '' }
-					{ path === 'childHealth' ? <ChildHealth disabled={ disabled } ref={ e => ( need = e ) } interviewSite={ orgName }/> : '' }
-					{ path === 'etsftz' ? <ChildHealth disabled={ disabled } {...serviceDetail} /> : '' }
+					{path === 'chronicDisease' ? <ChronicDisease disabled={disabled} ref={e => ( need = e )} interviewSite={orgName}/> : ''}
+					{path === 'mbsftz' ? <ChronicDisease disabled={disabled} {...serviceDetail} /> : ''}
+					{path === 'newestPolicy' ? <NewestPolicy disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'zxzctz' ? <NewestPolicy disabled={disabled} {...serviceDetail} /> : ''}
+					{path === 'newestActivity' ? <NewestActivity disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'zxhdtz' ? <NewestActivity disabled={disabled} {...serviceDetail} /> : ''}
+					{path === 'antenatalCare' ? <AntenatalCare disabled={disabled} ref={e => ( need = e )} antenatalCareSite={orgName}/> : ''}
+					{path === 'yfcjtz' ? <AntenatalCare disabled={disabled} {...serviceDetail} /> : ''}
+					{path === 'childHealth' ? <ChildHealth disabled={disabled} ref={e => ( need = e )} interviewSite={orgName}/> : ''}
+					{path === 'etsftz' ? <ChildHealth disabled={disabled} {...serviceDetail} /> : ''}
 
-					{ path === 'medication' ? <Medication disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'yytx00' ? <Medication disabled={ disabled } {...serviceDetail} /> : '' }
-					{ path === 'curativeEffect' ? <Medication disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'yylxgz' ? <Medication disabled={ disabled } {...serviceDetail} /> : '' }
+					{path === 'medication' ? <Medication disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'yytx00' ? <Medication disabled={disabled} {...serviceDetail} /> : ''}
+					{path === 'curativeEffect' ? <Medication disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'yylxgz' ? <Medication disabled={disabled} {...serviceDetail} /> : ''}
 
-					{ path === 'hypertension' ? <Hypertension disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'gxysf0' ? <Hypertension disabled={ disabled } {...serviceDetail} /> : '' }
-					{ path === 'diabetes' ? <Diabetes disabled={ disabled } ref={ e => ( need = e ) }/> : '' }
-					{ path === 'tnbsf0' ? <Diabetes disabled={ disabled } {...serviceDetail} /> : '' }
+					{path === 'hypertension' ? <Hypertension disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'gxysf0' ? <Hypertension disabled={disabled} {...serviceDetail} /> : ''}
+					{path === 'diabetes' ? <Diabetes disabled={disabled} ref={e => ( need = e )}/> : ''}
+					{path === 'tnbsf0' ? <Diabetes disabled={disabled} {...serviceDetail} /> : ''}
 
-					<ResidentInfoTable {...residentInfoProps} ref={ e => ( residentInfoTable = e ) }/>
-					{ userType === config.userType.doctor ?
+					<ResidentInfoTable {...residentInfoProps} ref={e => ( residentInfoTable = e )}/>
+					{userType === config.userType.doctor ?
 						<div>
-							<div className={ styles.submit } style={ { display: displayConfirm } }>
-								<Button size="large" type="primary" onClick={ validAndConfirm }>提交我的委托单信息</Button>
+							<div className={styles.submit} style={{ display: displayConfirm }}>
+								<Button size="large" type="primary" onClick={validAndConfirm}>提交我的委托单信息</Button>
 							</div>
-							<div className={ styles.submit } style={ { display: display } }>
+							<div className={styles.submit} style={{ display: display }}>
 								<Row>
-									<Col span={ 12 }>
-										<Button size="large" type="primary" style={ { width: 200 } } disabled={ submitDisabled }
-										        loading={ loading } onClick={ showModal }>确认委托并支付</Button>
+									<Col span={12}>
+										<Button size="large" type="primary" style={{ width: 200 }} disabled={submitDisabled}
+										        loading={loading} onClick={showModal}>确认委托并支付</Button>
 									</Col>
-									<Col span={ 12 }>
-										<Button size="large" type="primary" style={ { width: 200, display: displayBack } }
-										        onClick={ backToEdit }>返回修改</Button>
-										<Button size="large" type="primary" style={ { width: 200, display: displayNew } }
-										        onClick={ function () { location.reload() } }>新建委托单</Button>
+									<Col span={12}>
+										<Button size="large" type="primary" style={{ width: 200, display: displayBack }}
+										        onClick={backToEdit}>返回修改</Button>
+										<Button size="large" type="primary" style={{ width: 200, display: displayNew }}
+										        onClick={function () { location.reload() }}>新建委托单</Button>
 									</Col>
 								</Row>
 							</div>
-						</div> : '' }
-					{ userType === config.userType.worker && pagination.status === '1' ?
-						<div className={ styles.confirmOrderBtn }>
+						</div> : ''}
+					{userType === config.userType.worker && pagination.status === '1' ?
+						<div className={styles.confirmOrderBtn}>
 							<span>温馨提示：提交单条居民信息可在已处理中查看或撤回修改；确认完成所有委托任务后，医生将在手机APP中查看到您的服务信息，不能撤回修改！</span>
-							<Popconfirm title="提交以后将不能撤回修改，确认已完成该委托单全部内容？" onConfirm={ confirmOrder }>
-								<Button size="large" type="primary" style={ { width: 200 } } disabled={ disabledConfirmOrder }>确认完成</Button>
+							<Popconfirm title="提交以后将不能撤回修改，确认已完成该委托单全部内容？" onConfirm={confirmOrder}>
+								<Button size="large" type="primary" style={{ width: 200 }} disabled={disabledConfirmOrder}>确认完成</Button>
 							</Popconfirm>
 						</div> : ''
 					}
