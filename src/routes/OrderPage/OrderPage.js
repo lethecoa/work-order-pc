@@ -39,7 +39,7 @@ const OrderPage = ( {
 	user,
 } ) => {
 	/*fun.printLoader( 'orderPage' );*/
-	const { userType, secretaryId, name, group } = user;
+	const { userType, secretaryId, name, group,parentOrgId } = user;
 	const { currentStep, displayConfirm, submitDisabled, displayBack, displayNew } = orderModel ? orderModel : {};
 	const { serviceDetail, disabledConfirmOrder, pagination, isOver } = workerModel ? workerModel : {};
 	const { currentData, display, disabled, residentList } = userType === config.userType.worker ? workerModel : orderModel;
@@ -151,6 +151,7 @@ const OrderPage = ( {
 		handleSubmit: handleSubmit,
 		remainingBalance: remainingBalance,
 		group,
+		parentOrgId,
 	};
 	/** 居民信息样本参数 */
 	const residentInfoProps = {

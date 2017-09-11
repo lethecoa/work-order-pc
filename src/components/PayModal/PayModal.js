@@ -1,5 +1,6 @@
 import React from 'react';
 import {Modal, Button, Form, Input, Select} from 'antd';
+
 const FormItem = Form.Item;
 import styles from './PayModal.less';
 
@@ -19,7 +20,7 @@ export default class PayModal extends React.Component {
 		this.setState( {
 			visible: true,
 			expenseAccount: expenseAccount,
-			groupId: 1,
+			groupId: this.props.parentOrgId,
 		} );
 	};
 
@@ -40,7 +41,7 @@ export default class PayModal extends React.Component {
 	};
 
 	render() {
-		const { visible, loading, expenseAccount } = this.state;
+		const { visible, loading, expenseAccount, groupId } = this.state;
 		const { remainingBalance, group } = this.props;
 		return (
 			<div>
@@ -60,7 +61,7 @@ export default class PayModal extends React.Component {
 				>
 
 					<FormItem {...formItemLayout} label="选择客服中心">
-						<Select onChange={this.handleChange} style={{ width: '100%' }} defaultValue="1">
+						<Select onChange={this.handleChange} style={{ width: '100%' }} value={groupId ? groupId : '1'}>
 							{group ? group.map( ( item, index ) => {
 								return (<Select.Option value={item.groupId} key={index}>{item.groupName}</Select.Option>)
 							} ) : ''}
