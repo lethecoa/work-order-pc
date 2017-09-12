@@ -13,7 +13,7 @@ module.exports = {
 	/** 表单布局 */
 	formItemLayout: { labelCol: { span: 4 }, wrapperCol: { span: 12 } },
 	/** 用户类型 */
-	userType: { doctor: 'doctor', worker: 'worker' },
+	userType: { doctor: 'doctor', worker: 'worker', admin: 'admin' },
 	/** “居民信息控件”单元格的编辑模式 */
 	ritStatus: { general: '显示状态', editing: '编辑中', cancel: '取消编辑' },
 	/** 根据委托单名称定义“居民信息控件”表头的显示项  */

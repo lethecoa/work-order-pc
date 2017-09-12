@@ -51,6 +51,7 @@ function Login( {
 					<RadioGroup defaultValue={userType ? userType : config.userType.doctor} onChange={handleChange}>
 						<RadioButton value={config.userType.doctor}>医生登录</RadioButton>
 						<RadioButton value={config.userType.worker}>客服登录</RadioButton>
+						{/*<RadioButton value={config.userType.admin}>系统管理</RadioButton>*/}
 					</RadioGroup>
 				</div>
 				<form>

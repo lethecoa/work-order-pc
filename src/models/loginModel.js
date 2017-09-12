@@ -16,11 +16,14 @@ export default {
 		}
 	},
 	effects: {
-		*login( { payload }, { put, call, select } ) {
+		* login( { payload }, { put, call, select } ) {
 			const userType = yield select( state => state.appModel.userType );
 			let path = '';
 			let data = {};
 			if ( userType === config.userType.worker ) {
+				data = yield call( secretaryLogin, payload );
+				path = modular.unfinished.url;
+			} else if ( userType === config.userType.admin ) {
 				data = yield call( secretaryLogin, payload );
 				path = modular.unfinished.url;
 			} else {
