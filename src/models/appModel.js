@@ -27,12 +27,12 @@ export default {
 	},
 
 	effects: {
-		*checkLogin( { payload: { pathname, query } }, { select, put } ) {
+		* checkLogin( { payload: { pathname, query } }, { select, put } ) {
 			const matchDoctor = pathToRegexp( '/doctor/:modelName/:subPath' ).exec( pathname );
 			const matchWorker = pathToRegexp( '/worker/:state/:subPath' ).exec( pathname );
 			let storeageUser = storeage.get( config.local.user );
 			let storeageUserType = storeage.get( config.local.userType );
-			fun.print( storeageUser, '存储在浏览器内的user数据' );
+			//fun.print( storeageUser, '存储在浏览器内的user数据' );
 			let currentUser = {};
 			if ( matchWorker && matchWorker[ 1 ] === 'orderList' ) {
 				if ( query.secretaryId ) {
@@ -90,11 +90,11 @@ export default {
 				yield put( routerRedux.push( modular.login ) );
 			}
 		},
-		*logout( {}, { put } ) {
+		* logout( {}, { put } ) {
 			storeage.set( config.local.user, null );
 			yield put( routerRedux.push( modular.login ) );
 		},
-		*getItemPrice( { payload }, { call } ){
+		* getItemPrice( { payload }, { call } ) {
 			const data = yield call( getItemInfoById, { itemId: payload.itemId } );
 			if ( data.success ) {
 				payload.fun( data.entity.itemMoney );
@@ -104,7 +104,7 @@ export default {
 		}
 	},
 	subscriptions: {
-		setup ( { dispatch, history } ) {
+		setup( { dispatch, history } ) {
 			history.listen( ( { pathname, query } ) => {
 				dispatch( { type: action.checkLogin, payload: { pathname, query } } );
 				// if ( pathname === '/orderList') {
