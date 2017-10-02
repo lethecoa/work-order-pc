@@ -5,7 +5,7 @@ import OrderStep from './OrderStep/OrderStep';
 // 基本信息
 import BaseInfo from './BaseInfo/BaseInfo';
 // 确认支付
-import PayModal from './PayModal/PayModal';
+import PayModal from './Modal/PayModal';
 //查询栏
 import SearchBar from './SearchBar/SearchBar';
 // 表单项

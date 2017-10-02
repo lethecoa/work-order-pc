@@ -2,7 +2,7 @@ import React from 'react';
 import {Modal, Button, Form, Input, Select} from 'antd';
 
 const FormItem = Form.Item;
-import styles from './PayModal.less';
+import styles from './index.less';
 
 const formItemLayout = {
 	labelCol: { span: 10 },

@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'dva';
-import { MainLayout } from '../components';
+import {connect} from 'dva';
+import {MainLayout} from '../components';
 
-function App( { dispatch, user, children, location: { pathname } } ) {
+function App( { dispatch, user, loading, children, location: { pathname } } ) {
 	return (
-		<MainLayout user={user} dispatch={dispatch} pathname={pathname.replace( '/', '' )}>
+		<MainLayout user={user} loading={loading} dispatch={dispatch} pathname={pathname.replace( '/', '' )}>
 			{children}
 		</MainLayout>
 	);
@@ -13,6 +13,7 @@ function App( { dispatch, user, children, location: { pathname } } ) {
 function mapStateToProps( state ) {
 	return {
 		user: state.appModel.user,
+		loading: state.loading.models.appModel
 	};
 }
 

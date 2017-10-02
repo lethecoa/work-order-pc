@@ -4,6 +4,7 @@ module.exports = {
 	app_saveUserType: 'saveUserType',
 	checkLogin: 'checkLogin',
 	login: 'login',
+	changePwd: 'changePwd',
 	secretaryLogin: 'secretaryLogin',
 	logout: 'logout',
 	login_setInfo: 'setInfo',
