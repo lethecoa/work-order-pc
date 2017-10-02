@@ -1,7 +1,7 @@
 import {routerRedux} from 'dva/router';
 import pathToRegexp from 'path-to-regexp'
 import {getItemInfoById, changePwd} from '../services/appService';
-import {config, storeage, model, urlMap, action, fun, modular} from '../common';
+import {config, storeage, model, action, fun, modular} from '../common';
 
 export default {
   namespace: model.app,
@@ -102,9 +102,25 @@ export default {
       storeage.set(config.local.user, null);
       yield put(routerRedux.push(modular.login));
     },
-    * changePwd({payload}, {call}) {
+    * changePwd({payload}, {call, select, put}) {
+      const user = yield select(state => state.appModel.user);
+      const userType = user.userType;
+      payload.userType = userType;
+      if (userType === config.userType.doctor) {
+        payload.userId = user.accountId;
+      } else if (userType === config.userType.worker) {
+        payload.userId = user.secretaryId;
+      } else if (userType === config.userType.admin) {
+        payload.userId = user.adminId;
+      }
       const data = yield call(changePwd, payload);
-      console.log(data)
+      if (data.success) {
+        fun.showNotification('修改密码成功', '请用新密码重新登录');
+        storeage.set(config.local.user, null);
+        yield put(routerRedux.push(modular.login));
+      } else {
+        throw data
+      }
     },
     * getItemPrice({payload}, {call}) {
       const data = yield call(getItemInfoById, {itemId: payload.itemId});
