@@ -17,7 +17,7 @@
   },
   "proxy": {
     "/api": {
-      "target": "http://api.jksmpt.com/ylk/rest/",
+      "target": "http://10.128.191.55:8484/api/rest",
       "changeOrigin": true,
       "pathRewrite": {
         "^/api": ""
