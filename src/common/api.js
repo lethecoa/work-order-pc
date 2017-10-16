@@ -41,4 +41,27 @@ module.exports = {
   saveService: config.api + '/callCenter/saveService',
   /** 确认完成所有委托内容 */
   confirmOrder: config.api + '/callCenter/confirmOrder',
+
+  /** 查询医生个人信息*/
+  queryAccountPersonInfo: config.api +'/background/queryAccountPersonInfo',
+  /** 查询分组下医生信息*/
+  queryAccountInfo : config.api+'/background/queryAccountInfo',
+  /**查询分组下客服列表信息*/
+  querySecretaryInfo : config.api +'/background/querySecretaryInfo',
+  /**删除医生信息*/
+  deletAccountInfo : config.api+'/background/deletAccountInfo',
+  /** 修改医生信息*/
+  updateAccountPersonInfo : config.api+'/background/updateAccountPersonInfo',
+  /** 新增医生信息*/
+  createAccountInfo: config.api+'/background/createAccountInfo',
+  /**查询机构*/
+  querySysOrgInfo: config.api+'/background/querySysOrgInfo',
+  /**新增客服信息*/
+  createSecretaryInfo: config.api+'/background/createSecretaryInfo',
+  /**删除客服信息*/
+  deletSecretaryInfo: config.api+'/background/deletSecretaryInfo',
+  /**修改客服信息*/
+  updateSecretaryPersonInfo: config.api+'/background/updateSecretaryPersonInfo',
+  /**查看客服个人信息*/
+  queryScretarytPersonInfo: config.api+'/background/queryScretarytPersonInfo',
 };

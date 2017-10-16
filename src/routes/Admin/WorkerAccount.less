@@ -1,0 +1,38 @@
+.create{
+  margin: 1em 1em 0 0;
+  text-align: right;
+}
+.table {
+  margin:             10px;
+  width:              calc(~'100% - 20px');
+  display:            inline-table;
+  -moz-user-select:   none;
+  -khtml-user-select: none;
+  user-select:        none;
+  thead tr th {
+    background: #E7F0FA !important;
+    text-align: center;
+  }
+  td {
+    cursor: pointer;
+  }
+}
+.form {
+  margin:     10px 10px 0 10px;
+  text-align: right;
+  .tab {
+    label {
+      width:       100px;
+      text-align:  center;
+      font-weight: bold;
+    }
+    :global(.ant-radio-button-wrapper-checked) {
+      background: #108EE9;
+      color:      #F0F0F0;
+      border:     1px solid #015AEF;
+    }
+  }
+}
+.center {
+  text-align: center;
+}
