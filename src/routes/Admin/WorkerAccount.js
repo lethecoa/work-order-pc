@@ -73,7 +73,9 @@ const columns= [
 ]
 const WorkerAccount = ({ loading, dispatch,adminModel}) => {
 
-  const { pagination, list : dataSource , total,orgList } = adminModel;
+  const { pagination, list, total, orgList } = adminModel;
+
+  const {list : dataSource} = list;
 
   //机构信息
   data = orgList;
@@ -111,7 +113,20 @@ const WorkerAccount = ({ loading, dispatch,adminModel}) => {
       type: 'adminModel/orgList'
     })
   };
+  const handlerPageChange = (page) =>{
 
+    dispatch({ type: 'adminModel/initSecretaryList', payload : page})
+  }
+  /**表格分页器*/
+  const tablePagination = {
+    total: total,
+    current: pagination.page,
+    pageSize: pagination.pageSize,
+   // pageSize : 2,
+    onChange: handlerPageChange,
+    showQuickJumper: true,
+    showTotal: total => `共 ${total} 条`,
+  };
   return(
     <div>
       <div className={styles.create}>
@@ -128,7 +143,7 @@ const WorkerAccount = ({ loading, dispatch,adminModel}) => {
         columns={columns}
         loading={loading}
         rowKey={record=>record.secretaryId}
-        pagination={false}
+        pagination={tablePagination}
       />
     </div>
   )

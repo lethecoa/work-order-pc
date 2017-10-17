@@ -62,8 +62,10 @@ const columns = [
     )
   }
 ]
-const DoctorAccount = ({dispatch,loading, adminModel}) => {
-  const { pagination, list : dataSource, total, orgList } = adminModel;
+const DoctorAccount = ({dispatch, loading, adminModel}) => {
+
+  const { pagination, list, total, orgList } = adminModel;
+  const {list : dataSource} = list;
   data = orgList;
 
   /**删除医生信息*/
@@ -74,6 +76,10 @@ const DoctorAccount = ({dispatch,loading, adminModel}) => {
     })
   };
 
+  /**
+   * 添加医生
+   * @param data
+   */
   createHandler = (data) => {
     dispatch({
       type: 'adminModel/createDoctorInfo',
@@ -91,7 +97,20 @@ const DoctorAccount = ({dispatch,loading, adminModel}) => {
   editDoctorInfo = (values) => {
     dispatch({type: 'adminModel/editDoctorInfo', payload: values});
   };
-
+  //点击某页跳转
+  const handlerPageChange= (page) =>{
+    dispatch( { type: 'adminModel/initDoctorList', payload: page } );
+  }
+  /**表格分页器*/
+  const tablePagination = {
+    total: total,
+    current: pagination.page,
+    pageSize: pagination.pageSize,
+    // pageSize: 5,
+    onChange: handlerPageChange,
+    showQuickJumper: true,
+    showTotal: total => `共 ${total} 条`,
+  };
   return (
     <div>
       <div className={styles.create}>
@@ -99,6 +118,7 @@ const DoctorAccount = ({dispatch,loading, adminModel}) => {
           <Button type="primary" size="large">新增医生账号</Button>
         </DoctorAccountModal>
       </div>
+
       <Table
         className={ styles.table }
         bordered
@@ -106,7 +126,7 @@ const DoctorAccount = ({dispatch,loading, adminModel}) => {
         columns={columns}
         loading={loading}
         rowKey={record=>record.accountId}
-        pagination={false}
+        pagination={tablePagination}
 
       />
 
